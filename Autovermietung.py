@@ -1,18 +1,46 @@
-## Importe
-import sqlite3
+# Installieren
+# python -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org mysql-connector-python
 
-# Erstellt die Hauptdatenbank
-datenbank = sqlite3.connect('Autovermietung.db')
+# Importe
+import mysql.connector
 
-# Mauszeiger holen
-c = datenbank.cursor()
+# Datenbank MySQL
+DB_CBM = mysql.connector.connect(
+  host="cbm.bremer-community.de",
+  user="cbm",
+  passwd="xmVx2_25",
+  database="cbm_Autovermietung"
+)
 
 ## Abfragen
 # Übersicht über die vorhandenen Fahrzeuge
 # Durch das eingeben vom Wort Fahrzeuge werden alle Fahrzeuge aufgelistet
 
+# Menü 1
 # Übersicht über die vorhandenen Fahrzeuge
-MP1=c.execute("""SELECT * FROM Fahrzeuge)""")
+
+mycursor = DB_CBM.cursor()
+mycursor.execute("SELECT * FROM `autovermietung` WHERE `Fahrzeuge`")
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print("Das sind alle Fahrzeuge: ", x)
+
+
+
+
+
+# Menü 2
+# Neue Fahrzeuge einfügen
+
+
+
+
+
+
+
+
+
 
 ## Menü Fahrzeuge                               #Hauptmenü 0
 #   |  
