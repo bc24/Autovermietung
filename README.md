@@ -22,3 +22,6 @@
 - Bitte an alle Rechnungsbestandteile denken !
 - SQLite3 Datenbank
 - Verhindern von Abstürzen
+### Python Projekt
+### Frank Panzer
+### Die Autovermietung
