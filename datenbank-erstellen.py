@@ -1,3 +1,14 @@
+INSERT INTO `autovermietung` (`Fahrzeuge`, `Lieferanten`, `Zweigstellen`) VALUES (`FahrzeugID`,`Acura`,`Alfa Romeo`,`Aston Martin`,`Audi`,`Bently`,`BMW`,`BMW i`,`Bugatti`,`Buick`,`Byton`,`Cadillac`,`Chevrolet`,`Chrysler`,`Citroen`,`Dacia`,`Daihatsu`,`Dodge`,`DS Automobiles`,`Faraday Future`,`Ferrari`,`Fiat`,`Fisker`,`Ford`,`GMC`,`Holden`,`Honda`,`Hyundai`,`Infiniti`,`Isuzu`,`Jaguar`,`Jeep`,`Kia`,`Koenigsegg`,`Lada`,`Lamborghini`,`Lancia`,`Land Rover`,`Lexus`,`Ligier`,`Lincoln`,`Lotus`,`Mahindra`,`Maserati`,`Maybach`,`Mazda`,`Mercedes Benz`,`Mini`,`Mitsubishi`,`Morgan`,`Nissan`,`Opel`,`Pagani`,`Peugeot`,`PG`,`Piaggio`,`Porsche`,`Renault`,`Rolls Royce`,`Saab`,`Seat`,`Skoda`,`Smart`,`SsangYong`,`StreetScooter`,`Subaru`,`Suzuki`,`Tesla`,`Toyota`,`Triumph`,`TVR`,`Vauxhall`,`Volvo`,`VW`,`Wiesmann`, '2', '3');
+
+# Import
+import sqlite3
+
+# Erstellt die Hauptdatenbank
+datenbank = sqlite3.connect('Autovermietung.db')
+
+# Mauszeiger holen
+c = datenbank.cursor()
+
 ## In die Datenbank schreiben
 # Fahrzeuge
 c.execute("""CREATE TABLE `Fahrzeuge` (

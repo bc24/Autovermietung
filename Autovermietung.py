@@ -3,9 +3,8 @@
 # python -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org mysql-connector-python
 
 # Quellen
-# Menü -  https://www.python-kurs.eu/tkinter_labels.php
-#         https://www.tutorialspoint.com/python3/tk_menu.htm
-#
+# Menü              -   http://effbot.org/tkinterbook/menu.htm
+# MySQL Connector   -   https://pypi.org/project/mysql-connector-python/
 
 # Importe
 import mysql.connector
@@ -19,24 +18,28 @@ DB_CBM = mysql.connector.connect(
   database="cbm_Autovermietung"
 )
 
-## Abfragen
-# Übersicht über die vorhandenen Fahrzeuge
-# Durch das eingeben vom Wort Fahrzeuge werden alle Fahrzeuge aufgelistet
-
 # Menü 1
 # Übersicht über die vorhandenen Fahrzeuge
 
-mycursor = DB_CBM.cursor()
-mycursor.execute("SELECT * FROM `autovermietung` WHERE `Fahrzeuge`")
-myresult = mycursor.fetchall()
+def menuepunkt1():
+  mycursor = DB_CBM.cursor()
+  mycursor.execute("SELECT * FROM `autovermietung` WHERE `fahrzeuge`")
+  myresult = mycursor.fetchall()
 
-for x in myresult:
-  print("Das sind alle Fahrzeuge: ", x)
+  for x in myresult:
+    print("Das sind alle Fahrzeuge: ", x)
 
 # Menü 2
 # Neue Fahrzeuge einfügen
 
+def menuepunkt2():
+  Fahrzeuge_Anlegen=input("Bitte geben Sie eine Automarkte ein die Sie hinzufügen wollen: ")
+  mycursor = DB_CBM.cursor()
+  mycursor.execute("INSERT INTO fahrzeuge (fahrzeugmarken) VALUES (%s)", (Fahrzeuge_Anlegen,) )
+  myresult = mycursor.fetchall()
 
+  for x in myresult:
+    print("Das sind alle Fahrzeuge: ", x)
 
 
 ## Menü Fahrzeuge                               #Hauptmenü 0
@@ -49,43 +52,147 @@ for x in myresult:
 #   |- Sortierung der Fahrzeuge                 #6
 #       |- Modell                               #7
 #       |- Status                               #8
-#           |- Vorhanden/Verliehen              #9
-#   |- Mitarbeiter                              #10
-#       |- Alle Mitarbeiter anzeigen            #11
-#       |- Mitarbeiter anlegen                  #12
-#       |- Mitarbeiter ändern                   #13
-#   |- Kunde                                    #14
-#       |- Alle Kunden anzeigen                 #15
-#       |- Neuer Kunde anlegen                  #16
-#       |- Kunde ändern                         #17
-#   |- Kundenoptionen                           #18
-#       |- Fahrzeug leihen                      #19
-#       |- Fahrzeug zurückbringen               #19
-#       |- Fahrzeug zustand                     #20
-#           |- Fahrzeug beschädigt              #21
-#           |- Fahrzeug zerstört                #22
+#       |- Vorhanden                            #9              ###### Weiter Bearbeiten
+#       |- Verliehen                            #10
+#   |- Mitarbeiter                              #11
+#       |- Alle Mitarbeiter anzeigen            #12
+#       |- Mitarbeiter anlegen                  #13
+#       |- Mitarbeiter ändern                   #14
+#   |- Kunde                                    #15
+#       |- Alle Kunden anzeigen                 #16
+#       |- Neuer Kunde anlegen                  #17
+#       |- Kunde ändern                         #18
+#   |- Kundenoptionen                           #19
+#       |- Fahrzeug leihen                      #20
+#       |- Fahrzeug zurückbringen               #21
+#       |- Fahrzeug zustand                     #22
+#           |- Fahrzeug beschädigt              #23
+#           |- Fahrzeug zerstört                #24
 
 
-#Menü # Quelle: https://www.python-kurs.eu/tkinter_labels.php
-def donothing():
+# Notiz an mich
+'''
+FahrzeugSortierung
+FahrzeugSortierungModell
+FahrzeugSortierungStatus
+
+VorhandenVerliehen
+Mitarbeiter
+AlleMitarbeiterAnzeigen
+MitarbeiterAnlegen
+MitarbeiterAendern
+
+Kunde
+AlleKundenAnzeigen
+NeuerKundeAnlegen
+KundeAendern
+
+KundenoptionenMenu
+FahrzeugLeihen
+FahrzeugZurueckbringen
+FahrzeugZustand
+FahrzeugBeschaedigt 
+FahrzeugZerstoert
+
+'''
+
+
+
+
+# Menü
+root = Tk()
+menubar = Menu(root)
+
+# Fahrzeug Menü - Umsetzung
+
+def FahrzeugeAuflisten():
   filewin = Toplevel(root)
-  button = Button(filewin, text="Do nothing button")
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt1())
+  button.pack()
+
+def NeueFahrzeuge():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt2())
+  button.pack()
+
+  #
+
+def FahrzeugeEntfernen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt3())
+  button.pack()
+
+def FahrzeugeBearbeiten():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt4())
+  button.pack()
+
+def FahrzeugMietpreise():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt5())
+  button.pack()
+
+def FahrzeugSortierung():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt6())
+  button.pack()
+
+def FahrzeugSortierungModell():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt7())
+  button.pack()
+
+def FahrzeugSortierungStatus():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt8())
   button.pack()
 
 
-root = Tk()
-menubar = Menu(root)
+# Mitarbeiter Menü - Umsetzung
+def VorhandenVerliehen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt9())
+  button.pack()
+
+def Mitarbeiter():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt10())
+  button.pack()
+
+def AlleMitarbeiterAnzeigen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt11())
+  button.pack()
+
+def MitarbeiterAnlegen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt12())
+  button.pack()
+
+def MitarbeiterAendern():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt13())
+  button.pack()
+
+# Kunde Menü - Umsetzung
+
+def Kunde():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt14())
+  button.pack()
 
 
 Label(root,
 		 text="Projekt Autovermietung in Python",
 		 fg = "light green",
 		 bg = "dark green",
-		 font = "Helvetica 16 bold italic").pack()
+		 font = "Helvetica 16 bold italic").pack()      # .pack  =  Minimal und Maximal Größe des Textfeldes
+
 Label(root,
 		 text="Von Frank Panzer",
 		 fg = "red",
 		 font = "Times").pack()
+
 Label(root,
 		 text="2019",
 		 fg = "blue",
@@ -95,21 +202,21 @@ Label(root,
 # Fahrzeug Menü
 fahrzeuge = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Fahrzeuge", menu=fahrzeuge)
-fahrzeuge.add_command(label="Fahrzeuge auflisten", command=donothing)
-fahrzeuge.add_command(label="Neue Fahrzeuge", command=donothing)
-fahrzeuge.add_command(label="Fahrzeuge entfernen", command=donothing)
-fahrzeuge.add_command(label="Fahrzeuge bearbeiten", command=donothing)
-fahrzeuge.add_command(label="Mietpreise für Fahrzeuge festlegen", command=donothing)
-fahrzeuge.add_command(label="Sortierung der Fahrzeuge", command=donothing)
+fahrzeuge.add_command(label="Fahrzeuge auflisten", command=FahrzeugeAuflisten)
+fahrzeuge.add_command(label="Neue Fahrzeuge", command=NeueFahrzeuge)
+fahrzeuge.add_command(label="Fahrzeuge entfernen", command=FahrzeugeEntfernen)
+fahrzeuge.add_command(label="Fahrzeuge bearbeiten", command=FahrzeugeBearbeiten)
+fahrzeuge.add_command(label="Mietpreise für Fahrzeuge festlegen", command=FahrzeugMietpreise)
+fahrzeuge.add_command(label="Sortierung der Fahrzeuge", command=FahrzeugSortierung)
 fahrzeuge.add_separator()  # Einen Strich ziehen
 fahrzeuge.add_cascade(label="Beenden", command=root.quit)
 
 # Mitarbeiter Menü
 mitarbeiter = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Mitarbeiter", menu=mitarbeiter)
-mitarbeiter.add_command(label="Alle Mitarbeiter anzeigen", command=donothing)
-mitarbeiter.add_command(label="Mitarbeiter anlegen", command=donothing)
-mitarbeiter.add_command(label="Mitarbeiter ändern", command=donothing)
+mitarbeiter.add_command(label="Alle Mitarbeiter anzeigen", command=AlleMitarbeiter)
+mitarbeiter.add_command(label="Mitarbeiter anlegen", command=MitarbeiterAnlegen)
+mitarbeiter.add_command(label="Mitarbeiter ändern", command=MitarbeiterAendern)
 mitarbeiter.add_separator()  # Einen Strich ziehen
 mitarbeiter.add_cascade(label="Beenden", command=root.quit)
 
@@ -134,8 +241,6 @@ kundenoptionen.add_separator()  # Einen Strich ziehen
 kundenoptionen.add_cascade(label="Beenden", command=root.quit)
 
 menubar.add_cascade(label=" 2019 by. Frank Panzer")
-
-
 
 root.config(menu=menubar)
 root.mainloop()
