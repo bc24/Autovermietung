@@ -1,22 +1,63 @@
-#
-# Installieren
-# python -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org mysql-connector-python
+'''
+Copyright 2019 Frank Panzer
+Python Projekt - Autovermietung
 
-# Quellen
-# Menü              -   http://effbot.org/tkinterbook/menu.htm
-# MySQL Connector   -   https://pypi.org/project/mysql-connector-python/
+Installieren
+python -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org mysql-connector-python
 
+Quellen
+Menü              -   http://effbot.org/tkinterbook/menu.htm
+MySQL Connector   -   https://pypi.org/project/mysql-connector-python/
+
+'''
 # Importe
+import mysql
 import mysql.connector
 from tkinter import *
 
 # Datenbank MySQL
-DB_CBM = mysql.connector.connect(
+DB_CBM=mysql.connector.connect(
   host="localhost",
   user="root",
   passwd="",
   database="cbm_Autovermietung"
 )
+mycursor = DB_CBM.cursor()
+
+# SQL Tabelle mitarbeiter erstellen
+mycursor.execute("CREATE TABLE mitarbeiter(mitarbeiter_id INTEGER PRIMARY KEY AUTOINCREMENT,vorname VARCHAR(30),nachname VARCHAR(50),strasse VARCHAR(80),hausnummer INTEGER,plz_id INTEGER,telefonnr VARCHAR(80),FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)") #IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
+
+# SQL Tabelle zweigstellen erstellen
+mycursor.execute("CREATE TABLE zweigstellen (standort_id INTEGER PRIMARY KEY AUTOINCREMENT,strasse VARCHAR(80),plz_id INTEGER,hausnummer INTEGER,telefonnr INTEGER,steuernummer VARCHAR(20), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)") # IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
+
+# SQL Tabelle zweigstellen_mitarbeiter erstellen
+mycursor.execute("CREATE TABLE IF NOT EXISTS zweigstellen_mitarbeiter(standort_id INTEGER, mitarbeiter_id INTEGER, FOREIGN KEY (standort_id) REFERENCES standorte(standort_id) ON UPDATE CASCADE ON DELETE SET NULL,FOREIGN KEY (mitarbeiter_id) REFERENCES mitarbeiter(mitarbeiter_id) ON UPDATE CASCADE ON DELETE SET NULL)") # IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
+
+# SQL Tabelle kunde erstellen
+mycursor.execute("CREATE TABLE IF NOT EXISTS kunden(kunden_id INTEGER PRIMARY KEY AUTOINCREMENT, vorname VARCHAR(30), nachname VARCHAR(50), strasse VARCHAR(80), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(80), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)") # IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
+
+# SQL Tabelle fahrzeuge erstellen
+mycursor.execute("CREATE TABLE fahrzeuge(kfz_id INTEGER PRIMARY KEY AUTOINCREMENT,marke VARCHAR(50),modell VARCHAR(50),status VARCHAR(30),kennzeichen VARCHAR(11),standort_id INTEGER, kfz_preis_id INTEGER,FOREIGN KEY (standort_id) REFERENCES standorte(standort_id) ON UPDATE CASCADE ON DELETE SET NULL,FOREIGN KEY (kfz_preis_id) REFERENCES kfr_preis(kfz_preis_id) ON UPDATE CASCADE ON DELETE SET NULL)") # IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
+
+# SQL Tabelle plz_id erstellen
+mycursor.execute("CREATE TABLE plz_id (plz_id INTEGER PRIMARY KEY AUTOINCREMENT,plz CHAR(5), ort varchar(50))") # IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
+
+# SQL Tabelle plz_id erstellen
+mycursor.execute("CREATE TABLE plz_id (plz_id INTEGER PRIMARY KEY AUTOINCREMENT,plz CHAR(5), ort varchar(50))") # IF NOT EXISTS
+DB_CBM.close()
+DB_CBM.commit()
 
 # Menü 1
 # Übersicht über die vorhandenen Fahrzeuge
