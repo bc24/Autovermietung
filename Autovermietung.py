@@ -16,16 +16,19 @@ import mysql.connector
 from tkinter import *
 
 # Datenbank MySQL
-DB_CBM=mysql.connector.connect(
-  host="localhost",
-  user="root",
-  passwd="",
-  database="cbm_Autovermietung"
+DB_CBM = mysql.connector.connect(
+  host = "localhost",
+  user = "root",
+  passwd = "",
+  database = "cbm_Autovermietung"
 )
 mycursor = DB_CBM.cursor()
 
+"""
+# Datenbank erstellen Start
+
 # SQL Tabelle mitarbeiter erstellen
-mycursor.execute("CREATE TABLE mitarbeiter(mitarbeiter_id INTEGER PRIMARY KEY AUTOINCREMENT,vorname VARCHAR(30),nachname VARCHAR(50),strasse VARCHAR(80),hausnummer INTEGER,plz_id INTEGER,telefonnr VARCHAR(80),FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)") #IF NOT EXISTS
+mycursor.execute("CREATE TABLE IF NOT EXISTS mitarbeiter(mitarbeiter_id INTEGER PRIMARY KEY AUTOINCREMENT,vorname VARCHAR(30),nachname VARCHAR(50),strasse VARCHAR(80),hausnummer INTEGER,plz_id INTEGER,telefonnr VARCHAR(80),FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)") #IF NOT EXISTS
 DB_CBM.close()
 DB_CBM.commit()
 
@@ -54,10 +57,10 @@ mycursor.execute("CREATE TABLE plz_id (plz_id INTEGER PRIMARY KEY AUTOINCREMENT,
 DB_CBM.close()
 DB_CBM.commit()
 
-# SQL Tabelle plz_id erstellen
-mycursor.execute("CREATE TABLE plz_id (plz_id INTEGER PRIMARY KEY AUTOINCREMENT,plz CHAR(5), ort varchar(50))") # IF NOT EXISTS
-DB_CBM.close()
-DB_CBM.commit()
+# Datenbank erstellen Stop
+"""
+
+# Menü start
 
 # Menü 1
 # Übersicht über die vorhandenen Fahrzeuge
@@ -84,7 +87,7 @@ def menuepunkt2():
 
 
 ## Menü Fahrzeuge                               #Hauptmenü 0
-#   |  
+#   |
 #   |- Fahrzeuge auflisten                      #1
 #   |- Neue Fahrzeuge                           #2
 #   |- Fahrzeuge entfernen                      #3
@@ -111,41 +114,14 @@ def menuepunkt2():
 #           |- Fahrzeug zerstört                #24
 
 
-# Notiz an mich
-'''
-FahrzeugSortierung
-FahrzeugSortierungModell
-FahrzeugSortierungStatus
-
-VorhandenVerliehen
-Mitarbeiter
-AlleMitarbeiterAnzeigen
-MitarbeiterAnlegen
-MitarbeiterAendern
-
-Kunde
-AlleKundenAnzeigen
-NeuerKundeAnlegen
-KundeAendern
-
-KundenoptionenMenu
-FahrzeugLeihen
-FahrzeugZurueckbringen
-FahrzeugZustand
-FahrzeugBeschaedigt 
-FahrzeugZerstoert
-
-'''
-
-
-
 
 # Menü
 root = Tk()
 menubar = Menu(root)
 
-# Fahrzeug Menü - Umsetzung
+# Menü def Start
 
+# Fahrzeug Menü - Umsetzung
 def FahrzeugeAuflisten():
   filewin = Toplevel(root)
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt1())
@@ -156,12 +132,19 @@ def NeueFahrzeuge():
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt2())
   button.pack()
 
-  #
+# Ab hier weiter mit dem Menü
 
 def FahrzeugeEntfernen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt3())
-  button.pack()
+  filewin = Topleve2(root)
+  button = Button(filewin, text= menuepunkt3())
+
+
+Labe2(root,
+		 text="Fahrzeug entfernen",
+         fg = "light green",
+		 bg = "dark green",
+		 font = "Helvetica 16 bold italic").pack()
+
 
 def FahrzeugeBearbeiten():
   filewin = Toplevel(root)
@@ -188,39 +171,109 @@ def FahrzeugSortierungStatus():
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt8())
   button.pack()
 
-
-# Mitarbeiter Menü - Umsetzung
-def VorhandenVerliehen():
+# Fahrzeug vorhanden Menü - Umsetzung
+def Vorhanden():
   filewin = Toplevel(root)
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt9())
   button.pack()
 
-def Mitarbeiter():
+# Fahrzeug verliehen Menü - Umsetzung
+def Verliehen():
   filewin = Toplevel(root)
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt10())
   button.pack()
 
-def AlleMitarbeiterAnzeigen():
+def Mitarbeiter():
   filewin = Toplevel(root)
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt11())
   button.pack()
 
-def MitarbeiterAnlegen():
+def AlleMitarbeiterAnzeigen():
   filewin = Toplevel(root)
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt12())
   button.pack()
 
-def MitarbeiterAendern():
+def MitarbeiterAnlegen():
   filewin = Toplevel(root)
   button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt13())
+  button.pack()
+
+def MitarbeiterAendern():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt14())
   button.pack()
 
 # Kunde Menü - Umsetzung
 
 def Kunde():
   filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt14())
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt15())
   button.pack()
+
+# Alle Kunden anzeigen Menü - Umsetzung
+
+def AlleKundenAnzeigen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt16())
+  button.pack()
+
+# Neuer Kunde anlegen Menü - Umsetzung
+
+def NeuerKundeAnlegen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt17())
+  button.pack()
+
+# Kunde ändern Menü - Umsetzung
+
+def KundeAendern():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt18())
+  button.pack()
+
+# Kundenoptionen Menu - Umsetzung
+
+def KundenoptionenMenu():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt19())
+  button.pack()
+
+# Fahrzeug Leihmenü - Umsetzung
+
+def FahrzeugLeihen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt20())
+  button.pack()
+
+# Fahrzeug zurück bringen Menü - Umsetzung
+
+def FahrzeugZurueckbringen():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt21())
+  button.pack()
+
+# Fahrzeug Zustand Menü - Umsetzung
+
+def FahrzeugZustand():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt22())
+  button.pack()
+
+# Fahrzeug Beschädigt  Menü - Umsetzung
+
+def FahrzeugBeschaedigt ():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt23())
+  button.pack()
+
+# Fahrzeug zerstört Menü - Umsetzung
+
+def FahrzeugZerstoert():
+  filewin = Toplevel(root)
+  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt24())
+  button.pack()
+
+# Menü def Ende
 
 
 Label(root,
@@ -255,7 +308,6 @@ fahrzeuge.add_cascade(label="Beenden", command=root.quit)
 # Mitarbeiter Menü
 mitarbeiter = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Mitarbeiter", menu=mitarbeiter)
-mitarbeiter.add_command(label="Alle Mitarbeiter anzeigen", command=AlleMitarbeiter)
 mitarbeiter.add_command(label="Mitarbeiter anlegen", command=MitarbeiterAnlegen)
 mitarbeiter.add_command(label="Mitarbeiter ändern", command=MitarbeiterAendern)
 mitarbeiter.add_separator()  # Einen Strich ziehen
@@ -264,20 +316,20 @@ mitarbeiter.add_cascade(label="Beenden", command=root.quit)
 # Kunden Menü
 kunde = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Kunde", menu=kunde)
-kunde.add_command(label="Alle Mitarbeiter anzeigen", command=donothing)
-kunde.add_command(label="Neuer Kunde anlegen", command=donothing)
-kunde.add_command(label="Kunde ändern", command=donothing)
+kunde.add_command(label="Alle Kunden anzeigen", command=AlleKundenAnzeigen)
+kunde.add_command(label="Neuer Kunde anlegen", command=NeuerKundeAnlegen)
+kunde.add_command(label="Kunde ändern", command=KundeAendern)
 kunde.add_separator()  # Einen Strich ziehen
 kunde.add_cascade(label="Beenden", command=root.quit)
 
 # Kundenoptionen Menü
 kundenoptionen = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Kundenoptionen", menu=kundenoptionen)
-kundenoptionen.add_command(label="Fahrzeug leihen", command=donothing)
-kundenoptionen.add_command(label="Fahrzeug zurückbringen", command=donothing)
-kundenoptionen.add_command(label="Fahrzeug zustand", command=donothing)
-kundenoptionen.add_command(label="Fahrzeug beschädigt", command=donothing)
-kundenoptionen.add_command(label="Fahrzeug zerstört", command=donothing)
+kundenoptionen.add_command(label="Fahrzeug leihen", command=FahrzeugLeihen)
+kundenoptionen.add_command(label="Fahrzeug zurückbringen", command=FahrzeugZurueckbringen)
+kundenoptionen.add_command(label="Fahrzeug zustand", command=FahrzeugZustand)
+kundenoptionen.add_command(label="Fahrzeug beschädigt", command=FahrzeugBeschaedigt)
+kundenoptionen.add_command(label="Fahrzeug zerstört", command=FahrzeugZerstoert)
 kundenoptionen.add_separator()  # Einen Strich ziehen
 kundenoptionen.add_cascade(label="Beenden", command=root.quit)
 
