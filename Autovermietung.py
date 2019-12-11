@@ -14,6 +14,8 @@ MySQL Connector   -   https://pypi.org/project/mysql-connector-python/
 import mysql
 import mysql.connector
 from tkinter import *
+import time
+import sys
 
 # Datenbank MySQL
 DB_CBM = mysql.connector.connect(
@@ -60,23 +62,46 @@ DB_CBM.commit()
 # Datenbank erstellen Stop
 """
 
-# Menü start
-
-# Menü 1
 # Übersicht über die vorhandenen Fahrzeuge
 
-def menuepunkt1():
+def FahrzeugeAnzeigen():
   mycursor = DB_CBM.cursor()
-  mycursor.execute("SELECT * FROM `autovermietung` WHERE `fahrzeuge`")
+  mycursor.execute("SELECT * FROM fahrzeuge")
+  myresult = mycursor.fetchall()
+
+  #for x in myresult:
+  #  print("Das sind alle Fahrzeuge: ", x)
+
+
+# Neue Fahrzeuge einfügen
+
+def FahrzeugeAnlegen():
+  Fahrzeuge_Anlegen1=input("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
+  Fahrzeuge_Anlegen2 = input("Bitte geben Sie eine Fahrzeugmodell ein, die Sie hinzufügen wollen: ")
+  Fahrzeuge_Anlegen3 = input("Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
+
+  mycursor = DB_CBM.cursor()
+
+  # ID für Fahrzeug wird gehollt
+  res= mycursor.execute("INSERT INTO fahrzeuge (fahrzeug_id) VALUES (%s)", (Fahrzeuge_Anlegen,))
+  print(res.lastinsertid)
+  fzid = res.lastinsertid
+
+# Fahrzeug Dummy nur erzeugen wenn kein Datensatz zuverfügung steht
+  #mycursor.execute("INSERT INTO `fahrzeuge` (`fahrzeug_id`, `marke`, `modell`, `status`, `kennzeichen`, `zweigstelle_id`, `kfz_preis_id`) VALUES (NULL, 'bmw', '3er', 'da', 'hb-fp-103', '2', '250');)
+
+  mycursor.execute("UPDATE fahrzeuge SET (fahrzeug_id) WHERE fahrzeug_id ="+ fzid + (Fahrzeuge_Anlegen0,))
+  mycursor.execute("INSERT INTO fahrzeuge (marke) VALUES (%s)", (Fahrzeuge_Anlegen1,))
+  mycursor.execute("INSERT INTO fahrzeuge (modell) VALUES (%s)", (Fahrzeuge_Anlegen2,))
+  mycursor.execute("INSERT INTO fahrzeuge (status) VALUES (%s)", (Fahrzeuge_Anlegen3,))
+
+  # marke, modell, status, kennzeichen, zweigstelle_id, kfz_preis_id
   myresult = mycursor.fetchall()
 
   for x in myresult:
     print("Das sind alle Fahrzeuge: ", x)
 
-# Menü 2
-# Neue Fahrzeuge einfügen
-
-def menuepunkt2():
+def menuepunkt3():
   Fahrzeuge_Anlegen=input("Bitte geben Sie eine Automarkte ein die Sie hinzufügen wollen: ")
   mycursor = DB_CBM.cursor()
   mycursor.execute("INSERT INTO fahrzeuge (fahrzeugmarken) VALUES (%s)", (Fahrzeuge_Anlegen,) )
@@ -114,226 +139,65 @@ def menuepunkt2():
 #           |- Fahrzeug zerstört                #24
 
 
+# Abfrage kunde oder Mitarbeiter
+print("Sind sie Kunde(1) oder Mitarbeiter(2)? ")
+Frage1 = input()
 
-# Menü
-root = Tk()
-menubar = Menu(root)
+print("Bitte geben sie ihren Vornamen ein: ")
+Vorname = input()
 
-# Menü def Start
+print("Bitte geben sie ihren Nachnamen ein: ")
+Nachname = input()
 
-# Fahrzeug Menü - Umsetzung
-def FahrzeugeAuflisten():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt1())
-  button.pack()
+# Wenn Kunde dann
+if Frage1 == "1":
+  print("Guten Tag Herr/Frau", Nachname + "! Sind Sie Neu(1) oder sind Sie schon Kunde(2)? ")
+  kunde1 = input()
+  if kunde1 == "1":  # Kunde anlegen
+    Nachname = input()
+    liste_kunde = []
+    liste_kunde.insert(0, Nachname)
+    liste_kunde.insert(1, Vorname)
+    print("Bitte geben Sie ihre Strasse: ")
+    Strasse = input()
+    liste_kunde.insert(2, Strasse)
+    print("Bitte geben sie ihre Hausnummer ein:")
+    Hausnummer = input()
+    liste_kunde.insert(3, Hausnummer)
+    print("Bitte geben sie ihre Postleitzahl ein:")
+    plz = []
+    plz = input()
+    liste_kunde_plz.insert(0, plz)
+    print("Bitte geben Sie ihren Wohnort ein:")
+    Ort = input()
+    liste_kunde_plz.insert(1, Ort)
+    print("Bitte geben sie ihre Telefonnummer im Format 0421123456 (Also ohne Lehrzeichen,+ oder -)")
+    Telefon = input()
+    liste_kunde.insert(4, Telefon)
+    tupel_kunde = (liste_kunde)
+    tupel_kunde_plz = (liste_kunde_plz)
+    cursor.execute("""INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr) VALUES (?,?,?,?,?)""",
+                   (tupel_kunde))
+    cursor.execute("""INSERT INTO plz_id (plz, ort) VALUES (?,?)""", (tupel_kunde_plz))
+    connection.commit()
+    print("Sie haben folgende Daten eingegeben. Bitte merken sie sich ihre Kundennummer!")
+    sql = "SELECT * FROM kunden"
+    print(sql)
 
-def NeueFahrzeuge():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt2())
-  button.pack()
-
-# Ab hier weiter mit dem Menü
-
-def FahrzeugeEntfernen():
-  filewin = Topleve2(root)
-  button = Button(filewin, text= menuepunkt3())
-
-
-Labe2(root,
-		 text="Fahrzeug entfernen",
-         fg = "light green",
-		 bg = "dark green",
-		 font = "Helvetica 16 bold italic").pack()
-
-
-def FahrzeugeBearbeiten():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt4())
-  button.pack()
-
-def FahrzeugMietpreise():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt5())
-  button.pack()
-
-def FahrzeugSortierung():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt6())
-  button.pack()
-
-def FahrzeugSortierungModell():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt7())
-  button.pack()
-
-def FahrzeugSortierungStatus():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt8())
-  button.pack()
-
-# Fahrzeug vorhanden Menü - Umsetzung
-def Vorhanden():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt9())
-  button.pack()
-
-# Fahrzeug verliehen Menü - Umsetzung
-def Verliehen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt10())
-  button.pack()
-
-def Mitarbeiter():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt11())
-  button.pack()
-
-def AlleMitarbeiterAnzeigen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt12())
-  button.pack()
-
-def MitarbeiterAnlegen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt13())
-  button.pack()
-
-def MitarbeiterAendern():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt14())
-  button.pack()
-
-# Kunde Menü - Umsetzung
-
-def Kunde():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt15())
-  button.pack()
-
-# Alle Kunden anzeigen Menü - Umsetzung
-
-def AlleKundenAnzeigen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt16())
-  button.pack()
-
-# Neuer Kunde anlegen Menü - Umsetzung
-
-def NeuerKundeAnlegen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt17())
-  button.pack()
-
-# Kunde ändern Menü - Umsetzung
-
-def KundeAendern():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt18())
-  button.pack()
-
-# Kundenoptionen Menu - Umsetzung
-
-def KundenoptionenMenu():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt19())
-  button.pack()
-
-# Fahrzeug Leihmenü - Umsetzung
-
-def FahrzeugLeihen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt20())
-  button.pack()
-
-# Fahrzeug zurück bringen Menü - Umsetzung
-
-def FahrzeugZurueckbringen():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt21())
-  button.pack()
-
-# Fahrzeug Zustand Menü - Umsetzung
-
-def FahrzeugZustand():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt22())
-  button.pack()
-
-# Fahrzeug Beschädigt  Menü - Umsetzung
-
-def FahrzeugBeschaedigt ():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt23())
-  button.pack()
-
-# Fahrzeug zerstört Menü - Umsetzung
-
-def FahrzeugZerstoert():
-  filewin = Toplevel(root)
-  button = Button(filewin, text="Dieser Menüpunkt ist noch nicht fertig!"+ menuepunkt24())
-  button.pack()
-
-# Menü def Ende
+  if Frage1 == "2":
+    print("Bitte geben sie ihre Kundennummer ein:")
 
 
-Label(root,
-		 text="Projekt Autovermietung in Python",
-		 fg = "light green",
-		 bg = "dark green",
-		 font = "Helvetica 16 bold italic").pack()      # .pack  =  Minimal und Maximal Größe des Textfeldes
+### Mitarbeiter
+if Frage1 == "2":
+  print("Willkommen zurück Herr/Frau", Nachname + "!")
+  print("Hallo", Vorname +", bitte wähle zwischen:\nAlle Fahrzeuge anzeigen(1)\nMitarbeiter anlegen(2)\nMitarbeiter ändern(3)")
+  Alle_Fahrzeuge_ansehen = input()
 
-Label(root,
-		 text="Von Frank Panzer",
-		 fg = "red",
-		 font = "Times").pack()
+  if Alle_Fahrzeuge_ansehen == "1":   # Alle Fahrzeuge ansehen
+    Alle_Fahrzeuge_ansehen = []
+    FahrzeugeAnzeigen()
 
-Label(root,
-		 text="2019",
-		 fg = "blue",
-		 bg = "yellow",
-		 font = "Verdana 10 bold").pack()
-
-# Fahrzeug Menü
-fahrzeuge = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Fahrzeuge", menu=fahrzeuge)
-fahrzeuge.add_command(label="Fahrzeuge auflisten", command=FahrzeugeAuflisten)
-fahrzeuge.add_command(label="Neue Fahrzeuge", command=NeueFahrzeuge)
-fahrzeuge.add_command(label="Fahrzeuge entfernen", command=FahrzeugeEntfernen)
-fahrzeuge.add_command(label="Fahrzeuge bearbeiten", command=FahrzeugeBearbeiten)
-fahrzeuge.add_command(label="Mietpreise für Fahrzeuge festlegen", command=FahrzeugMietpreise)
-fahrzeuge.add_command(label="Sortierung der Fahrzeuge", command=FahrzeugSortierung)
-fahrzeuge.add_separator()  # Einen Strich ziehen
-fahrzeuge.add_cascade(label="Beenden", command=root.quit)
-
-# Mitarbeiter Menü
-mitarbeiter = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Mitarbeiter", menu=mitarbeiter)
-mitarbeiter.add_command(label="Mitarbeiter anlegen", command=MitarbeiterAnlegen)
-mitarbeiter.add_command(label="Mitarbeiter ändern", command=MitarbeiterAendern)
-mitarbeiter.add_separator()  # Einen Strich ziehen
-mitarbeiter.add_cascade(label="Beenden", command=root.quit)
-
-# Kunden Menü
-kunde = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Kunde", menu=kunde)
-kunde.add_command(label="Alle Kunden anzeigen", command=AlleKundenAnzeigen)
-kunde.add_command(label="Neuer Kunde anlegen", command=NeuerKundeAnlegen)
-kunde.add_command(label="Kunde ändern", command=KundeAendern)
-kunde.add_separator()  # Einen Strich ziehen
-kunde.add_cascade(label="Beenden", command=root.quit)
-
-# Kundenoptionen Menü
-kundenoptionen = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Kundenoptionen", menu=kundenoptionen)
-kundenoptionen.add_command(label="Fahrzeug leihen", command=FahrzeugLeihen)
-kundenoptionen.add_command(label="Fahrzeug zurückbringen", command=FahrzeugZurueckbringen)
-kundenoptionen.add_command(label="Fahrzeug zustand", command=FahrzeugZustand)
-kundenoptionen.add_command(label="Fahrzeug beschädigt", command=FahrzeugBeschaedigt)
-kundenoptionen.add_command(label="Fahrzeug zerstört", command=FahrzeugZerstoert)
-kundenoptionen.add_separator()  # Einen Strich ziehen
-kundenoptionen.add_cascade(label="Beenden", command=root.quit)
-
-menubar.add_cascade(label=" 2019 by. Frank Panzer")
-
-root.config(menu=menubar)
-root.mainloop()
+  if FahrzeugeAnlegen == "2":         # Mitglied anlegen
+    FahrzeugeAnlegen = []
+    FahrzeugeAnlegen()
