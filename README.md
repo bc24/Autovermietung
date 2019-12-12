@@ -4,8 +4,8 @@
 ### Frank Panzer
 ### Die Autovermietung
 
-### Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
-### MySQL Datenbank                                                                       
+#### Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
+                                                                      
 ### Aufbau der Konsolenanwendung:               
 - Übersicht über die vorhandenen Fahrzeuge                                            
 - Inkl. Status                                                                      
