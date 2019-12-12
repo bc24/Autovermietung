@@ -9,7 +9,7 @@ Quellen
 Menü              -   http://effbot.org/tkinterbook/menu.htm
 MySQL Connector   -   https://pypi.org/project/mysql-connector-python/
 Foreign Keys      -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
-PLZ deutschland   -   https://launix.de/launix/launix-gibt-plz-datenbank-frei/
+PLZ Datensaätze   -   https://mockaroo.com/
 
 
 '''
@@ -133,7 +133,7 @@ def FahrzeugeEntfernen():
 #   |- Sortierung der Fahrzeuge                 #6
 #       |- Modell                               #7
 #       |- Status                               #8
-#       |- Vorhanden                            #9              ###### Weiter Bearbeiten
+#       |- Vorhanden                            #9        
 #       |- Verliehen                            #10
 #   |- Mitarbeiter                              #11
 #       |- Alle Mitarbeiter anzeigen            #12
