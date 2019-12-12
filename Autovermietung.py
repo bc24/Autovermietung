@@ -6,10 +6,10 @@ Vorausgesetzt Installationen
 python -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org mysql-connector-python
 
 Quellen
-Menü              -   http://effbot.org/tkinterbook/menu.htm
-MySQL Connector   -   https://pypi.org/project/mysql-connector-python/
-Foreign Keys      -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
-PLZ Datensaätze   -   https://mockaroo.com/
+Menü                -   http://effbot.org/tkinterbook/menu.htm
+MySQL Connector     -   https://pypi.org/project/mysql-connector-python/
+Foreign Keys        -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
+Zufall Datensaätze  -   https://mockaroo.com/
 
 
 '''
@@ -125,15 +125,15 @@ def FahrzeugeEntfernen():
 
 ## Menü Fahrzeuge                               #Hauptmenü 0
 #   |
-#   |- Fahrzeuge auflisten                      #1
-#   |- Neue Fahrzeuge                           #2
+#   |- Fahrzeuge auflisten                      #1    Fertig
+#   |- Neue Fahrzeuge                           #2    Fertig
 #   |- Fahrzeuge entfernen                      #3
 #   |- Fahrzeuge bearbeiten                     #4
 #   |- Mietpreise für Fahrzeuge festlegen       #5
 #   |- Sortierung der Fahrzeuge                 #6
 #       |- Modell                               #7
 #       |- Status                               #8
-#       |- Vorhanden                            #9        
+#       |- Vorhanden                            #9
 #       |- Verliehen                            #10
 #   |- Mitarbeiter                              #11
 #       |- Alle Mitarbeiter anzeigen            #12
