@@ -1,6 +1,13 @@
 # Die Autovermietung
-### Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
-### SQLite3 Datenbank                                                                       
+
+### Python Projekt 2019
+### Copyright by Frank Panzer
+Webseite https://frank-panzer.de
+
+
+#### Kurze Info
+Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
+                                                                      
 ### Aufbau der Konsolenanwendung:               
 - Übersicht über die vorhandenen Fahrzeuge                                            
 - Inkl. Status                                                                      
@@ -20,8 +27,6 @@
 - Rechnungen für den Kunden erstellen
 - Speicherung der Rechnung in der form
 - Bitte an alle Rechnungsbestandteile denken !
-- SQLite3 Datenbank
+- MySQL Datenbank
 - Verhindern von Abstürzen
-### Python Projekt
-### Frank Panzer
-### Die Autovermietung
+
