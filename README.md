@@ -8,8 +8,8 @@
 - Fahrzeuge entfernen                                                                  
 - Mietpreise für Fahrzeuge festlegen
 - Sortierung der Fahrzeuge
--- Modell
--- Status
+- Modell
+- Status
 - Vorhanden/Verliehen
 - Möglichkeit einen Kunden/Mitarbeiter anzulegen und/oder zu ändern
 - Kundenoptionen
