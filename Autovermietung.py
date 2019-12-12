@@ -14,35 +14,6 @@ Zufall Datensaätze  -   https://mockaroo.com/
 
 '''
 
-# Menüpunkte
-
-## Menü Fahrzeuge                               #Hauptmenü 0
-#   |
-#   |- Fahrzeuge auflisten                      #1    Fertig
-#   |- Neue Fahrzeuge                           #2    Fertig
-#   |- Fahrzeuge entfernen                      #3
-#   |- Fahrzeuge bearbeiten                     #4
-#   |- Mietpreise für Fahrzeuge festlegen       #5
-#   |- Sortierung der Fahrzeuge                 #6
-#       |- Modell                               #7
-#       |- Status                               #8
-#       |- Vorhanden                            #9
-#       |- Verliehen                            #10
-#   |- Mitarbeiter                              #11
-#       |- Alle Mitarbeiter anzeigen            #12
-#       |- Mitarbeiter anlegen                  #13
-#       |- Mitarbeiter ändern                   #14
-#   |- Kunde                                    #15
-#       |- Alle Kunden anzeigen                 #16
-#       |- Neuer Kunde anlegen                  #17
-#       |- Kunde ändern                         #18
-#   |- Kundenoptionen                           #19
-#       |- Fahrzeug leihen                      #20
-#       |- Fahrzeug zurückbringen               #21
-#       |- Fahrzeug zustand                     #22
-#           |- Fahrzeug beschädigt              #23
-#           |- Fahrzeug zerstört                #24
-
 # Importe
 import mysql
 import mysql.connector
@@ -104,101 +75,32 @@ mycursor.execute("CREATE TABLE IF NOT EXISTS rechnung_details (rechnung_id INTEG
 
 # Übersicht über die vorhandenen Fahrzeuge
 # Menüpunkt 1
-def FahrzeugeAnzeigen():
-  mycursor = DB_CBM.cursor()
-  mycursor.execute("SELECT * FROM fahrzeuge")
-  myresult = mycursor.fetchall()
-  print("SELECT * FROM fahrzeuge")
-
-  #for x in myresult:
-  #  print("Das sind alle Fahrzeuge: ", x)
+import FahrzeugeAnzeigen
 
 
 # Neue Fahrzeuge einfügen
 # Menüpunkt 2
-def FahrzeugeAnlegen():
-  Fahrzeuge_Anlegen1=input("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
-  Fahrzeuge_Anlegen2 = input("Bitte geben Sie eine Fahrzeugmodell ein, die Sie hinzufügen wollen: ")
-  Fahrzeuge_Anlegen3 = input("Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
+import FahrzeugeAnlegen
 
-  mycursor = DB_CBM.cursor()
-
-  # ID für Fahrzeug wird gehollt
-  res= mycursor.execute("INSERT INTO fahrzeuge (fahrzeug_id) VALUES (%s)", (Fahrzeuge_Anlegen,))
-  print(res.lastinsertid)
-  fzid = res.lastinsertid
-
-  mycursor.execute("UPDATE fahrzeuge SET (fahrzeug_id) WHERE fahrzeug_id ="+ fzid + (Fahrzeuge_Anlegen0,))
-  mycursor.execute("INSERT INTO fahrzeuge (marke) VALUES (%s)", (Fahrzeuge_Anlegen1,))
-  mycursor.execute("INSERT INTO fahrzeuge (modell) VALUES (%s)", (Fahrzeuge_Anlegen2,))
-  mycursor.execute("INSERT INTO fahrzeuge (status) VALUES (%s)", (Fahrzeuge_Anlegen3,))
-  mycursor.execute("INSERT INTO fahrzeuge (kennzeichen) VALUES (%s)", (Fahrzeuge_Anlegen1,))
-  mycursor.execute("INSERT INTO fahrzeuge (zweigstelle_id) VALUES (%s)", (Fahrzeuge_Anlegen2,))
-  mycursor.execute("INSERT INTO fahrzeuge (fahrzeug_preis_id) VALUES (%s)", (Fahrzeuge_Anlegen3,))
-
-  myresult = mycursor.fetchall()
-
-  for x in myresult:
-    print("Das sind alle Fahrzeuge: ", x)
 
 # Neue Fahrzeuge entfernen
 # Menüpunkt 3
-def FahrzeugeEntfernen():
-  Fahrzeuge_Anlegen=input("Bitte geben Sie eine Automarkte ein die Sie hinzufügen wollen: ")
-  mycursor = DB_CBM.cursor()
-  mycursor.execute("INSERT INTO fahrzeuge (fahrzeugmarken) VALUES (%s)", (Fahrzeuge_Anlegen),)
-  myresult = mycursor.fetchall()
+import FahrzeugeEntfernen
 
-  for x in myresult:
-    print("Das sind alle Fahrzeuge: ", x)
 
 # Alle Mitglieder anzeigen
 # Menüpunkt 12
-def Alle_Mitglieder_ansehen():
-  #mycursor.execute("SELECT * FROM mitglieder WHERE vorname,nachname")
+import Alle_Mitglieder_ansehen
 
-  mitarbeiterAufliesten = "SELECT * FROM mitarbeiter"
-  print(mitarbeiterAufliesten)
 
 # Mitglied anlegen
 # Menüpunkt 13
-def MitgliederAnlegen():
-  Mitglied_Vorname = input("Bitte geben Sie eine Vorname ein, die Sie hinzufügen wollen: ")
-  Mitglied_Nachname = input("Bitte geben Sie eine Nachname ein, die Sie hinzufügen wollen: ")
-  Mitglied_Strasse = input("Bitte geben Sie eine Straße ein, die Sie hinzufügen wollen: ")
-  Mitglied_Hausnummer = input("Bitte geben Sie eine Hausnummer ein, die Sie hinzufügen wollen: ")
-  Mitglied_Telefonnummer = input("Bitte geben Sie eien Telefonnummer ein, die Sie hinzufügen wollen: ")
+import MitgliederAnlegen
 
-  mycursor = DB_CBM.cursor()
-
-  # ID für Mitglieder wird gehollt
-  res = Mitglied_cursor.execute("INSERT INTO mitglieder (mitglieder_id) VALUES (%s)", (Mitglied_Anlegen1,))
-  print(res.lastinsertid)
-  fzid = res.lastinsertid
-
-  # ID für PLZ_ID wird gehollt
-  plzid = mycursor.execute("INSERT INTO mitglieder(plz_id) VALUES (%s)", (PlzHolen,))
-  print(plzid.lastinsertid)
-  plzidgeben = plzid.lastinsertid
-
-  Mitglied_cursor.execute("UPDATE mitglieder SET (fahrzeug_id) WHERE fahrzeug_id =" + fzid + (Mitglied_Anlegen0,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (vorname) VALUES (%s)", (Mitglied_Vorname,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (nachname) VALUES (%s)", (Mitglied_Nachname,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (strasse) VALUES (%s)", (Mitglied_Strasse,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (hausnummer) VALUES (%s)", (Mitglied_Hausnummer,))
-  Mitglied_cursor.execute("UPDATE mitglieder SET (plz_id) WHERE plz_id =" + plzidgeben + (Mitglied_Anlegen0,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (telefonnr) VALUES (%s)", (Mitglied_Telefonnummer,))
-
-
-  myresult = Mitglied_cursor.fetchall()
-
-  for x in myresult:
-    print("Das sind alle Mitglieder: ", x)
 
 # Mitglied ändern
 # Menüpunkt 14
-def MitgliederAendern():
-  pass
+import MitgliederAendern
 
 
 # Consolen Abfragen
