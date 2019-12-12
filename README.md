@@ -2,10 +2,11 @@
 
 ### Python Projekt 2019
 ### Copyright by Frank Panzer
-https://frank-panzer.de
+Webseite https://frank-panzer.de
 
 
-#### Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
+#### Kurze Info
+Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
                                                                       
 ### Aufbau der Konsolenanwendung:               
 - Übersicht über die vorhandenen Fahrzeuge                                            
