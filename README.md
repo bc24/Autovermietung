@@ -1,8 +1,9 @@
 # Die Autovermietung
 
-### Python Projekt
-### Frank Panzer
-### Die Autovermietung
+### Python Projekt 2019
+### Copyright by Frank Panzer
+https://frank-panzer.de
+
 
 #### Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
                                                                       
