@@ -13,6 +13,36 @@ Zufall Datensaätze  -   https://mockaroo.com/
 
 
 '''
+
+# Menüpunkte
+
+## Menü Fahrzeuge                               #Hauptmenü 0
+#   |
+#   |- Fahrzeuge auflisten                      #1    Fertig
+#   |- Neue Fahrzeuge                           #2    Fertig
+#   |- Fahrzeuge entfernen                      #3
+#   |- Fahrzeuge bearbeiten                     #4
+#   |- Mietpreise für Fahrzeuge festlegen       #5
+#   |- Sortierung der Fahrzeuge                 #6
+#       |- Modell                               #7
+#       |- Status                               #8
+#       |- Vorhanden                            #9
+#       |- Verliehen                            #10
+#   |- Mitarbeiter                              #11
+#       |- Alle Mitarbeiter anzeigen            #12
+#       |- Mitarbeiter anlegen                  #13
+#       |- Mitarbeiter ändern                   #14
+#   |- Kunde                                    #15
+#       |- Alle Kunden anzeigen                 #16
+#       |- Neuer Kunde anlegen                  #17
+#       |- Kunde ändern                         #18
+#   |- Kundenoptionen                           #19
+#       |- Fahrzeug leihen                      #20
+#       |- Fahrzeug zurückbringen               #21
+#       |- Fahrzeug zustand                     #22
+#           |- Fahrzeug beschädigt              #23
+#           |- Fahrzeug zerstört                #24
+
 # Importe
 import mysql
 import mysql.connector
@@ -78,6 +108,7 @@ def FahrzeugeAnzeigen():
   mycursor = DB_CBM.cursor()
   mycursor.execute("SELECT * FROM fahrzeuge")
   myresult = mycursor.fetchall()
+  print("SELECT * FROM fahrzeuge")
 
   #for x in myresult:
   #  print("Das sind alle Fahrzeuge: ", x)
@@ -115,41 +146,62 @@ def FahrzeugeAnlegen():
 def FahrzeugeEntfernen():
   Fahrzeuge_Anlegen=input("Bitte geben Sie eine Automarkte ein die Sie hinzufügen wollen: ")
   mycursor = DB_CBM.cursor()
-  mycursor.execute("INSERT INTO fahrzeuge (fahrzeugmarken) VALUES (%s)", (Fahrzeuge_Anlegen,) )
+  mycursor.execute("INSERT INTO fahrzeuge (fahrzeugmarken) VALUES (%s)", (Fahrzeuge_Anlegen),)
   myresult = mycursor.fetchall()
 
   for x in myresult:
     print("Das sind alle Fahrzeuge: ", x)
 
-# Menüpunkte
+# Alle Mitglieder anzeigen
+# Menüpunkt 12
+def Alle_Mitglieder_ansehen():
+  #mycursor.execute("SELECT * FROM mitglieder WHERE vorname,nachname")
 
-## Menü Fahrzeuge                               #Hauptmenü 0
-#   |
-#   |- Fahrzeuge auflisten                      #1    Fertig
-#   |- Neue Fahrzeuge                           #2    Fertig
-#   |- Fahrzeuge entfernen                      #3
-#   |- Fahrzeuge bearbeiten                     #4
-#   |- Mietpreise für Fahrzeuge festlegen       #5
-#   |- Sortierung der Fahrzeuge                 #6
-#       |- Modell                               #7
-#       |- Status                               #8
-#       |- Vorhanden                            #9
-#       |- Verliehen                            #10
-#   |- Mitarbeiter                              #11
-#       |- Alle Mitarbeiter anzeigen            #12
-#       |- Mitarbeiter anlegen                  #13
-#       |- Mitarbeiter ändern                   #14
-#   |- Kunde                                    #15
-#       |- Alle Kunden anzeigen                 #16
-#       |- Neuer Kunde anlegen                  #17
-#       |- Kunde ändern                         #18
-#   |- Kundenoptionen                           #19
-#       |- Fahrzeug leihen                      #20
-#       |- Fahrzeug zurückbringen               #21
-#       |- Fahrzeug zustand                     #22
-#           |- Fahrzeug beschädigt              #23
-#           |- Fahrzeug zerstört                #24
+  mitarbeiterAufliesten = "SELECT * FROM mitarbeiter"
+  print(mitarbeiterAufliesten)
 
+# Mitglied anlegen
+# Menüpunkt 13
+def MitgliederAnlegen():
+  Mitglied_Vorname = input("Bitte geben Sie eine Vorname ein, die Sie hinzufügen wollen: ")
+  Mitglied_Nachname = input("Bitte geben Sie eine Nachname ein, die Sie hinzufügen wollen: ")
+  Mitglied_Strasse = input("Bitte geben Sie eine Straße ein, die Sie hinzufügen wollen: ")
+  Mitglied_Hausnummer = input("Bitte geben Sie eine Hausnummer ein, die Sie hinzufügen wollen: ")
+  Mitglied_Telefonnummer = input("Bitte geben Sie eien Telefonnummer ein, die Sie hinzufügen wollen: ")
+
+  mycursor = DB_CBM.cursor()
+
+  # ID für Mitglieder wird gehollt
+  res = Mitglied_cursor.execute("INSERT INTO mitglieder (mitglieder_id) VALUES (%s)", (Mitglied_Anlegen1,))
+  print(res.lastinsertid)
+  fzid = res.lastinsertid
+
+  # ID für PLZ_ID wird gehollt
+  plzid = mycursor.execute("INSERT INTO mitglieder(plz_id) VALUES (%s)", (PlzHolen,))
+  print(plzid.lastinsertid)
+  plzidgeben = plzid.lastinsertid
+
+  Mitglied_cursor.execute("UPDATE mitglieder SET (fahrzeug_id) WHERE fahrzeug_id =" + fzid + (Mitglied_Anlegen0,))
+  Mitglied_cursor.execute("INSERT INTO mitglieder (vorname) VALUES (%s)", (Mitglied_Vorname,))
+  Mitglied_cursor.execute("INSERT INTO mitglieder (nachname) VALUES (%s)", (Mitglied_Nachname,))
+  Mitglied_cursor.execute("INSERT INTO mitglieder (strasse) VALUES (%s)", (Mitglied_Strasse,))
+  Mitglied_cursor.execute("INSERT INTO mitglieder (hausnummer) VALUES (%s)", (Mitglied_Hausnummer,))
+  Mitglied_cursor.execute("UPDATE mitglieder SET (plz_id) WHERE plz_id =" + plzidgeben + (Mitglied_Anlegen0,))
+  Mitglied_cursor.execute("INSERT INTO mitglieder (telefonnr) VALUES (%s)", (Mitglied_Telefonnummer,))
+
+
+  myresult = Mitglied_cursor.fetchall()
+
+  for x in myresult:
+    print("Das sind alle Mitglieder: ", x)
+
+# Mitglied ändern
+# Menüpunkt 14
+def MitgliederAendern():
+  pass
+
+
+# Consolen Abfragen
 
 # Abfrage kunde oder Mitarbeiter
 print("Sind sie Kunde(1) oder Mitarbeiter(2)? ")
@@ -212,14 +264,17 @@ if Frage1 == "2":
   print("Hallo", Vorname +", bitte wähle zwischen:\nAlle Mitglieder anzeigen(1)\nMitarbeiter anlegen(2)\nMitarbeiter ändern(3)")
   Alle_Mitglieder_ansehen = input()
 
-  if Alle_Mitglieder_ansehen == "1":   # Alle Mitglieder ansehen
-    Alle_Mitglieder_ansehen = []
+  # Alle Mitglieder ansehen
+  if Alle_Mitglieder_ansehen == "1":
+    #Alle_Mitglieder_ansehen = []
     Alle_Mitglieder_ansehen()
 
-  if MitgliederAnlegen == "2":         # Mitglied anlegen
+  # Mitglied anlegen
+  if MitgliederAnlegen == "2":
     MitgliederAnlegen = []
     MitgliederAnlegen()
 
-  if MitgliederAendern == "3":         # Mitglied ändern
+  # Mitglied ändern
+  if MitgliederAendern == "3":
     MitgliederAendern = []
     MitgliederAendern()
