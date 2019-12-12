@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 11. Dez 2019 um 15:06
+-- Erstellungszeit: 12. Dez 2019 um 05:32
 -- Server-Version: 10.4.10-MariaDB
--- PHP-Version: 7.1.33
+-- PHP-Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,40 +25,61 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `fahrzeuge`
+-- Tabellenstruktur für Tabelle `fahrzeug`
 --
 
-CREATE TABLE `fahrzeuge` (
-  `fahrzeug_id` int(50) NOT NULL,
-  `marke` varchar(50) NOT NULL,
-  `modell` varchar(50) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `kennzeichen` varchar(50) NOT NULL,
-  `zweigstelle_id` int(11) NOT NULL,
-  `kfz_preis_id` int(11) NOT NULL
+CREATE TABLE `fahrzeug` (
+  `fahrzeug_id` int(11) NOT NULL,
+  `marke` varchar(50) DEFAULT NULL,
+  `modell` varchar(50) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `kennzeichen` varchar(20) DEFAULT NULL,
+  `zweigstellen_id` int(11) DEFAULT NULL,
+  `fahrzeug_preis_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Daten für Tabelle `fahrzeuge`
---
-
-INSERT INTO `fahrzeuge` (`fahrzeug_id`, `marke`, `modell`, `status`, `kennzeichen`, `zweigstelle_id`, `kfz_preis_id`) VALUES
-(1, 'bmw', '3er', 'da', 'hb-fp-103', 2, 250);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `kunde`
+-- Tabellenstruktur für Tabelle `fahrzeug_preis`
 --
 
-CREATE TABLE `kunde` (
-  `kunden_id` int(50) NOT NULL,
-  `vorname` varchar(50) NOT NULL,
-  `nachname` varchar(50) NOT NULL,
-  `strasse` varchar(100) NOT NULL,
-  `hausnummer` int(50) NOT NULL,
-  `plz_id` int(50) NOT NULL,
-  `telefonnr` varchar(50) NOT NULL
+CREATE TABLE `fahrzeug_preis` (
+  `fahrzeug_preis_id` int(11) NOT NULL,
+  `fahrzeug_id` int(11) DEFAULT NULL,
+  `fahrzeug_preis_netto` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `kunden`
+--
+
+CREATE TABLE `kunden` (
+  `kunden_id` int(11) NOT NULL,
+  `nachname` varchar(50) DEFAULT NULL,
+  `vorname` varchar(30) DEFAULT NULL,
+  `strasse` varchar(80) DEFAULT NULL,
+  `hausnummer` int(11) DEFAULT NULL,
+  `plz_id` int(11) DEFAULT NULL,
+  `telefonnr` varchar(80) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `mitarbeiter`
+--
+
+CREATE TABLE `mitarbeiter` (
+  `mitarbeiter_id` int(11) NOT NULL,
+  `vorname` varchar(50) DEFAULT NULL,
+  `nachname` varchar(50) DEFAULT NULL,
+  `strasse` varchar(80) DEFAULT NULL,
+  `hausnummer` int(11) DEFAULT NULL,
+  `plz_id` int(11) DEFAULT NULL,
+  `telefonnr` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -68,23 +89,49 @@ CREATE TABLE `kunde` (
 --
 
 CREATE TABLE `plz_id` (
-  `plz` int(5) NOT NULL,
-  `ort` char(50) NOT NULL
+  `plz_id` int(11) NOT NULL,
+  `plz` varchar(5) DEFAULT NULL,
+  `ort` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `zweigstellen`
+-- Tabellenstruktur für Tabelle `rechnung`
 --
 
-CREATE TABLE `zweigstellen` (
-  `(standort_id` int(50) NOT NULL,
-  `strasse` varchar(50) NOT NULL,
-  `plz_id` int(50) NOT NULL,
-  `hausnummer` int(10) NOT NULL,
-  `telefonnr` int(50) NOT NULL,
-  `steuernummer` varchar(50) NOT NULL
+CREATE TABLE `rechnung` (
+  `rechnung_id` int(11) NOT NULL,
+  `zweigstellen_id` int(11) DEFAULT NULL,
+  `kunden_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `rechnung_details`
+--
+
+CREATE TABLE `rechnung_details` (
+  `rechnung_id` int(11) DEFAULT NULL,
+  `fahrzeug_id` int(11) DEFAULT NULL,
+  `verleih_beginn` date DEFAULT NULL,
+  `verleih_ende` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `zweigstelle`
+--
+
+CREATE TABLE `zweigstelle` (
+  `zweigstellen_id` int(11) NOT NULL,
+  `strasse` varchar(80) DEFAULT NULL,
+  `hausnummer` int(11) DEFAULT NULL,
+  `plz_id` int(11) DEFAULT NULL,
+  `telefonnr` int(11) DEFAULT NULL,
+  `steuernummer` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -94,8 +141,8 @@ CREATE TABLE `zweigstellen` (
 --
 
 CREATE TABLE `zweigstellen_mitarbeiter` (
-  `zweigstellen_id` int(50) NOT NULL,
-  `mitarbeiter_id` int(50) NOT NULL
+  `zweigstellen_id` int(11) DEFAULT NULL,
+  `mitarbeiter_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -103,58 +150,163 @@ CREATE TABLE `zweigstellen_mitarbeiter` (
 --
 
 --
--- Indizes für die Tabelle `fahrzeuge`
+-- Indizes für die Tabelle `fahrzeug`
 --
-ALTER TABLE `fahrzeuge`
+ALTER TABLE `fahrzeug`
   ADD PRIMARY KEY (`fahrzeug_id`),
-  ADD UNIQUE KEY `kfz_preis_id` (`kfz_preis_id`),
-  ADD UNIQUE KEY `kfz_preis_id_2` (`kfz_preis_id`);
+  ADD KEY `zweigstellen_id` (`zweigstellen_id`),
+  ADD KEY `fahrzeug_preis_id` (`fahrzeug_preis_id`);
 
 --
--- Indizes für die Tabelle `kunde`
+-- Indizes für die Tabelle `fahrzeug_preis`
 --
-ALTER TABLE `kunde`
-  ADD PRIMARY KEY (`kunden_id`);
+ALTER TABLE `fahrzeug_preis`
+  ADD PRIMARY KEY (`fahrzeug_preis_id`);
+
+--
+-- Indizes für die Tabelle `kunden`
+--
+ALTER TABLE `kunden`
+  ADD PRIMARY KEY (`kunden_id`),
+  ADD KEY `plz_id` (`plz_id`);
+
+--
+-- Indizes für die Tabelle `mitarbeiter`
+--
+ALTER TABLE `mitarbeiter`
+  ADD PRIMARY KEY (`mitarbeiter_id`),
+  ADD KEY `plz_id` (`plz_id`);
 
 --
 -- Indizes für die Tabelle `plz_id`
 --
 ALTER TABLE `plz_id`
-  ADD PRIMARY KEY (`plz`);
+  ADD PRIMARY KEY (`plz_id`);
 
 --
--- Indizes für die Tabelle `zweigstellen`
+-- Indizes für die Tabelle `rechnung`
 --
-ALTER TABLE `zweigstellen`
-  ADD PRIMARY KEY (`(standort_id`);
+ALTER TABLE `rechnung`
+  ADD PRIMARY KEY (`rechnung_id`),
+  ADD KEY `zweigstellen_id` (`zweigstellen_id`),
+  ADD KEY `kunden_id` (`kunden_id`);
+
+--
+-- Indizes für die Tabelle `rechnung_details`
+--
+ALTER TABLE `rechnung_details`
+  ADD KEY `rechnung_id` (`rechnung_id`),
+  ADD KEY `fahrzeug_id` (`fahrzeug_id`);
+
+--
+-- Indizes für die Tabelle `zweigstelle`
+--
+ALTER TABLE `zweigstelle`
+  ADD PRIMARY KEY (`zweigstellen_id`),
+  ADD KEY `plz_id` (`plz_id`);
+
+--
+-- Indizes für die Tabelle `zweigstellen_mitarbeiter`
+--
+ALTER TABLE `zweigstellen_mitarbeiter`
+  ADD KEY `zweigstellen_id` (`zweigstellen_id`),
+  ADD KEY `mitarbeiter_id` (`mitarbeiter_id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT für Tabelle `fahrzeuge`
+-- AUTO_INCREMENT für Tabelle `fahrzeug`
 --
-ALTER TABLE `fahrzeuge`
-  MODIFY `fahrzeug_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `fahrzeug`
+  MODIFY `fahrzeug_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `kunde`
+-- AUTO_INCREMENT für Tabelle `fahrzeug_preis`
 --
-ALTER TABLE `kunde`
-  MODIFY `kunden_id` int(50) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `fahrzeug_preis`
+  MODIFY `fahrzeug_preis_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `kunden`
+--
+ALTER TABLE `kunden`
+  MODIFY `kunden_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `mitarbeiter`
+--
+ALTER TABLE `mitarbeiter`
+  MODIFY `mitarbeiter_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `plz_id`
 --
 ALTER TABLE `plz_id`
-  MODIFY `plz` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `plz_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `zweigstellen`
+-- AUTO_INCREMENT für Tabelle `rechnung`
 --
-ALTER TABLE `zweigstellen`
-  MODIFY `(standort_id` int(50) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `rechnung`
+  MODIFY `rechnung_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `zweigstelle`
+--
+ALTER TABLE `zweigstelle`
+  MODIFY `zweigstellen_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints der exportierten Tabellen
+--
+
+--
+-- Constraints der Tabelle `fahrzeug`
+--
+ALTER TABLE `fahrzeug`
+  ADD CONSTRAINT `fahrzeug_ibfk_1` FOREIGN KEY (`zweigstellen_id`) REFERENCES `zweigstelle` (`zweigstellen_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fahrzeug_ibfk_2` FOREIGN KEY (`fahrzeug_preis_id`) REFERENCES `fahrzeug_preis` (`fahrzeug_preis_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `kunden`
+--
+ALTER TABLE `kunden`
+  ADD CONSTRAINT `kunden_ibfk_1` FOREIGN KEY (`plz_id`) REFERENCES `plz_id` (`plz_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `mitarbeiter`
+--
+ALTER TABLE `mitarbeiter`
+  ADD CONSTRAINT `mitarbeiter_ibfk_1` FOREIGN KEY (`plz_id`) REFERENCES `plz_id` (`plz_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `rechnung`
+--
+ALTER TABLE `rechnung`
+  ADD CONSTRAINT `rechnung_ibfk_1` FOREIGN KEY (`zweigstellen_id`) REFERENCES `zweigstelle` (`zweigstellen_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `rechnung_ibfk_2` FOREIGN KEY (`kunden_id`) REFERENCES `kunden` (`kunden_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `rechnung_details`
+--
+ALTER TABLE `rechnung_details`
+  ADD CONSTRAINT `rechnung_details_ibfk_1` FOREIGN KEY (`rechnung_id`) REFERENCES `rechnung` (`rechnung_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `rechnung_details_ibfk_2` FOREIGN KEY (`fahrzeug_id`) REFERENCES `fahrzeug` (`fahrzeug_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `zweigstelle`
+--
+ALTER TABLE `zweigstelle`
+  ADD CONSTRAINT `zweigstelle_ibfk_1` FOREIGN KEY (`plz_id`) REFERENCES `plz_id` (`plz_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `zweigstellen_mitarbeiter`
+--
+ALTER TABLE `zweigstellen_mitarbeiter`
+  ADD CONSTRAINT `zweigstellen_mitarbeiter_ibfk_1` FOREIGN KEY (`zweigstellen_id`) REFERENCES `zweigstelle` (`zweigstellen_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `zweigstellen_mitarbeiter_ibfk_2` FOREIGN KEY (`mitarbeiter_id`) REFERENCES `mitarbeiter` (`mitarbeiter_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
