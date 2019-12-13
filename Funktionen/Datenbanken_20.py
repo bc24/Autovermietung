@@ -15,6 +15,10 @@ Zufall Datensaätze  -   https://mockaroo.com/
 '''
 # Datenbanken
 # Menüpunkt 20
+import mysql
+import mysql.connector
+
+
 def Datenbanken():
     # Datenbank MySQL Verbindung
     DB_CBM = mysql.connector.connect(
