@@ -13,8 +13,8 @@ Zufall Datensaätze  -   https://mockaroo.com/
 
 
 '''
-# Mitglied anlegen
-# Menüpunkt 13
+# Mitglieder Anlegen
+# Menüpunkt 12
 def MitgliederAnlegen():
   Mitglied_Vorname = input("Bitte geben Sie eine Vorname ein, die Sie hinzufügen wollen: ")
   Mitglied_Nachname = input("Bitte geben Sie eine Nachname ein, die Sie hinzufügen wollen: ")

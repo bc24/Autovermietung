@@ -13,7 +13,7 @@ Zufall Datensaätze  -   https://mockaroo.com/
 
 
 '''
-# Mitglied ändern
-# Menüpunkt 14
-def MitgliederAendern():
-  pass
+# Fahrzeug Modell
+# Menüpunkt 7
+def FahrzeugModell():
+    pass

@@ -13,10 +13,7 @@ Zufall Datensaätze  -   https://mockaroo.com/
 
 
 '''
-# Alle Mitglieder anzeigen
-# Menüpunkt 12
-def Alle_Mitglieder_ansehen():
-  #mycursor.execute("SELECT * FROM mitglieder WHERE vorname,nachname")
-
-  mitarbeiterAufliesten = "SELECT * FROM mitarbeiter"
-  print(mitarbeiterAufliesten)
+# Fahrzeug Status
+# Menüpunkt 8
+def FahrzeugStatus():
+    pass

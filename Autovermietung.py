@@ -17,94 +17,97 @@ Zufall Datensaätze  -   https://mockaroo.com/
 # Importe
 import mysql
 import mysql.connector
-from tkinter import *
 import time
 import sys
 
 # Datenbank MySQL Verbindung
-DB_CBM = mysql.connector.connect(
-  host = "localhost",
-  user = "root",
-  passwd = "",
-  database = "cbm_Autovermietung"
-)
-
-# mycursor Cursor holen
-mycursor = DB_CBM.cursor()
-
-# cbm_Autovermietung Datenbank anlegen
-mycursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
-
-# Überprüfen ob Datenbank schon existiert
-mycursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
-for x in mycursor:
-  print("Vorhandene Datenbank",x)
-
-# Datenbank Tabelle plz_ip erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS plz_id ( plz_id INT PRIMARY KEY AUTO_INCREMENT, plz VARCHAR(5) DEFAULT NULL, ort VARCHAR(50) DEFAULT NULL )")
-
-# Datenbank Tabelle mitarbeiter erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS mitarbeiter(mitarbeiter_id INTEGER PRIMARY KEY AUTO_INCREMENT,vorname VARCHAR(50),nachname VARCHAR(50),strasse VARCHAR(80),hausnummer INTEGER,plz_id INTEGER,telefonnr VARCHAR(50),FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle zweigstellen erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS zweigstelle (zweigstellen_id INTEGER PRIMARY KEY AUTO_INCREMENT, strasse VARCHAR(80), hausnummer INTEGER, plz_id INTEGER, telefonnr INTEGER, steuernummer VARCHAR(20), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle zweigstellen_mitarbeiter erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS zweigstellen_mitarbeiter (zweigstellen_id INTEGER, mitarbeiter_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (mitarbeiter_id) REFERENCES mitarbeiter(mitarbeiter_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle kunden erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS kunden (kunden_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(30), strasse VARCHAR(80), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(80), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle fahrzeug_preis erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS fahrzeug_preis (fahrzeug_preis_id INTEGER PRIMARY KEY AUTO_INCREMENT, fahrzeug_id INTEGER, fahrzeug_preis_netto FLOAT)")
-
-# Datenbank Tabelle fahrzeug erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS fahrzeug (fahrzeug_id INTEGER PRIMARY KEY AUTO_INCREMENT, marke VARCHAR(50), modell VARCHAR(50), status VARCHAR(30), kennzeichen VARCHAR(20), zweigstellen_id INTEGER, fahrzeug_preis_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_preis_id) REFERENCES fahrzeug_preis(fahrzeug_preis_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle fahrzeug_preis Fremdschlüssel erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS fahrzeug_preis (FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle rechnung erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS rechnung (rechnung_id INTEGER PRIMARY KEY AUTO_INCREMENT, zweigstellen_id INTEGER, kunden_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (kunden_id) REFERENCES kunden(kunden_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle rechnung_details erstellen
-mycursor.execute("CREATE TABLE IF NOT EXISTS rechnung_details (rechnung_id INTEGER, fahrzeug_id INTEGER, verleih_beginn DATE, verleih_ende DATE, FOREIGN KEY (rechnung_id) REFERENCES rechnung(rechnung_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
+import Datenbanken_20
 
 # Beginn der Funktionen
 
 # Übersicht über die vorhandenen Fahrzeuge
-# Menüpunkt 1
-import FahrzeugeAnzeigen
+# Hauptmenue
+import Hauptmenue_00
 
+# Übersicht über die vorhandenen Fahrzeuge
+# Menüpunkt 1
+import FahrzeugeAnzeigen_01
 
 # Neue Fahrzeuge einfügen
 # Menüpunkt 2
-import FahrzeugeAnlegen
-
+import FahrzeugeAnlegen_02
 
 # Neue Fahrzeuge entfernen
 # Menüpunkt 3
-import FahrzeugeEntfernen
+import FahrzeugeEntfernen_03
 
+# Fahrzeuge bearbeiten
+# Menüpunkt 4
+import FahrzeugeBearbeiten_04
 
-# Alle Mitglieder anzeigen
+# Mietpreise für Fahrzeuge festlegen
+# Menüpunkt 5
+import MietpreiseFestlegen_05
+
+# Sortierung der Fahrzeuge
+# Menüpunkt 6
+import SortierungFahrzeuge_06
+
+# Fahrzeug Modell
+# Menüpunkt 7
+import FahrzeugModell_07
+
+# Fahrzeug Status
+# Menüpunkt 8
+import FahrzeugStatus_08
+
+# Fahrzeug Vorhanden
+# Menüpunkt 9
+import FahrzeugVorhanden_09
+
+# Fahrzeug Verliehen
+# Menüpunkt 10
+import FahrzeugVerliehen_10
+
+# Alle Mitarbeiter anzeigen
+# Menüpunkt 11
+import Mitglieder_ansehen_11
+
+# Mitarbeiter anlegen
 # Menüpunkt 12
-import Alle_Mitglieder_ansehen
+import MitgliederAnlegen_12
 
-
-# Mitglied anlegen
+# Mitglieder Ändern
 # Menüpunkt 13
-import MitgliederAnlegen
+import MitgliederAendern_13
 
-
-# Mitglied ändern
+# Alle Kundne anzeigen
 # Menüpunkt 14
-import MitgliederAendern
+import KundenAnzeigen_14
+
+# Neuer Kunde anlegen
+# Menüpunkt 15
+import KundeAnlegen_15
+
+# Neue Kunde ändernn
+# Menüpunkt 16
+import KundeAendern_16
+
+# Fahrzeug leihen
+# Menüpunkt 17
+import FahrzeugLeihen_17
+
+# Fahrzeug zurückbringen
+# Menüpunkt 18
+import FahrzeugZurueckbringen_18
+
+# Fahrzeug zustand Fahrzeug beschädigt/zerstört
+# Menüpunkt 19
+import FahrzeugZustand_19
+
 
 
 # Consolen Abfragen
-
 # Abfrage kunde oder Mitarbeiter
 print("Sind sie Kunde(1) oder Mitarbeiter(2)? ")
 Frage1 = input()
@@ -156,8 +159,8 @@ if Frage1 == "1":
     print(sql)
 
   if Frage1 == "2":
-     mitglieder=[]
-     print("Bitte geben sie ihre Kundennummer ein:")
+    mitglieder=[]
+    print("Bitte geben sie ihre Kundennummer ein:")
 
 
 ### Wenn Mitarbeiter dann
@@ -172,11 +175,11 @@ if Frage1 == "2":
     Alle_Mitglieder_ansehen()
 
   # Mitglied anlegen
-  if MitgliederAnlegen == "2":
+  if MitgliederAnlegen_12 == "2":
     MitgliederAnlegen = []
     MitgliederAnlegen()
 
   # Mitglied ändern
-  if MitgliederAendern == "3":
+  if MitgliederAendern_13 == "3":
     MitgliederAendern = []
     MitgliederAendern()
