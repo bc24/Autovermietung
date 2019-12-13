@@ -21,26 +21,32 @@ def MitgliederAnlegen():
   Mitglied_Strasse = input("Bitte geben Sie eine Straße ein, die Sie hinzufügen wollen: ")
   Mitglied_Hausnummer = input("Bitte geben Sie eine Hausnummer ein, die Sie hinzufügen wollen: ")
   Mitglied_Telefonnummer = input("Bitte geben Sie eien Telefonnummer ein, die Sie hinzufügen wollen: ")
-
+  Mitglied_PLZ = input("Bitte geben Sie die PLZ ein, die Sie hinzufügen wollen: ")
+  
   mycursor = DB_CBM.cursor()
 
   # ID für Mitglieder wird gehollt
   res = Mitglied_cursor.execute("INSERT INTO mitglieder (mitglieder_id) VALUES (%s)", (Mitglied_Anlegen1,))
   print(res.lastinsertid)
-  fzid = res.lastinsertid
+  mgid = res.lastinsertid
+  
+  Mitglied_cursor.execute("UPDATE mitglieder SET vorname=? WHERE mitglieder_id = ? ", (Mitglied_Vorname,  mgid))
+  Mitglied_cursor.execute("UPDATE mitglieder SET nachname=? WHERE mitglieder_id = ? ", (Mitglied_Nachname,  mgid))
+  Mitglied_cursor.execute("UPDATE mitglieder SET strasse=? WHERE mitglieder_id = ? ", (Mitglied_Strasse,  mgid))
+  Mitglied_cursor.execute("UPDATE mitglieder SET hausnummer=? WHERE mitglieder_id = ? ", (Mitglied_Hausnummer,  mgid))
+  Mitglied_cursor.execute("UPDATE mitglieder SET telefonnr=? WHERE mitglieder_id = ? ", (Mitglied_Telefonnummer,  mgid))
 
-  # ID für PLZ_ID wird gehollt
-  plzid = mycursor.execute("INSERT INTO mitglieder(plz_id) VALUES (%s)", (PlzHolen,))
-  print(plzid.lastinsertid)
-  plzidgeben = plzid.lastinsertid
+  
+  Mitglied_cursor.execute("UPDATE mitglieder SET plz_id=(SELECT plz_id FROM plz_id WHERE plz=? limit 1) WHERE mitglieder_id = ?", (Mitglied_PLZ,  mgid))
 
-  Mitglied_cursor.execute("UPDATE mitglieder SET (fahrzeug_id) WHERE fahrzeug_id =" + fzid + (Mitglied_Anlegen0,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (vorname) VALUES (%s)", (Mitglied_Vorname,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (nachname) VALUES (%s)", (Mitglied_Nachname,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (strasse) VALUES (%s)", (Mitglied_Strasse,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (hausnummer) VALUES (%s)", (Mitglied_Hausnummer,))
-  Mitglied_cursor.execute("UPDATE mitglieder SET (plz_id) WHERE plz_id =" + plzidgeben + (Mitglied_Anlegen0,))
-  Mitglied_cursor.execute("INSERT INTO mitglieder (telefonnr) VALUES (%s)", (Mitglied_Telefonnummer,))
+  
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (fahrzeug_id) WHERE fahrzeug_id =" + fzid + (Mitglied_Anlegen0,))
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (vorname) VALUES (%s)", (Mitglied_Vorname,))
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (nachname) VALUES (%s)", (Mitglied_Nachname,))
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (strasse) VALUES (%s)", (Mitglied_Strasse,))
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (hausnummer) VALUES (%s)", (Mitglied_Hausnummer,))
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (plz_id) WHERE plz_id =" + fzid + (Mitglied_Anlegen0,))
+#  Mitglied_cursor.execute("UPDATE mitglieder SET (telefonnr) VALUES (%s)", (Mitglied_Telefonnummer,))
 
 
   myresult = Mitglied_cursor.fetchall()
