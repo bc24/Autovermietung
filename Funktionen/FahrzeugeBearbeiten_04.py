@@ -10,12 +10,8 @@ Menü                -   http://effbot.org/tkinterbook/menu.htm
 MySQL Connector     -   https://pypi.org/project/mysql-connector-python/
 Foreign Keys        -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
 Zufall Datensaätze  -   https://mockaroo.com/
-
-
 '''
 # Fahrzeuge bearbeiten
 # Menüpunkt 4
 def FahrzeugeBearbeiten():
     pass
-
-

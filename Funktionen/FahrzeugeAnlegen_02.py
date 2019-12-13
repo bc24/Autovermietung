@@ -11,10 +11,7 @@ MySQL Connector     -   https://pypi.org/project/mysql-connector-python/
 Foreign Keys        -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
 Zufall Datensaätze  -   https://mockaroo.com/
 
-
 '''
-#Datenbank Import
-import Funktionen.Datenbank_20
 
 # Neue Fahrzeuge einfügen
 # Menüpunkt 2

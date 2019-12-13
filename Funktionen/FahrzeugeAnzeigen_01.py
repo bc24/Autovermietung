@@ -20,6 +20,3 @@ def FahrzeugeAnzeigen():
   mycursor.execute("SELECT * FROM fahrzeuge")
   myresult = mycursor.fetchall()
   print("SELECT * FROM fahrzeuge")
-
-  #for x in myresult:
-  #  print("Das sind alle Fahrzeuge: ", x)

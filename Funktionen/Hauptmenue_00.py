@@ -37,4 +37,10 @@ Menüpunkte
 20-Datenbanken (Datenbanken_20)
 
 '''
-print("Hallo")
+print("'''")
+print("________________________________________")
+print("| Willkommen in Franks Python Projekt  |")
+print("| 2019 Copyright by. Frank Panzer      |")
+print("|                                      |")
+print("| Es werden alle Funktionen geladen... |")
+print("|______________________________________|")
