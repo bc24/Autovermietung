@@ -13,6 +13,9 @@ Zufall Datensaätze  -   https://mockaroo.com/
 
 
 '''
+#Datenbank Import
+import Funktionen.Datenbank_20
+
 # Neue Fahrzeuge einfügen
 # Menüpunkt 2
 def FahrzeugeAnlegen():
@@ -28,12 +31,12 @@ def FahrzeugeAnlegen():
   fzid = res.lastinsertid
 
   mycursor.execute("UPDATE fahrzeuge SET (fahrzeug_id) WHERE fahrzeug_id ="+ fzid + (Fahrzeuge_Anlegen0,))
-  mycursor.execute("INSERT INTO fahrzeuge (marke) VALUES (%s)", (Fahrzeuge_Anlegen1,))
-  mycursor.execute("INSERT INTO fahrzeuge (modell) VALUES (%s)", (Fahrzeuge_Anlegen2,))
-  mycursor.execute("INSERT INTO fahrzeuge (status) VALUES (%s)", (Fahrzeuge_Anlegen3,))
-  mycursor.execute("INSERT INTO fahrzeuge (kennzeichen) VALUES (%s)", (Fahrzeuge_Anlegen1,))
-  mycursor.execute("INSERT INTO fahrzeuge (zweigstelle_id) VALUES (%s)", (Fahrzeuge_Anlegen2,))
-  mycursor.execute("INSERT INTO fahrzeuge (fahrzeug_preis_id) VALUES (%s)", (Fahrzeuge_Anlegen3,))
+  mycursor.execute("UPDATE fahrzeuge SET (marke) VALUES (%s)", (Fahrzeuge_Anlegen1,))
+  mycursor.execute("UPDATE fahrzeuge SET (modell) VALUES (%s)", (Fahrzeuge_Anlegen2,))
+  mycursor.execute("UPDATE fahrzeuge SET (status) VALUES (%s)", (Fahrzeuge_Anlegen3,))
+  mycursor.execute("UPDATE fahrzeuge SET (kennzeichen) VALUES (%s)", (Fahrzeuge_Anlegen1,))
+  mycursor.execute("UPDATE fahrzeuge SET (zweigstelle_id) VALUES (%s)", (Fahrzeuge_Anlegen2,))
+  mycursor.execute("UPDATE fahrzeuge SET (fahrzeug_preis_id) VALUES (%s)", (Fahrzeuge_Anlegen3,))
 
   myresult = mycursor.fetchall()
 
