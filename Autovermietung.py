@@ -27,83 +27,83 @@ import Datenbanken_20
 
 # Übersicht über die vorhandenen Fahrzeuge
 # Hauptmenue
-import Hauptmenue_00
+import Funktionen.Hauptmenue_00
 
 # Übersicht über die vorhandenen Fahrzeuge
 # Menüpunkt 1
-import FahrzeugeAnzeigen_01
+import Funktionen.FahrzeugeAnzeigen_01
 
 # Neue Fahrzeuge einfügen
 # Menüpunkt 2
-import FahrzeugeAnlegen_02
+import Funktionen.FahrzeugeAnlegen_02
 
 # Neue Fahrzeuge entfernen
 # Menüpunkt 3
-import FahrzeugeEntfernen_03
+import Funktionen.FahrzeugeEntfernen_03
 
 # Fahrzeuge bearbeiten
 # Menüpunkt 4
-import FahrzeugeBearbeiten_04
+import Funktionen.FahrzeugeBearbeiten_04
 
 # Mietpreise für Fahrzeuge festlegen
 # Menüpunkt 5
-import MietpreiseFestlegen_05
+import Funktionen.MietpreiseFestlegen_05
 
 # Sortierung der Fahrzeuge
 # Menüpunkt 6
-import SortierungFahrzeuge_06
+import Funktionen.SortierungFahrzeuge_06
 
 # Fahrzeug Modell
 # Menüpunkt 7
-import FahrzeugModell_07
+import Funktionen.FahrzeugModell_07
 
 # Fahrzeug Status
 # Menüpunkt 8
-import FahrzeugStatus_08
+import Funktionen.FahrzeugStatus_08
 
 # Fahrzeug Vorhanden
 # Menüpunkt 9
-import FahrzeugVorhanden_09
+import Funktionen.FahrzeugVorhanden_09
 
 # Fahrzeug Verliehen
 # Menüpunkt 10
-import FahrzeugVerliehen_10
+import Funktionen.FahrzeugVerliehen_10
 
 # Alle Mitarbeiter anzeigen
 # Menüpunkt 11
-import Mitglieder_ansehen_11
+import Funktionen.Mitglieder_ansehen_11
 
 # Mitarbeiter anlegen
 # Menüpunkt 12
-import MitgliederAnlegen_12
+import Funktionen.MitgliederAnlegen_12
 
 # Mitglieder Ändern
 # Menüpunkt 13
-import MitgliederAendern_13
+import Funktionen.MitgliederAendern_13
 
 # Alle Kundne anzeigen
 # Menüpunkt 14
-import KundenAnzeigen_14
+import Funktionen.KundenAnzeigen_14
 
 # Neuer Kunde anlegen
 # Menüpunkt 15
-import KundeAnlegen_15
+import Funktionen.KundeAnlegen_15
 
 # Neue Kunde ändernn
 # Menüpunkt 16
-import KundeAendern_16
+import Funktionen.KundeAendern_16
 
 # Fahrzeug leihen
 # Menüpunkt 17
-import FahrzeugLeihen_17
+import Funktionen.FahrzeugLeihen_17
 
 # Fahrzeug zurückbringen
 # Menüpunkt 18
-import FahrzeugZurueckbringen_18
+import Funktionen.FahrzeugZurueckbringen_18
 
 # Fahrzeug zustand Fahrzeug beschädigt/zerstört
 # Menüpunkt 19
-import FahrzeugZustand_19
+import Funktionen.FahrzeugZustand_19
 
 
 

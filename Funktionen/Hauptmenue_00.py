@@ -37,3 +37,4 @@ Menüpunkte
 20-Datenbanken (Datenbanken_20)
 
 '''
+print("Hallo")
