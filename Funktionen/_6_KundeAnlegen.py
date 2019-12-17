@@ -15,10 +15,12 @@ Zufall Datensaätze                  -   https://mockaroo.com/
 """
 # Neuer Kunde anlegen
 from mysql.connector import connection, cursor
+import Funktionen._20_MySQL
 
 Vorname=input("Bitte gebe den Kunden Vornamen ein denn du anlegen willst: ")
 Nachname=input("Bitte gebe den Kunden Nachname ein denn du anlegen willst: ")
-def KundeAnlegen():
+
+def KundeAnlegen(conn, cursor):
     liste_kunde = []
     liste_kunde.insert(0, Nachname)
     liste_kunde.insert(1, Vorname)
@@ -44,8 +46,7 @@ def KundeAnlegen():
     tupel_kunde_plz = (liste_kunde_plz)
 
     # Übergabe der eingegebenen Datensätze in die Datenbank Tabelle
-    cursor.execute(
-        "INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr) VALUES (?,?,?,?,?), (tupel_kunde)")
+    cursor.execute("INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr) VALUES (?,?,?,?,?), (tupel_kunde)")
     cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (?,?), (tupel_kunde_plz)")
 
     # Übertragen der Datensätze

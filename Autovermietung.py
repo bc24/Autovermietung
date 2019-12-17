@@ -11,7 +11,7 @@ MySQL Connector                     -   https://pypi.org/project/mysql-connector
 Foreign Keys                        -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
 Zufall Datensaätze                  -   https://mockaroo.com/
 Überprüfung von ein paar Funktionen -   Sven Piehl
-
+Colorama                            -   https://pypi.org/project/colorama/
 """
 
 # Importe
@@ -30,21 +30,24 @@ def DatenbankenVerbindung():
         database="cbm_Autovermietung"
     )
 
-    DatenbankenVerbindung()
-    # mycursor Cursor holen
-    mycursor = DB_CBM.cursor()
+    #DatenbankenVerbindung()
+    # cursor Cursor holen
+    cursor = DB_CBM.cursor()
 
     # cbm_Autovermietung Datenbank anlegen
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
+    cursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
 
     # Überprüfen ob Datenbank schon existiert
-    mycursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
-    for x in mycursor:
+    cursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
+    for x in cursor:
         print("Vorhandene Datenbank", x)
 
-
+    return DB_CBM
 # Datenbank und Tabellen erstellen
 
+
+DB_CBM = DatenbankenVerbindung()
+cursor = DB_CBM.cursor()
 # Datenbank Tabelle plz_ip erstellen
 cursor.execute(
     "CREATE TABLE IF NOT EXISTS plz_id ( plz_id INT PRIMARY KEY AUTO_INCREMENT, plz VARCHAR(5) DEFAULT NULL, ort VARCHAR(50) DEFAULT NULL )")
@@ -112,7 +115,7 @@ def hmenu():
     |       C: Entfernen               |
     |       D: Bearbeiten              |
     |       E: Kunden Optionen         |
-    |----------------------------------|       
+    |----------------------------------|
     |       0: Beenden                 |
     |__________________________________|
 
@@ -165,7 +168,7 @@ def amenue():
         |       C: Fahrzeuge auflisten     |
         |       D: Zweigstellen auflisten  |
         |----------------------------------|
-        |       1: Hauptmenü               |      
+        |       1: Hauptmenü               |
         |       0: Beenden                 |
         |__________________________________|
 
@@ -192,18 +195,22 @@ def amenue():
 
 def MitarbeiterAuflisten():
     import Funktionen._1_Mitglieder_ansehen
+    Funktionen._1_Mitglieder_ansehen.Mitglieder_ansehen( DB_CBM, cursor )
 
 
 def KundenAuflisten():
     import Funktionen._2_KundenAnzeigen
+    Funktionen._2_KundenAnzeigen.KundenAnzeigen( DB_CBM, cursor )
 
 
 def FahrzeugeAuflisten():
     import Funktionen._3_FahrzeugeAnzeigen
+    Funktionen._3_FahrzeugeAnzeigen.FahrzeugeAnzeigen( DB_CBM, cursor )
 
 
 def ZweigstellenAuflisten():
     import Funktionen._4_ZweigstellenAuflisten
+    Funktionen._4_ZweigstellenAuflisten.ZweigstellenAuflisten( DB_CBM, cursor )
 
 
 # B Menü - Anlegen
@@ -216,7 +223,7 @@ def bmenue():
         |       D: Zweigstellen anlegen    |
         |       E: Mietpreise anlegen      |
         |----------------------------------|
-        |       1: Hauptmenü       
+        |       1: Hauptmenü
         |       0: Beenden                 |
         |__________________________________|
 
@@ -243,14 +250,18 @@ def bmenue():
 
 def MitarbeiterAnlegen():
     import Funktionen._5_MitgliederAnlegen
+    Funktionen._5_MitgliederAnlegen.MitgliederAnlegen( DB_CBM, cursor )
+
 
 
 def KundenAnlegen():
     import Funktionen._6_KundeAnlegen
+    Funktionen._6_KundeAnlegen.KundeAnlegen( DB_CBM, cursor )
 
 
 def FahrzeugeAnlegen():
     import Funktionen._7_FahrzeugeAnlegen
+    Funktionen._7_FahrzeugeAnlegen.FahrzeugeAnlegen( DB_CBM, cursor )
 
 
 def ZweigstellenAnlegen():
@@ -266,7 +277,7 @@ def cmenue():
         |       C: Fahrzeuge entfernen     |
         |       D: Zweigstellen entfernen  |
         |----------------------------------|
-        |       1: Hauptmenü               |      
+        |       1: Hauptmenü               |
         |       0: Beenden                 |
         |__________________________________|
 
@@ -290,21 +301,24 @@ def cmenue():
         print("Bitte versuchen Sie es erneut.")
         cmenue()
 
-
 def MitgliederEntfernen():
     import Funktionen._8_MitgliederEntfernen
+    Funktionen._8_MitgliederEntfernen.MitgliederEntfernen( DB_CBM, cursor )
 
 
 def KundenEntfernen():
     import Funktionen._9_KundenEntfernen
+    Funktionen._9_KundenEntfernen.KundenEntfernen( DB_CBM, cursor )
 
 
 def FahrzeugeEntfernen():
     import Funktionen._10_FahrzeugeEntfernen
+    Funktionen._10_FahrzeugeEntfernen.FahrzeugeEntfernen( DB_CBM, cursor )
 
 
 def ZweigstellenEntfernen():
     import Funktionen._11_ZweigstellenEntfernen
+    Funktionen._11_ZweigstellenEntfernen.ZweigstellenEntfernen( DB_CBM, cursor )
 
 
 # D Menü Bearbeiten
@@ -316,7 +330,7 @@ def dmenue():
         |       C: Fahrzeuge bearbeiten    |
         |       D: Mitpreise bearbeiten    |
         |----------------------------------|
-        |       1: Hauptmenü               |      
+        |       1: Hauptmenü               |
         |       0: Beenden                 |
         |__________________________________|
 
@@ -343,18 +357,22 @@ def dmenue():
 
 def MitarbeiterBearbeiten():
     import Funktionen._12_MitgliederAendern
+    Funktionen._12_MitgliederAendern.MitgliederAendern( DB_CBM, cursor )
 
 
 def KundenBearbeiten():
     import Funktionen._13_KundeAendern
+    Funktionen._13_KundeAendern.KundeAendern( DB_CBM, cursor )
 
 
 def FahrzeugeBearbeiten():
     import Funktionen._14_FahrzeugeBearbeiten
+    Funktionen._14_FahrzeugeBearbeiten.FahrzeugeBearbeiten( DB_CBM, cursor )
 
 
 def MitpreiseBearbeiten():
     import Funktionen._15_MitpreiseBearbeiten
+    Funktionen._15_MitpreiseBearbeiten.MitpreiseBearbeiten( DB_CBM, cursor )
 
 
 # E Menü - Kunden Optionen
@@ -366,7 +384,7 @@ def emenue():
         |       C: Fahrzeug sotieren nach Status   |
         |       D: Fahrzeug sotieren nach Modell   |
         |------------------------------------------|
-        |       1: Hauptmenü                       |      
+        |       1: Hauptmenü                       |
         |       0: Beenden                         |
         |__________________________________________|
 
@@ -393,18 +411,22 @@ def emenue():
 
 def FahrzeugAusleihen():
     import Funktionen._16_FahrzeugAusleihen
+    Funktionen._16_FahrzeugAusleihen.FahrzeugAusleihen( DB_CBM, cursor )
 
 
 def FahrzeugZurueckgeben():
     import Funktionen._17_FahrzeugZurueckgeben
+    Funktionen._17_FahrzeugZurueckgeben.FahrzeugZurueckgeben( DB_CBM, cursor )
 
 
 def FahrzeugSotierenStatus():
     import Funktionen._18_FahrzeugSotierenStatus
+    Funktionen._18_FahrzeugSotierenStatus.FahrzeugSotierenStatus( DB_CBM, cursor )
 
 
 def FahrzeugSotierenModell():
     import Funktionen._19_FahrzeugSotierenModell
+    Funktionen._19_FahrzeugSotierenModell.FahrzeugSotierenModell( DB_CBM, cursor )
 
 
 willkommen()

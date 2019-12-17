@@ -18,11 +18,15 @@ from mysql.connector import cursor
 
 
 # Alle Mitglieder anzeigen
-def Mitglieder_ansehen():
-    cursor.execute("SELECT * FROM mitglieder ")
-    result = cursor.fetchall()
-    for row in result:
-        print(f"Mitarbeiter ID: {row[0]:5} Vorname: {row[1]:10} Nachname: {row[2]:15} ")
-
-
-Mitglieder_ansehen()
+def Mitglieder_ansehen(conn, cursor):
+    cursor.execute("SELECT * FROM mitarbeiter")
+    records = cursor.fetchall()
+    for row in records:
+        print(f"Mitarbeiter ID: {row[0]}")
+        print(f"Vorname: {row[1]}")
+        print(f"Nachname: {row[2]}")
+        print(f"Strasse: {row[3]}")
+        print(f"Hausnummer: {row[4]}")
+        print(f"PLZ ID: {row[5]}")
+        print(f"Telefonnummer: {row[6]}")
+        print(f"\n")

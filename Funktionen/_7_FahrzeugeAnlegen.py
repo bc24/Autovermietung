@@ -17,30 +17,8 @@ Zufall Datensaätze                  -   https://mockaroo.com/
 import mysql
 
 
-def DatenbankenVerbindung():
-    # Datenbank MySQL Verbindung
-    DB_CBM = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="",
-        database="cbm_Autovermietung"
-    )
-
-    DatenbankenVerbindung()
-    # mycursor Cursor holen
-    mycursor = DB_CBM.cursor()
-
-    # cbm_Autovermietung Datenbank anlegen
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
-
-    # Überprüfen ob Datenbank schon existiert
-    mycursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
-    for x in mycursor:
-        print("Vorhandene Datenbank", x)
-
 # Neue Fahrzeuge einfügen
-
-def FahrzeugeAnlegen(Fahrzeuge_Anlegen=None, DB_CBM=None):
+def FahrzeugeAnlegen(conn, cursor):
     Fahrzeuge_Anlegen1 = input("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
     Fahrzeuge_Anlegen2 = input("Bitte geben Sie eine Fahrzeugmodell ein, die Sie hinzufügen wollen: ")
     Fahrzeuge_Anlegen3 = input(

@@ -15,12 +15,20 @@ Zufall Datensaätze                  -   https://mockaroo.com/
 
 """
 
-import Funktionen.Datenbanken
+# Imports
+from mysql.connector import cursor
 
-# Übersicht über die vorhandenen Fahrzeuge
 
-def FahrzeugeAnzeigen():
-  mycursor = DB_CBM.cursor()
-  mycursor.execute("SELECT * FROM fahrzeuge")
-  myresult = mycursor.fetchall()
-  print("SELECT * FROM fahrzeuge")
+# Alle Mitglieder anzeigen
+def FahrzeugeAnzeigen(conn, cursor):
+    cursor.execute("SELECT * FROM fahrzeug")
+    records = cursor.fetchall()
+    for row in records:
+        print(f"Fahrzeug ID: {row[0]}")
+        print(f"Marke: {row[1]}")
+        print(f"Modell: {row[2]}")
+        print(f"Status: {row[3]}")
+        print(f"Kennzeichen: {row[4]}")
+        print(f"Zweigstellen ID: {row[5]}")
+        print(f"Fahrzeug Preis ID: {row[6]}")
+        print(f"\n")

@@ -14,15 +14,20 @@ Zufall Datensaätze                  -   https://mockaroo.com/
 Überprüfung von ein paar Funktionen -   Sven Piehl
 
 """
+
 # Imports
 from mysql.connector import cursor
 
 
 # Alle Mitglieder anzeigen
-def ZweigstellenAuflisten():
-    cursor.execute("SELECT * FROM zweigstelle ")
-    result = cursor.fetchall()
-    for row in result:
-        print(f"zweigstellen_id: {row[0]:5} zweigstellen Strasse: {row[1]:10}  ")
-
-ZweigstellenAuflisten()
+def ZweigstellenAuflisten(conn, cursor):
+    cursor.execute("SELECT * FROM zweigstelle")
+    records = cursor.fetchall()
+    for row in records:
+        print(f"Zweigstellen ID: {row[0]}")
+        print(f"Strasse: {row[1]}")
+        print(f"Hausnummer: {row[2]}")
+        print(f"PLZ ID: {row[3]}")
+        print(f"Telefonnr: {row[4]}")
+        print(f"Steuernummer ID: {row[5]}")
+        print(f"\n")
