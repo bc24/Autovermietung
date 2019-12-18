@@ -11,13 +11,13 @@ MySQL Connector                     -   https://pypi.org/project/mysql-connector
 Foreign Keys                        -   https://dev.mysql.com/doc/refman/5.5/en/create-table-foreign-keys.html
 Zufall Datensaätze                  -   https://mockaroo.com/
 Überprüfung von ein paar Funktionen -   Sven Piehl
-Colorama                            -   https://pypi.org/project/colorama/
 """
 
 # Importe
 import mysql
 from mysql.connector import cursor, connection
 import sys
+import os
 
 
 # Datenbanken Verbindung
@@ -48,37 +48,34 @@ def DatenbankenVerbindung():
 
 DB_CBM = DatenbankenVerbindung()
 cursor = DB_CBM.cursor()
+
 # Datenbank Tabelle plz_ip erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS plz_id ( plz_id INT PRIMARY KEY AUTO_INCREMENT, plz VARCHAR(5) DEFAULT NULL, ort VARCHAR(50) DEFAULT NULL )")
+    "CREATE TABLE IF NOT EXISTS plz_id (plz_id INTEGER PRIMARY KEY AUTO_INCREMENT, plz CHAR(5), ort VARCHAR(50))")
 
 # Datenbank Tabelle mitarbeiter erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS mitarbeiter(mitarbeiter_id INTEGER PRIMARY KEY AUTO_INCREMENT,vorname VARCHAR(50),nachname VARCHAR(50),strasse VARCHAR(80),hausnummer INTEGER,plz_id INTEGER,telefonnr VARCHAR(50),FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+    "CREATE TABLE IF NOT EXISTS mitarbeiter (mitarbeiter_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(50), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle zweigstellen erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS zweigstelle (zweigstellen_id INTEGER PRIMARY KEY AUTO_INCREMENT, strasse VARCHAR(80), hausnummer INTEGER, plz_id INTEGER, telefonnr INTEGER, steuernummer VARCHAR(20), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+    "CREATE TABLE IF NOT EXISTS zweigstelle (zweigstellen_id INTEGER PRIMARY KEY AUTO_INCREMENT, standortname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr INTEGER, steuernummer VARCHAR(20), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle zweigstellen_mitarbeiter erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS zweigstellen_mitarbeiter (zweigstellen_id INTEGER, mitarbeiter_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (mitarbeiter_id) REFERENCES mitarbeiter(mitarbeiter_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+    "CREATE TABLE IF NOT EXISTS zweigstelle_mitarbeiter (zweigstellen_id INTEGER, mitarbeiter_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (mitarbeiter_id) REFERENCES mitarbeiter(mitarbeiter_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle kunden erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS kunden (kunden_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(30), strasse VARCHAR(80), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(80), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+    "CREATE TABLE IF NOT EXISTS kunden (kunden_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(50), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle fahrzeug_preis erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS fahrzeug_preis (fahrzeug_preis_id INTEGER PRIMARY KEY AUTO_INCREMENT, fahrzeug_id INTEGER, fahrzeug_preis_netto FLOAT)")
+    "CREATE TABLE IF NOT EXISTS fahrzeug_preis (fahrzeug_preis_id INTEGER PRIMARY KEY AUTO_INCREMENT, fahrzeug_preis_netto FLOAT)")
 
 # Datenbank Tabelle fahrzeug erstellen
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS fahrzeug (fahrzeug_id INTEGER PRIMARY KEY AUTO_INCREMENT, marke VARCHAR(50), modell VARCHAR(50), status VARCHAR(30), kennzeichen VARCHAR(20), zweigstellen_id INTEGER, fahrzeug_preis_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_preis_id) REFERENCES fahrzeug_preis(fahrzeug_preis_id) ON UPDATE CASCADE ON DELETE SET NULL)")
-
-# Datenbank Tabelle fahrzeug_preis Fremdschlüssel erstellen
-cursor.execute(
-    "CREATE TABLE IF NOT EXISTS fahrzeug_preis (FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+    "CREATE TABLE IF NOT EXISTS fahrzeug (fahrzeug_id INTEGER PRIMARY KEY AUTO_INCREMENT, marke VARCHAR(50), klasse VARCHAR(50), status VARCHAR(50), kennzeichen VARCHAR(50), zweigstellen_id INTEGER, fahrzeug_preis_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_preis_id) REFERENCES fahrzeug_preis(fahrzeug_preis_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle rechnung erstellen
 cursor.execute(
@@ -95,7 +92,7 @@ def willkommen():
     choice = input("""
     _______________WILLKOMMEN_______________
     |                 im                   |
-    |    Python Projekt Autovermietung     |
+    |   Python Projekt - Autovermietung    |
     |   2019 Copyright by. Frank Panzer    |
     |                                      |
     | Es werden alle Funktionen geladen... |
@@ -117,7 +114,8 @@ def hmenu():
     |       E: Kunden Optionen         |
     |----------------------------------|
     |       0: Beenden                 |
-    |__________________________________|
+    |                                  |
+    |__________________©_Frank_Panzer__|
 
     Bitte treffe eine Wahl: """)
 
@@ -170,7 +168,8 @@ def amenue():
         |----------------------------------|
         |       1: Hauptmenü               |
         |       0: Beenden                 |
-        |__________________________________|
+        |                                  |
+        |__________________©_Frank_Panzer__|
 
         Bitte treffe eine Wahl: """)
 
@@ -223,9 +222,10 @@ def bmenue():
         |       D: Zweigstellen anlegen    |
         |       E: Mietpreise anlegen      |
         |----------------------------------|
-        |       1: Hauptmenü
+        |       1: Hauptmenü               |
         |       0: Beenden                 |
-        |__________________________________|
+        |                                  |
+        |__________________©_Frank_Panzer__|
 
         Bitte treffe eine Wahl: """)
 
@@ -279,7 +279,8 @@ def cmenue():
         |----------------------------------|
         |       1: Hauptmenü               |
         |       0: Beenden                 |
-        |__________________________________|
+        |                                  |
+        |__________________©_Frank_Panzer__|
 
         Bitte treffe eine Wahl: """)
 
@@ -332,7 +333,8 @@ def dmenue():
         |----------------------------------|
         |       1: Hauptmenü               |
         |       0: Beenden                 |
-        |__________________________________|
+        |                                  |
+        |__________________©_Frank_Panzer__|
 
         Bitte treffe eine Wahl: """)
 
@@ -386,7 +388,8 @@ def emenue():
         |------------------------------------------|
         |       1: Hauptmenü                       |
         |       0: Beenden                         |
-        |__________________________________________|
+        |                                          |
+        |__________________________©_Frank_Panzer__|
 
         Bitte treffe eine Wahl: """)
 
