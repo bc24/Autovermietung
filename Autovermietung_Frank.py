@@ -26,32 +26,36 @@ import time
 
 # Datenbanken Verbindung
 def DatenbankenVerbindung():
-    # Datenbank MySQL Verbindung
-    DB_CBM = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="",
-        database="cbm_Autovermietung"
-    )
+    try:
+        # Datenbank MySQL Verbindung
+        DB_CBM = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            passwd="",
+            database="cbm_Autovermietung"
+        )
 
-    #DatenbankenVerbindung()
-    # cursor Cursor holen
-    cursor = DB_CBM.cursor()
+        #DatenbankenVerbindung()
+        # cursor Cursor holen
+        cursor = DB_CBM.cursor()
 
-    # cbm_Autovermietung Datenbank anlegen
-    cursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
+        # cbm_Autovermietung Datenbank anlegen
+        cursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
 
-    # Überprüfen ob Datenbank schon existiert
-    cursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
-    for x in cursor:
-        print("Vorhandene Datenbank", x)
+        # Überprüfen ob Datenbank schon existiert
+        cursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
+        for x in cursor:
+            print("Vorhandene Datenbank", x)
 
-    return DB_CBM
+        return DB_CBM
+
+
+        DB_CBM = DatenbankenVerbindung()
+        cursor = DB_CBM.cursor()
+    except:
+        print("Der MySQL Server steht momentan nicht zu Verfügung.")
+
 # Datenbank und Tabellen erstellen
-
-
-DB_CBM = DatenbankenVerbindung()
-cursor = DB_CBM.cursor()
 
 # Datenbank Tabelle plz_ip erstellen
 cursor.execute(
@@ -100,11 +104,15 @@ def willkommen():
         |   2019 Copyright by. Frank Panzer    |
         |                                      |
         | Es werden alle Funktionen geladen... |
+        | Es werden alle Datensätze geladen... |
         |                                      |
         |         Drücken Sie ENTER            |
-        |    um ins Hauptmenü zu gelangen.     |
+        |  um alle Funktionen und Datensätze   |
+        |  einzuspielen und ins Hauptmenü zu   |
+        |  zu gelangen!                        |
         |______________________________________|
          """)
+        time.sleep(5)
     except:
         print("Fehler das Willkommen Menü konnte nicht geladen werden.")
 
@@ -304,8 +312,7 @@ def bmenue():
         elif choice == "0" or choice == "0":
             sys.exit()
         else:
-            print(
-                "Bitte geben Sie A,B,C oder D ein.\nMit 1 Gelangen Sie wieder zurück ins Hauptmenü.\nMit 0(NULL) Beenden Sie das Programm.")
+            print("Bitte geben Sie A,B,C oder D ein.\nMit 1 Gelangen Sie wieder zurück ins Hauptmenü.\nMit 0(NULL) Beenden Sie das Programm.")
             print("Bitte versuchen Sie es erneut.")
             bmenue()
     except:
@@ -393,8 +400,7 @@ def FahrzeugeAnlegen():
     try:
         Fahrzeuge_Anlegen1 = input("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
         Fahrzeuge_Anlegen2 = input("Bitte geben Sie eine Fahrzeugmodell ein, die Sie hinzufügen wollen: ")
-        Fahrzeuge_Anlegen3 = input(
-            "Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
+        Fahrzeuge_Anlegen3 = input("Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
 
         cursor = DB_CBM.cursor()
 
@@ -471,9 +477,24 @@ def MitgliederEntfernen():
 
 def KundenEntfernen():
     try:
-        pass
+        os.system("cls")
+        cursor = DB_CBM.cursor()
+        cursor.execute("SELECT * FROM kunden")
+        result = cursor.fetchall()
+        for i in result:
+            print(f"Kunden ID: {i[0]:<10}  Vorname: {i[2]:<10}  Nachname: {i[1]:<10}  Straße: {i[3]:<10}  Hausnummer: {i[4]:<10}  Postleitzahl: {i[5]:<10} Telefonnummer: {i[6]:<10}")
+            print("Liste der Kunden.")
+            LoeschenUeberKundenID = input("Bitte Kunden ID des Kundes was Gelöscht werden soll: ")
+            cursor = DB_CBM.cursor()
+            klass = (LoeschenUeberKundenID,)
+            cursor.execute("DELETE FROM kunden WHERE kunden_id = (%s)",(LoeschenUeberKundenID,))
+            DB_CBM.commit()
+            print("Der Kunde wurde erfolgreich entfernt.")
+        time.sleep(2)
+        os.system("cls")
     except:
         print("Fehler ein Kunde konnte nicht entfernt werden.")
+
 
 
 def FahrzeugeEntfernen():
@@ -551,7 +572,13 @@ def FahrzeugeBearbeiten():
 
 def MitpreiseBearbeiten():
     try:
-        pass
+        os.system("cls")
+        cursor = DB_CBM.cursor()
+        Mitpreis_input=print("Bitte gebe die ID vom Fahrzeug ein welches du bearbeiten willst: ")
+        Mitpreis_input=()
+        cursor.execute("UPDATE fahrzeug_preis SET fahrzeug_preis_netto = "+ {Mitpreis_input} +" WHERE fahrzeug_preis.fahrzeug_preis_id = 1;")
+        result = cursor.fetchall()
+
     except:
         print("Fehler ein Mietpreis konnte nicht bearbeitet werden.")
 
@@ -610,7 +637,7 @@ def FahrzeugZurueckgeben():
 
 def FahrzeugSotierenStatus():
     try:
-        cursor.execute("SELECT * FROM fahrzeug")
+        cursor.execute("SELECT * FROM fahrzeug ORDER BY fahrzeug.status DESC")
         records = cursor.fetchall()
         for row in records:
             print(f"Fahrzeug ID: {row[0]}")
@@ -627,7 +654,17 @@ def FahrzeugSotierenStatus():
 
 def FahrzeugSotierenModell():
     try:
-        pass
+        cursor.execute("SELECT * FROM fahrzeug ORDER BY fahrzeug.marke DESC")
+        records = cursor.fetchall()
+        for row in records:
+            print(f"Fahrzeug ID: {row[0]}")
+            print(f"Marke: {row[1]}")
+            print(f"Modell: {row[2]}")
+            print(f"Status: {row[3]}")
+            print(f"Kennzeichen: {row[4]}")
+            print(f"Zweigstellen ID: {row[5]}")
+            print(f"Fahrzeug Preis ID: {row[6]}")
+            print(f"\n")
     except:
         print("Fehler die Fahrzeuge konnten nicht nach dem Modell sotiert werden.")
 
