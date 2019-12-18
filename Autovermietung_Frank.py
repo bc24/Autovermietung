@@ -93,8 +93,10 @@ cursor.execute(
 cursor.execute(
     "CREATE TABLE IF NOT EXISTS rechnung_details (rechnung_id INTEGER, fahrzeug_id INTEGER, verleih_beginn DATE, verleih_ende DATE, FOREIGN KEY (rechnung_id) REFERENCES rechnung(rechnung_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
-# Menüs
 
+
+
+# Menüs
 def willkommen():
     try:
         choice = input("""
@@ -112,45 +114,45 @@ def willkommen():
         |  zu gelangen!                        |
         |______________________________________|
          """)
-        time.sleep(5)
+        print("\t Aktuelles Dateum und Uhrzeit")
+        print(time.strftime("\t\t %d.%m.%Y %H:%M:%S"))
+        time.sleep(3)
     except:
         print("Fehler das Willkommen Menü konnte nicht geladen werden.")
 
 # H Menü
 def hmenu():
-    try:
-        choice = input("""
-        ____________HAUPTMENUE______________
-        |       A: Auflisten               |
-        |       B: Anlegen                 |
-        |       C: Entfernen               |
-        |       D: Bearbeiten              |
-        |       E: Kunden Optionen         |
-        |----------------------------------|
-        |       0: Beenden                 |
-        |                                  |
-        |__________________©_Frank_Panzer__|
+    choice = input("""
+    ____________HAUPTMENUE______________
+    |       A: Auflisten               |
+    |       B: Anlegen                 |
+    |       C: Entfernen               |
+    |       D: Bearbeiten              |
+    |       E: Kunden Optionen         |
+    |----------------------------------|
+    |       0: Beenden                 |
+    |                                  |
+    |__________________©_Frank_Panzer__|
 
-        Bitte treffe eine Wahl: """)
+    Bitte treffe eine Wahl: """)
 
-        if choice == "A" or choice == "a":
-            Auflisten()
-        elif choice == "B" or choice == "b":
-            Anlegen()
-        elif choice == "C" or choice == "c":
-            Entfernen()
-        elif choice == "D" or choice == "d":
-            Bearbeiten()
-        elif choice == "E" or choice == "e":
-            KundenOptionen()
-        elif choice == "0" or choice == "null":
-            sys.exit()
-        else:
-            print("Bitte geben Sie A,B,C,D oder E ein. Mit 0(NULL) Beenden Sie das Programm.")
-            print("Bitte versuchen Sie es erneut.")
-            hmenu()
-    except:
-        print("Fehler das Hauptmenü konnte nicht geladen werden.")
+    if choice == "A" or choice == "a":
+        Auflisten()
+    elif choice == "B" or choice == "b":
+        Anlegen()
+    elif choice == "C" or choice == "c":
+        Entfernen()
+    elif choice == "D" or choice == "d":
+        Bearbeiten()
+    elif choice == "E" or choice == "e":
+        KundenOptionen()
+    elif choice == "0" or choice == "null":
+        sys.exit()
+    else:
+        print("Bitte geben Sie A,B,C,D oder E ein. Mit 0(NULL) Beenden Sie das Programm.")
+        print("Bitte versuchen Sie es erneut.")
+        hmenu()
+
 
 
 def Auflisten():
