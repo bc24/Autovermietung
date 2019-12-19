@@ -34,23 +34,22 @@ def DatenbankenVerbindung():
         database="cbm_Autovermietung"
     )
 
-    # DatenbankenVerbindung()
-    # cursor Cursor holen
-    cursor = DB_CBM.cursor()
+    #DatenbankenVerbindung()
+    # mycursor Cursor holen
+    mycursor = DB_CBM.cursor()
 
     # cbm_Autovermietung Datenbank anlegen
-    cursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
+    mycursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
 
     # Überprüfen ob Datenbank schon existiert
-    cursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
-    for x in cursor:
+    mycursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
+    for x in mycursor:
         print("Vorhandene Datenbank", x)
 
-    DB_CBM = DatenbankenVerbindung()
-    cursor = DB_CBM.cursor()
     return DB_CBM
 
-
+DB_CBM = DatenbankenVerbindung()
+cursor = DB_CBM.cursor()
 
 # Datenbank und Tabellen erstellen
 
@@ -82,6 +81,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS rechnung (rechnung_id INTEGER PRIMARY
 cursor.execute("CREATE TABLE IF NOT EXISTS rechnung_details (rechnung_id INTEGER, fahrzeug_id INTEGER, verleih_beginn DATE, verleih_ende DATE, FOREIGN KEY (rechnung_id) REFERENCES rechnung(rechnung_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Dummy Datensätze erstellen
+"""
 # plz_id
 cursor.execute("USE plz_id")
 cursor.execute("INSERT INTO plz_id (plz_id, plz, ort) VALUES(1, 28201, Bremen),(2, 28777, Bremen),(3, 28199, Xinheng),(4, 28199, Ogaminan),(5, 1219, Mancilang),(6, 22151, Hamburg),(7, 35334, Arcachon),(8, 4888, Plaza de Caisán),(9, 66815, Sut-Khol’),(10, 49800, Butajīra),(11, 28757, Savran’),(12, 28199, Huangfang),(13, 78967, Buritis),(14, 79783, San Rafael),(15, 28199, Mafang),(16, 28755, Hengliang),(17, 43605, Karlovo),(18, 94631, Rungis),(19, 27201, Hanting),(20, 28259, Muli),(21, 28745, Mashizhai),(22, 28946, Caicara),(23, 37347, Rudolfov),(24, 78430, Rancho Nuevo),(25, 63441, Sandayong Sur),(26, 28201, Gananoque),(27, 28201, Xingong),(28, 28201, Awarawar),(29, 28201, Krajan Kerjo),(30, 28201, Chaoyang),(31, 36372, Kizlyar),(32, 29201, Coaldale),(33, 46205, Linhares),(34, 28201, Dongping),(35, 28201, Nouvelle France),(36, 28201, Vom),(37, 28201, Talā),(38, 67502, Blagoveshchensk),(39, 41355, Vineuil),(40, 28201, Xiangyanglu),(41, 28201, Bihać),(42, 13155, Otlja),(43, 28201, Socos),(44, 13075, Haligue),(45, 9025, Digkilaan),(46, 64922, Shebalino),(47, 7165, Villa Gesell),(48, 28201, Baalbek),(49, 28201, Teongtoda),(50, 28201, Taokeng)")
@@ -106,7 +106,7 @@ cursor.execute("INSERT INTO fahrzeug_preis (fahrzeug_preis_id, fahrzeug_preis_ne
 # Fahrzeug
 cursor.execute("USE fahrzeug")
 cursor.execute("INSERT INTO fahrzeug (fahrzeug_id, marke, klasse, status, kennzeichen, zweigstellen_id, fahrzeug_preis_id) VALUES(1, Hyundai, 1G4HR54K55U067447, 0, 337941276526984, NULL, NULL),(2, GMC, WDDDJ7CB2BA235314, 1, 6767570007245501, NULL, NULL),(3, Lexus, WAUDG94F15N652164, 0, 589376478750404713, NULL, NULL),(4, Chevrolet, JM3ER2A55C0139036, 1, 676299730455950849, NULL, NULL),(5, Hyundai, 3LNDL2L3XCR398991, 1, 5018556204712019028, NULL, NULL),(6, Chevrolet, JH4CU4F47AC106155, 1, 5602227314879099, NULL, NULL),(7, Chevrolet, SCBCP7ZA8AC301485, 1, 3558422937791107, NULL, NULL),(8, Subaru, 1G6AL5SX4D0571289, 0, 3531363267574477, NULL, NULL),(9, Mitsubishi, 1G4HD57208U022642, 0, 4751643427280714, NULL, NULL),(10, Chevrolet, JN1AZ4EH8FM961174, 0, 561045437851658445, NULL, NULL),(11, Saab, 1N6AD0CU2BC999873, 1, 5602214959990837, NULL, NULL),(12, Dodge, 2C3CCAKG2EH645440, 1, 3550588998214003, NULL, NULL),(13, Toyota, WVGAV3AX5EW186265, 1, 560224136608209826, NULL, NULL),(14, Mercedes-Benz, WVWGD7AJXEW340571, 1, 4405962730068925, NULL, NULL),(15, Nissan, WAUJT68E73A270160, 0, 3576408769968077, NULL, NULL),(16, Hummer, JN1CV6AP6AM131749, 1, 5048371497102309, NULL, NULL),(17, Subaru, 3N1BC1CP7CK320091, 0, 6331108737004604, NULL, NULL),(18, Isuzu, WBAUN1C5XBV124800, 0, 3565835694211574, NULL, NULL),(19, Chevrolet, 3VW4S7AT8EM819921, 0, 6767587899645374, NULL, NULL),(20, Pontiac, 2T1BU4EE0BC236536, 0, 3530756522072602, NULL, NULL),(21, Pontiac, 19UUA75627A432521, 0, 5100133035483178, NULL, NULL),(22, Mercedes-Benz, 1YVHZ8BA5A5862738, 1, 3577464645502936, NULL, NULL),(23, Kia, 5TFCW5F17DX681571, 0, 3585275339965258, NULL, NULL),(24, Subaru, JHMZE2H36ES320775, 0, 5528928590988162, NULL, NULL),(25, Chevrolet, 1N6AF0KY0EN247872, 0, 6762978877056954, NULL, NULL),(26, Chevrolet, WA1CV74L69D609007, 0, 6304561119138475404, NULL, NULL),(27, Mercury, 1G6DS5ED2B0880841, 0, 3562151344558114, NULL, NULL),(28, Scion, 1GYS4EEJ0BR695634, 1, 3547041892530260, NULL, NULL),(29, Honda, 19UUA56792A288180, 0, 5332431781852905, NULL, NULL),(30, BMW, WBS3C9C56FP731122, 1, 4405205506152782, NULL, NULL),(31, Isuzu, 3D7TT2CT9AG892600, 1, 560223920712612681, NULL, NULL),(32, Hummer, WAUWMAFC3FN064256, 1, 3557276590957129, NULL, NULL),(33, Cadillac, 1N6AD0CU6AC542420, 1, 5602256463171230, NULL, NULL),(34, Mercedes-Benz, 3GYT4LEFXCG180324, 0, 5100132981972184, NULL, NULL),(35, Chrysler, 2T1BURHE4EC870333, 0, 30412188389432, NULL, NULL),(36, Honda, 1G6AS5S32F0735934, 0, 6304544220205663930, NULL, NULL),(37, Infiniti, KM8JT3ACXAU115345, 1, 3553500988810200, NULL, NULL),(38, Mitsubishi, 1GD022CG6CZ690380, 0, 4917245511564705, NULL, NULL),(39, Ferrari, WAURMAFD9EN966091, 1, 4913645421983925, NULL, NULL),(40, Mercedes-Benz, 2D4RN3D10AR033717, 1, 4041590051681933, NULL, NULL),(41, Mazda, WAUAF48H19K898482, 1, 4041378600431, NULL, NULL),(42, Ferrari, 1G4HP54K034781652, 0, 4175004180761010, NULL, NULL),(43, Chevrolet, 3GYFNGEY0AS224747, 1, 3531412246920317, NULL, NULL),(44, Pontiac, WAUKFBFL5DA660052, 1, 3563215406081346, NULL, NULL),(45, Suzuki, JH4KB16697C496976, 1, 5579722850578195, NULL, NULL),(46, Hummer, YV4940BZ2E1735567, 1, 633110994181412601, NULL, NULL),(47, Volkswagen, WAUJF78K49N904867, 0, 3577699494508415, NULL, NULL),(48, Hyundai, WBALZ5C59CD749574, 0, 4041376027405, NULL, NULL),(49, Mitsubishi, 1G4GC5G36FF961304, 0, 3532483308894558, NULL, NULL),(50, Land Rover, WAUGL58E85A981390, 0, 3548846848040159, NULL, NULL);")
-
+"""
 
 # Menüs
 def willkommen():
