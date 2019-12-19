@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Dez 2019 um 08:21
+-- Erstellungszeit: 19. Dez 2019 um 13:58
 -- Server-Version: 10.4.10-MariaDB
 -- PHP-Version: 7.1.33
 
@@ -111,30 +111,30 @@ CREATE TABLE `fahrzeug_preis` (
 
 INSERT INTO `fahrzeug_preis` (`fahrzeug_preis_id`, `fahrzeug_preis_netto`) VALUES
 (1, 249),
-(2, 0),
-(3, 0),
-(4, 0),
-(5, 0),
-(6, 0),
-(7, 0),
-(8, 0),
-(9, 0),
-(10, 0),
-(11, 0),
-(12, 0),
-(13, 0),
-(14, 0),
-(15, 0),
-(16, 0),
-(17, 0),
-(18, 0),
-(19, 0),
-(20, 0),
-(21, 0),
-(22, 0),
-(23, 0),
-(24, 0),
-(25, 0),
+(2, 260),
+(3, 150),
+(4, 850),
+(5, 640),
+(6, 146),
+(7, 800),
+(8, 1500),
+(9, 125),
+(10, 264),
+(11, 164),
+(12, 168),
+(13, 169),
+(14, 124),
+(15, 246),
+(16, 168),
+(17, 105),
+(18, 150),
+(19, 160),
+(20, 140),
+(21, 164),
+(22, 1465),
+(23, 102),
+(24, 164),
+(25, 164),
 (26, 0),
 (27, 0),
 (28, 0),
@@ -156,10 +156,10 @@ INSERT INTO `fahrzeug_preis` (`fahrzeug_preis_id`, `fahrzeug_preis_netto`) VALUE
 (44, 0),
 (45, 0),
 (46, 0),
-(47, 0),
-(48, 0),
-(49, 0),
-(50, 0);
+(47, 1648),
+(48, 164),
+(49, 145),
+(50, 160);
 
 -- --------------------------------------------------------
 
@@ -343,6 +343,16 @@ CREATE TABLE `rechnung` (
   `kunden_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Daten für Tabelle `rechnung`
+--
+
+INSERT INTO `rechnung` (`rechnung_id`, `zweigstellen_id`, `kunden_id`) VALUES
+(1, 1, 32),
+(2, 2, 43),
+(3, 2, 33),
+(4, 1, 26);
+
 -- --------------------------------------------------------
 
 --
@@ -355,6 +365,14 @@ CREATE TABLE `rechnung_details` (
   `verleih_beginn` date DEFAULT NULL,
   `verleih_ende` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `rechnung_details`
+--
+
+INSERT INTO `rechnung_details` (`rechnung_id`, `fahrzeug_id`, `verleih_beginn`, `verleih_ende`) VALUES
+(NULL, 42, '2019-12-15', '2019-12-21'),
+(NULL, 27, '2019-12-01', '2019-12-31');
 
 -- --------------------------------------------------------
 
@@ -378,7 +396,8 @@ CREATE TABLE `zweigstelle` (
 
 INSERT INTO `zweigstelle` (`zweigstellen_id`, `zweigstellenname`, `strasse`, `hausnummer`, `plz_id`, `telefonnr`, `steuernummer`) VALUES
 (1, 'Bremen', 'Kornstrasse', 50, 1, 468545, '457896435678'),
-(2, 'Bremen-Nord', 'Kreinsloger', 103, 2, 46821685, '946255862164');
+(2, 'Bremen-Nord', 'Kreinsloger', 103, 2, 46821685, '946255862164'),
+(3, 'Bremen Flughafen', 'Flugzeugstr', 1, 4, 1234567, '25468952136');
 
 -- --------------------------------------------------------
 
@@ -390,6 +409,16 @@ CREATE TABLE `zweigstelle_mitarbeiter` (
   `zweigstellen_id` int(11) DEFAULT NULL,
   `mitarbeiter_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `zweigstelle_mitarbeiter`
+--
+
+INSERT INTO `zweigstelle_mitarbeiter` (`zweigstellen_id`, `mitarbeiter_id`) VALUES
+(1, 17),
+(2, 10),
+(2, 1),
+(3, 38);
 
 --
 -- Indizes der exportierten Tabellen
@@ -496,13 +525,13 @@ ALTER TABLE `plz_id`
 -- AUTO_INCREMENT für Tabelle `rechnung`
 --
 ALTER TABLE `rechnung`
-  MODIFY `rechnung_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rechnung_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `zweigstelle`
 --
 ALTER TABLE `zweigstelle`
-  MODIFY `zweigstellen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `zweigstellen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints der exportierten Tabellen
