@@ -306,6 +306,8 @@ def bmenue():
         FahrzeugeAnlegen()
     elif choice == "D" or choice == "d":
         ZweigstellenAnlegen()
+    elif choice == "E" or choice =="e":
+        MietpreiseAnlegen()
     elif choice == "1" or choice == "eins":
         hmenu()
     elif choice == "0" or choice == "0":
@@ -362,8 +364,6 @@ def MitarbeiterAnlegen():
     hmenu()
 
 
-
-#########################################################
 # Neuer Kunde anlegen
 def KundenAnlegen():
     Kunden_Vorname = input("Bitte gebe den Kunden Vornamen ein denn du anlegen willst: ")
@@ -388,9 +388,6 @@ def KundenAnlegen():
     time.sleep(2)
     os.system("cls")
 
-
-
-#########################################################
 
 # Neue Fahrzeuge einfügen
 def FahrzeugeAnlegen():
@@ -422,8 +419,10 @@ def FahrzeugeAnlegen():
 
 
 def ZweigstellenAnlegen():
-    dmenue()
+    pass
 
+def MietpreiseAnlegen():
+    pass
 
 
 # C Menü - Entfernen
@@ -483,7 +482,6 @@ def MitarbeiterEntfernen():
     os.system("cls")
     print("Der Mitarbeiter wurde erfolgreich gelöscht.")
 
-################################################################################
 
 def KundenEntfernen():
     os.system("cls")
@@ -553,8 +551,6 @@ def ZweigstellenEntfernen():
     DB_CBM.commit()
     os.system("cls")
     print("Die Zweigstelle wurde erfolgreich gelöscht.")
-
-################################################################################
 
 
 # D Menü Bearbeiten
