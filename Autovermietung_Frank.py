@@ -430,7 +430,7 @@ def ZweigstellenAnlegen():
 def cmenue():
     choice = input("""
         ___________ENTFERNEN_MENUE__________
-        |       A: Mitglieder entfernen    |
+        |       A: Mitarbeiter entfernen   |
         |       B: Kunden entfernen        |
         |       C: Fahrzeuge entfernen     |
         |       D: Zweigstellen entfernen  |
@@ -443,7 +443,7 @@ def cmenue():
         Bitte treffe eine Wahl: """)
 
     if choice == "A" or choice == "a":
-        MitgliederEntfernen()
+        MitarbeiterEntfernen()
     elif choice == "B" or choice == "b":
         KundenEntfernen()
     elif choice == "C" or choice == "c":
@@ -460,36 +460,76 @@ def cmenue():
         cmenue()
 
 
-def MitgliederEntfernen():
-    try:
-        pass
-    except:
-        print("Fehler ein Mitglied konnte nicht entfernt werden.")
+def MitarbeiterEntfernen():
+    os.system("cls")
+    cursor = DB_CBM.cursor()
+    cursor.execute("SELECT * FROM mitarbeiter")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"Mitarbeiter ID: {row[0]}")
+        print(f"Vorname: {row[2]}")
+        print(f"Nachname: {row[1]}")
+        print(f"Strasse: {row[3]}")
+        print(f"Hausnummer: {row[4]}")
+        print(f"Postleitzahl: {row[5]}")
+        print(f"Telefonnummer: {row[6]}")
+        print(f"\n")
+    print("Liste der Kunden")
+    MitarbeiterLoeschen = input("Bitte geben Sie die Kunden ID ein die Sie löschen möchten: ")
+    cursor = DB_CBM.cursor()
+    MitarbeiterLoeschenID = (MitarbeiterLoeschen,)
+    cursor.execute("DELETE FROM mitarbeiter WHERE mitarbeiter_id = (%s)", (MitarbeiterLoeschen,))
+    DB_CBM.commit()
+    os.system("cls")
+    print("Der Mitarbeiter wurde erfolgreich gelöscht.")
 
+################################################################################
 
 def KundenEntfernen():
     os.system("cls")
     cursor = DB_CBM.cursor()
     cursor.execute("SELECT * FROM kunden")
     result = cursor.fetchall()
-    for i in result:
-        print(f"Kunden ID: {i[0]:<10}  Vorname: {i[2]:<10}  Nachname: {i[1]:<10}  Straße: {i[3]:<10}  Hausnummer: {i[4]:<10}  Postleitzahl: {i[5]:<10} Telefonnummer: {i[6]:<10}")
-        print("Liste der Kunden.")
-        LoeschenUeberKundenID = input("Bitte Kunden ID des Kundes was Gelöscht werden soll: ")
-        cursor = DB_CBM.cursor()
-        cursor.execute("DELETE FROM kunden WHERE kunden_id = (%s)", (LoeschenUeberKundenID,))
-        DB_CBM.commit()
-        print("Der Kunde wurde erfolgreich entfernt.")
-    time.sleep(2)
+    for row in result:
+        print(f"Kunden ID: {row[0]}")
+        print(f"Vorname: {row[2]}")
+        print(f"Nachname: {row[1]}")
+        print(f"Strasse: {row[3]}")
+        print(f"Hausnummer: {row[4]}")
+        print(f"Telefonnummer: {row[6]}")
+        print(f"\n")
+    print("Liste der Kunden")
+    FahrzeugLoeschen = input("Bitte geben Sie die Kunden ID ein die Sie löschen möchten: ")
+    cursor = DB_CBM.cursor()
+    FahrzeugLoeschenID = (FahrzeugLoeschen,)
+    cursor.execute("DELETE FROM kunden WHERE kunden_id = (%s)", (FahrzeugLoeschen,))
+    DB_CBM.commit()
     os.system("cls")
+    print("Der Kunde wurde erfolgreich gelöscht.")
 
 
 
 def FahrzeugeEntfernen():
-    try:
-        pass
-    except:
-        print("Fehler ein Fahrzeug konnte nicht entfernt werden.")
+    os.system("cls")
+    cursor = DB_CBM.cursor()
+    cursor.execute("SELECT * FROM fahrzeug")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"Fahrzeug ID: {row[0]}")
+        print(f"Marke: {row[1]}")
+        print(f"Klasse: {row[2]}")
+        print(f"Status: {row[3]}")
+        print(f"Kennzeichen: {row[4]}")
+        print(f"\n")
+    print("Liste der Fahrzeuge")
+    FahrzeugLoeschen = input("Bitte geben Sie die Fahrzeug ID ein die Sie löschen möchten: ")
+    cursor = DB_CBM.cursor()
+    FahrzeugLoeschenID = (FahrzeugLoeschen,)
+    cursor.execute("DELETE FROM fahrzeug WHERE fahrzeug_id = (%s)", (FahrzeugLoeschen,))
+    DB_CBM.commit()
+    os.system("cls")
+    print("Das Fahrzeug wurde erfolgreich gelöscht.")
+
 
 
 def ZweigstellenEntfernen():
@@ -511,9 +551,10 @@ def ZweigstellenEntfernen():
     ZweigstelleLoeschenID = (ZweigstelleLoeschen,)
     cursor.execute("DELETE FROM zweigstelle WHERE zweigstellen_id = (%s)", (ZweigstelleLoeschen,))
     DB_CBM.commit()
-    print("Die Zweigstelle wurde erfolgreich gelöscht.")
     os.system("cls")
+    print("Die Zweigstelle wurde erfolgreich gelöscht.")
 
+################################################################################
 
 
 # D Menü Bearbeiten
