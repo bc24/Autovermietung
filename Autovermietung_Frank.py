@@ -487,7 +487,22 @@ def ZweigstellenAnlegen():
     """
 
 def MietpreiseAnlegen():
-    pass
+    print("Bitte geben Sie die ID des Fahrzeug an: ")
+    input_mietpreis_id = input()
+    liste_mietpreis = []
+    liste_mietpreis.insert(0, input_mietpreis_id)
+
+    print("Bitte geben Sie einen Mietpreise ein: ")
+    input_mietpreis_mietpreis = input()
+    liste_mietpreis.insert(1, input_mietpreis_mietpreis)
+
+
+    liste_mietpreis.append(liste_mietpreis_vergleich[0])
+    tupel_mietpreis = tuple(liste_mietpreis)
+    tupel_mietpreis_plz = tuple(liste_mietpreis_plz)
+
+    cursor.execute("UPDATE fahrzeug_preis SET fahrzeug_preis_netto = %s WHERE fahrzeug_preis . fahrzeug_preis_id = %s )", tupel_mietpreis_plz)
+    DB_CBM.commit()
 
 
 # C Menü - Entfernen
