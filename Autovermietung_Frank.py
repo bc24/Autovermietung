@@ -319,7 +319,7 @@ def bmenue():
         bmenue()
 
 
-
+#####################################################################################
 # Abfragen um Mitarbeiter anzulegen
 def MitarbeiterAnlegen():
     print("Bitte geben Sie eine Nachname ein, die Sie hinzufügen wollen: ")
@@ -358,68 +358,133 @@ def MitarbeiterAnlegen():
     tupel_mitarbeiter = tuple(liste_mitarbeiter)
     tupel_mitarbeiter_plz = tuple(liste_mitarbeiter_plz)
 
-    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (?,?)", (tupel_mitarbeiter_plz))
-    cursor.execute("INSERT INTO mitarbeiter (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (?,?,?,?,?, (SELECT plz_id FROM plz_id WHERE plz = ? limit 1))",tupel_mitarbeiter)
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_mitarbeiter_plz)
+    cursor.execute("INSERT INTO mitarbeiter (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_mitarbeiter)
     DB_CBM.commit()
-    hmenu()
 
+#####################################################################################
 
 # Neuer Kunde anlegen
 def KundenAnlegen():
-    Kunden_Vorname = input("Bitte gebe den Kunden Vornamen ein denn du anlegen willst: ")
-    Kunden_Nachname = input("Bitte gebe den Kunden Nachname ein denn du anlegen willst: ")
-    Kunde_Strasse = input("Bitte geben Sie ihre Strasse: ")
-    Kunde_Hausnummer = input("Bitte geben sie ihre Hausnummer ein: ")
-    Kunde_PLZ = 0
-    cursor = DB_CBM.cursor()
-    while True:
-        Kunde_PLZ = input("Bitte geben sie die Postleitzahl ein des Kunden ein: ")
-        cursor.execute("SELECT plz FROM plz_id WHERE plz = %s", (Kunde_PLZ,))
-        rows = cursor.fetchall()
-        if len(rows) == 0:
-            print(f"Postleitzahl {Kunde_PLZ} ist unbekannt")
-            continue
-        break
-    tupel = (Kunden_Vorname, Kunden_Nachname, Kunde_Strasse, Kunde_Hausnummer, rows[0][0])
-    cursor.execute(
-        "INSERT INTO kunden (nachname,vorname,strasse,hausnummer,plz_id,telefonnr) VALUES (%s,%s,%s,%s,%s,%s)",tupel)
-    DB_CBM.commit()
-    print("Der Kunde wurde Erfolgreich angelegt.")
-    time.sleep(2)
-    os.system("cls")
+    print("Bitte geben Sie eine Nachname ein, die Sie hinzufügen wollen: ")
+    input_kunde_nachname = input()
+    liste_kunde = []
+    liste_kunde.insert(1, input_kunde_nachname)
 
+    print("Bitte geben Sie eine Vorname ein, die Sie hinzufügen wollen: ")
+    input_kunde_vorname = input()
+    liste_kunde.insert(2, input_kunde_vorname)
+
+    print("Bitte geben Sie eine Straße ein, die Sie hinzufügen wollen: ")
+    input_kunde_strasse = input()
+    liste_kunde.insert(3, input_kunde_strasse)
+
+    print("Bitte geben Sie eine Hausnummer ein, die Sie hinzufügen wollen: ")
+    input_kunde_hausnummer = input()
+    liste_kunde.insert(4, input_kunde_hausnummer)
+
+    print("Bitte geben Sie eien Postleitzahl ein, die Sie hinzufügen wollen: ")
+    liste_kunde_plz = []
+    input_kunde_postleitzahl = input()
+    liste_kunde_plz.insert(0, input_kunde_postleitzahl)
+    liste_kunde_vergleich = []
+    liste_kunde_vergleich.insert(0, input_kunde_postleitzahl)
+
+    print("Bitte geben sie den Wohnort des neuen Mitarbeiters ein:")
+    input_kunde_wohnort = input()
+    liste_kunde_plz.insert(1, input_kunde_wohnort)
+
+    print("Bitte geben sie die Telefonnummer des neuen Mitarbeiter ein:")
+    input_kunde_telefonnummer = input()
+    liste_kunde.insert(4, input_kunde_telefonnummer)
+
+    liste_kunde.append(liste_kunde_vergleich[0])
+    tupel_kunde = tuple(liste_kunde)
+    tupel_kunde_plz = tuple(liste_kunde_plz)
+
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_kunde_plz)
+    cursor.execute("INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_kunde)
+    DB_CBM.commit()
+
+###################################################################################
 
 # Neue Fahrzeuge einfügen
 def FahrzeugeAnlegen():
-    Fahrzeuge_Anlegen1 = input("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
-    Fahrzeuge_Anlegen2 = input("Bitte geben Sie eine Fahrzeugmodell ein, die Sie hinzufügen wollen: ")
-    Fahrzeuge_Anlegen3 = input(
-        "Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
+    print("Das Fahrzeug anlegen gibt leider schon wieder einen Fehler aus.")
+    pass
+    """
+    print("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
+    input_fahrzeug_marke = input()
+    liste_fahrzeug = []
+    liste_fahrzeug.insert(1, input_fahrzeug_marke)
 
-    cursor = DB_CBM.cursor()
+    print("Bitte geben Sie an um was von eine Fahrzeug Klasse es sich handelt:\n Klssen: Kleinwagen, Mittelklasse oder Grosswagen")
+    input_fahrzeug_klasse = input()
+    liste_fahrzeug.insert(2, input_fahrzeug_klasse)
 
-    # ID für Fahrzeug wird gehollt
-    res = cursor.execute("INSERT INTO fahrzeuge (fahrzeug_id) VALUES (%s)", (Fahrzeuge_Anlegen,))
-    print(res.lastinsertid)
-    fzid = res.lastinsertid
+    print("Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
+    input_fahrzeug_status = input()
+    liste_fahrzeug.insert(3, input_fahrzeug_status)
 
-    cursor.execute("UPDATE fahrzeuge SET (fahrzeug_id) WHERE fahrzeug_id =" + fzid, )
-    cursor.execute("UPDATE fahrzeuge SET (marke) VALUES (%s)", (Fahrzeuge_Anlegen1,))
-    cursor.execute("UPDATE fahrzeuge SET (modell) VALUES (%s)", (Fahrzeuge_Anlegen2,))
-    cursor.execute("UPDATE fahrzeuge SET (status) VALUES (%s)", (Fahrzeuge_Anlegen3,))
-    cursor.execute("UPDATE fahrzeuge SET (kennzeichen) VALUES (%s)", (Fahrzeuge_Anlegen1,))
-    cursor.execute("UPDATE fahrzeuge SET (zweigstelle_id) VALUES (%s)", (Fahrzeuge_Anlegen2,))
-    cursor.execute("UPDATE fahrzeuge SET (fahrzeug_preis_id) VALUES (%s)", (Fahrzeuge_Anlegen3,))
+    print("Bitte geben Sie eine Kennzeichen ein, die Sie hinzufügen wollen: ")
+    input_fahrzeug_kennzeichen = input()
+    liste_fahrzeug.insert(4, input_fahrzeug_kennzeichen)
 
-    myresult = cursor.fetchall()
+    print("Bitte geben Sie an zu welcher Zweigstelle das Fahrzeug hinzufügt werden soll: ")
+    input_fahrzeug_zweigstelle = input()
+    liste_fahrzeug.insert(5, input_fahrzeug_zweigstelle)
 
-    for x in myresult:
-        print("Das sind alle Fahrzeuge: ", x)
+    print("Bitte geben Sie an zu welchen Preis das Fahrzeug zuverfügung gestellt werden soll: ")
+    input_fahrzeug_mietpreis = input()
+    liste_fahrzeug.insert(6, input_fahrzeug_mietpreis)
 
+    liste_fahrzeug.append(liste_fahrzeug[0])
+    tupel_fahrzeug = tuple(liste_fahrzeug)
+    tupel_fahrzeug_zweigstelle = tuple(tupel_fahrzeug)
+
+    cursor.execute("INSERT INTO zweigstelle (zweigstellenname, strasse, hausnummer, plz_id, telefonnr, steuernummer) VALUES (%s,%s,%s,%s,%s)", tupel_fahrzeug_zweigstelle)
+    cursor.execute("INSERT INTO fahrzeugn (marke, modell, klasse, status, kennzeichen, zweigstelle_id) VALUES (%s,%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_fahrzeug)
+    DB_CBM.commit()
+    """
 
 
 def ZweigstellenAnlegen():
+    print("Das Zweigstellen anlegen wirt momentan einen Fehler aus, ich schaue es mir noch mal genauer an wodran es liegt.")
     pass
+    """
+    print("Bitte geben Sie einen Zweigstellennamen an: ")
+    input_zweigstelle_zweigstellennamen = input()
+    liste_zweigstelle = []
+    liste_zweigstelle.insert(1, input_zweigstelle_zweigstellennamen)
+
+    print("Bitte geben Sie eine Strasse für die Zweigstelle ein: ")
+    input_zweigstelle_strasse = input()
+    liste_zweigstelle.insert(2, input_zweigstelle_strasse)
+
+    print("Bitte geben Sie eine Hausnummer für die Zweigstelle ein : ")
+    input_zweigstelle_hausnummer = input()
+    liste_zweigstelle.insert(3, input_zweigstelle_hausnummer)
+
+    print("Bitte geben Sie eine Postleitzahl für die Zweigstelle ein: ")
+    input_zweigstelle_postleitzahl = input()
+    liste_zweigstelle.insert(4, input_zweigstelle_postleitzahl)
+
+    print("Bitte geben Sie eine Telefonnummer für die Zweigstelle ein:")
+    input_zweigstelle_telefonnummer = input()
+    liste_zweigstelle.insert(5, input_zweigstelle_telefonnummer)
+
+    print("Bitte geben Sie eine Steuernummer ein:")
+    input_zweigstelle_steuernummer = input()
+    liste_zweigstelle.insert(5, input_zweigstelle_steuernummer)
+
+    liste_zweigstelle.append(liste_zweigstelle_vergleich[0])
+    tupel_zweigstelle = tuple(liste_zweigstelle)
+    tupel_zweigstelle = tuple(tupel_zweigstelle)
+
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_zweigstelle)
+    cursor.execute("INSERT INTO zweigstellen (zweigstellennamen, strasse, hausnummer, plz_id, telefonnr, steuernummer) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_zweigstelle)
+    DB_CBM.commit()
+    """
 
 def MietpreiseAnlegen():
     pass
@@ -618,6 +683,44 @@ def MitpreiseBearbeiten():
     cursor.execute("UPDATE fahrzeug_preis SET fahrzeug_preis_netto = " + {
         Mitpreis_input} + " WHERE fahrzeug_preis.fahrzeug_preis_id = 1;")
     result = cursor.fetchall()
+
+##^ überarbeiten        v   vorlage von anderen def
+
+"""
+print("Bitte geben sie die Telefonnummer des neuen Mitarbeiter ein:")
+input_kunde_telefonnummer = input()
+liste_kunde.insert(4, input_kunde_telefonnummer)
+
+liste_kunde.append(liste_kunde_vergleich[0])
+tupel_kunde = tuple(liste_kunde)
+tupel_kunde_plz = tuple(liste_kunde_plz)
+
+cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_kunde_plz)
+cursor.execute("INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_kunde)
+DB_CBM.commit()
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

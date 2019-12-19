@@ -7,10 +7,10 @@ Zweigstellen auflisten		läuft
 
 Menü Anlegen
 ------------
-Mitarbeiter anlegen		Fehler				
-Kunden anlegen			Fehler		
+Mitarbeiter anlegen		läuft				
+Kunden anlegen			läuft		
 Fahrzeuge anlegen		Fehler
-Zweigstellen anlegen		pass		
+Zweigstellen anlegen		Fehler		
 Mietpreise anlegen		pass
 
 Menü Entfernen
@@ -38,28 +38,6 @@ Schadensbericht einreichen	läuft
 
 ==============================
 Fehlermeldungen
-=============================
-Mitglied anlegen
-
-File "Autovermietung_Frank.py", line 361, in MitarbeiterAnlegen
-    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (?,?)", (tupel_mitarbeiter_plz))
-  File "C:\Users\frankp\AppData\Local\Programs\Python\Python38\lib\site-packages\mysql\connector\cursor.py", line 560, in execute
-    raise errors.ProgrammingError(
-mysql.connector.errors.ProgrammingError: Not all parameters were used in the SQL statement
-=============================
-Kunde anlegen
-
- File "C:\Users\frankp\AppData\Local\Programs\Python\Python38\lib\site-packages\mysql\connector\cursor.py", line 558, in execute
-    stmt = RE_PY_PARAM.sub(psub, stmt)
-  File "C:\Users\frankp\AppData\Local\Programs\Python\Python38\lib\site-packages\mysql\connector\cursor.py", line 85, in __call__
-    raise errors.ProgrammingError(
-mysql.connector.errors.ProgrammingError: Not enough parameters for the SQL statement
-=============================
-Fahrzeug anlegen
-
-File "Autovermietung_Frank.py", line 402, in FahrzeugeAnlegen
-    res = cursor.execute("INSERT INTO fahrzeuge (fahrzeug_id) VALUES (%s)", (Fahrzeuge_Anlegen,))
-NameError: name 'Fahrzeuge_Anlegen' is not defined
 =============================
 Mietpreise bearbeiten
 
