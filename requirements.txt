@@ -1,4 +1,9 @@
-import mysql
+easy-menu
+Jinja2
+MarkupSafe
+mog-commons
+mysql-connector-python
+protobuf
+PyYAML
+six
 from mysql.connector import cursor, connection
-import sys
-import time

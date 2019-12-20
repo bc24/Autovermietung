@@ -17,6 +17,8 @@ Zufall Datensaätze                  -   https://mockaroo.com/
 """
 
 # Importe
+from typing import Tuple
+
 import mysql
 from mysql.connector import cursor, connection
 import sys
@@ -34,7 +36,7 @@ def DatenbankenVerbindung():
         database="cbm_Autovermietung"
     )
 
-    #DatenbankenVerbindung()
+    # DatenbankenVerbindung()
     # mycursor Cursor holen
     mycursor = DB_CBM.cursor()
 
@@ -48,37 +50,51 @@ def DatenbankenVerbindung():
 
     return DB_CBM
 
+
 DB_CBM = DatenbankenVerbindung()
 cursor = DB_CBM.cursor()
 
 # Datenbank und Tabellen erstellen
 
 # Datenbank Tabelle plz_ip erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS plz_id (plz_id INTEGER PRIMARY KEY AUTO_INCREMENT, plz CHAR(5), ort VARCHAR(50))")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS plz_id (plz_id INTEGER PRIMARY KEY AUTO_INCREMENT, plz CHAR(5), ort VARCHAR(50))")
 
 # Datenbank Tabelle mitarbeiter erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS mitarbeiter (mitarbeiter_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(50), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS mitarbeiter (mitarbeiter_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(50), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle zweigstellen erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS zweigstelle (zweigstellen_id INTEGER PRIMARY KEY AUTO_INCREMENT, zweigstellenname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr INTEGER, steuernummer VARCHAR(20), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS zweigstelle (zweigstellen_id INTEGER PRIMARY KEY AUTO_INCREMENT, zweigstellenname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr INTEGER, steuernummer VARCHAR(20), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle zweigstellen_mitarbeiter erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS zweigstelle_mitarbeiter (zweigstellen_id INTEGER, mitarbeiter_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (mitarbeiter_id) REFERENCES mitarbeiter(mitarbeiter_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS zweigstelle_mitarbeiter (zweigstellen_id INTEGER, mitarbeiter_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (mitarbeiter_id) REFERENCES mitarbeiter(mitarbeiter_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle kunden erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS kunden (kunden_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(50), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS kunden (kunden_id INTEGER PRIMARY KEY AUTO_INCREMENT, nachname VARCHAR(50), vorname VARCHAR(50), strasse VARCHAR(50), hausnummer INTEGER, plz_id INTEGER, telefonnr VARCHAR(50), FOREIGN KEY (plz_id) REFERENCES plz_id(plz_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle fahrzeug_preis erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS fahrzeug_preis (fahrzeug_preis_id INTEGER PRIMARY KEY AUTO_INCREMENT, fahrzeug_preis_netto FLOAT)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS fahrzeug_preis (fahrzeug_preis_id INTEGER PRIMARY KEY AUTO_INCREMENT, fahrzeug_preis_netto FLOAT)")
 
 # Datenbank Tabelle fahrzeug erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS fahrzeug (fahrzeug_id INTEGER PRIMARY KEY AUTO_INCREMENT, marke VARCHAR(50), klasse VARCHAR(50), status VARCHAR(50), kennzeichen VARCHAR(50), zweigstellen_id INTEGER, fahrzeug_preis_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_preis_id) REFERENCES fahrzeug_preis(fahrzeug_preis_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS fahrzeug (fahrzeug_id INTEGER PRIMARY KEY AUTO_INCREMENT, marke VARCHAR(50), klasse VARCHAR(50), status VARCHAR(50), kennzeichen VARCHAR(50), zweigstellen_id INTEGER, fahrzeug_preis_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_preis_id) REFERENCES fahrzeug_preis(fahrzeug_preis_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+
+# Datenbank Tabelle ausgeliehen_details erstellen
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS ausgeliehen_details (ausgeliehen_id INTEGER PRIMARY KEY AUTO_INCREMENT, kunden_id INTEGER, verleih_anfang DATE, verleih_ende DATE, fahrzeug_id INTEGER, status VARCHAR(50), FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (kunden_id) REFERENCES kunden(kunden_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle rechnung erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS rechnung (rechnung_id INTEGER PRIMARY KEY AUTO_INCREMENT, zweigstellen_id INTEGER, kunden_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (kunden_id) REFERENCES kunden(kunden_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS rechnung (rechnung_id INTEGER PRIMARY KEY AUTO_INCREMENT, zweigstellen_id INTEGER, kunden_id INTEGER, FOREIGN KEY (zweigstellen_id) REFERENCES zweigstelle(zweigstellen_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (kunden_id) REFERENCES kunden(kunden_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Datenbank Tabelle rechnung_details erstellen
-cursor.execute("CREATE TABLE IF NOT EXISTS rechnung_details (rechnung_id INTEGER, fahrzeug_id INTEGER, verleih_beginn DATE, verleih_ende DATE, FOREIGN KEY (rechnung_id) REFERENCES rechnung(rechnung_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS rechnung_details (rechnung_id INTEGER, fahrzeug_id INTEGER, verleih_beginn DATE, verleih_ende DATE, FOREIGN KEY (rechnung_id) REFERENCES rechnung(rechnung_id) ON UPDATE CASCADE ON DELETE SET NULL, FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id) ON UPDATE CASCADE ON DELETE SET NULL)")
 
 # Dummy Datensätze erstellen
 """
@@ -102,6 +118,7 @@ cursor.execute("INSERT INTO fahrzeug_preis (fahrzeug_preis_id, fahrzeug_preis_ne
 # Fahrzeug
 cursor.execute("INSERT INTO fahrzeug (fahrzeug_id, marke, klasse, status, kennzeichen, zweigstellen_id, fahrzeug_preis_id) VALUES(1, Hyundai, 1G4HR54K55U067447, 0, 337941276526984, NULL, NULL),(2, GMC, WDDDJ7CB2BA235314, 1, 6767570007245501, NULL, NULL),(3, Lexus, WAUDG94F15N652164, 0, 589376478750404713, NULL, NULL),(4, Chevrolet, JM3ER2A55C0139036, 1, 676299730455950849, NULL, NULL),(5, Hyundai, 3LNDL2L3XCR398991, 1, 5018556204712019028, NULL, NULL),(6, Chevrolet, JH4CU4F47AC106155, 1, 5602227314879099, NULL, NULL),(7, Chevrolet, SCBCP7ZA8AC301485, 1, 3558422937791107, NULL, NULL),(8, Subaru, 1G6AL5SX4D0571289, 0, 3531363267574477, NULL, NULL),(9, Mitsubishi, 1G4HD57208U022642, 0, 4751643427280714, NULL, NULL),(10, Chevrolet, JN1AZ4EH8FM961174, 0, 561045437851658445, NULL, NULL),(11, Saab, 1N6AD0CU2BC999873, 1, 5602214959990837, NULL, NULL),(12, Dodge, 2C3CCAKG2EH645440, 1, 3550588998214003, NULL, NULL),(13, Toyota, WVGAV3AX5EW186265, 1, 560224136608209826, NULL, NULL),(14, Mercedes-Benz, WVWGD7AJXEW340571, 1, 4405962730068925, NULL, NULL),(15, Nissan, WAUJT68E73A270160, 0, 3576408769968077, NULL, NULL),(16, Hummer, JN1CV6AP6AM131749, 1, 5048371497102309, NULL, NULL),(17, Subaru, 3N1BC1CP7CK320091, 0, 6331108737004604, NULL, NULL),(18, Isuzu, WBAUN1C5XBV124800, 0, 3565835694211574, NULL, NULL),(19, Chevrolet, 3VW4S7AT8EM819921, 0, 6767587899645374, NULL, NULL),(20, Pontiac, 2T1BU4EE0BC236536, 0, 3530756522072602, NULL, NULL),(21, Pontiac, 19UUA75627A432521, 0, 5100133035483178, NULL, NULL),(22, Mercedes-Benz, 1YVHZ8BA5A5862738, 1, 3577464645502936, NULL, NULL),(23, Kia, 5TFCW5F17DX681571, 0, 3585275339965258, NULL, NULL),(24, Subaru, JHMZE2H36ES320775, 0, 5528928590988162, NULL, NULL),(25, Chevrolet, 1N6AF0KY0EN247872, 0, 6762978877056954, NULL, NULL),(26, Chevrolet, WA1CV74L69D609007, 0, 6304561119138475404, NULL, NULL),(27, Mercury, 1G6DS5ED2B0880841, 0, 3562151344558114, NULL, NULL),(28, Scion, 1GYS4EEJ0BR695634, 1, 3547041892530260, NULL, NULL),(29, Honda, 19UUA56792A288180, 0, 5332431781852905, NULL, NULL),(30, BMW, WBS3C9C56FP731122, 1, 4405205506152782, NULL, NULL),(31, Isuzu, 3D7TT2CT9AG892600, 1, 560223920712612681, NULL, NULL),(32, Hummer, WAUWMAFC3FN064256, 1, 3557276590957129, NULL, NULL),(33, Cadillac, 1N6AD0CU6AC542420, 1, 5602256463171230, NULL, NULL),(34, Mercedes-Benz, 3GYT4LEFXCG180324, 0, 5100132981972184, NULL, NULL),(35, Chrysler, 2T1BURHE4EC870333, 0, 30412188389432, NULL, NULL),(36, Honda, 1G6AS5S32F0735934, 0, 6304544220205663930, NULL, NULL),(37, Infiniti, KM8JT3ACXAU115345, 1, 3553500988810200, NULL, NULL),(38, Mitsubishi, 1GD022CG6CZ690380, 0, 4917245511564705, NULL, NULL),(39, Ferrari, WAURMAFD9EN966091, 1, 4913645421983925, NULL, NULL),(40, Mercedes-Benz, 2D4RN3D10AR033717, 1, 4041590051681933, NULL, NULL),(41, Mazda, WAUAF48H19K898482, 1, 4041378600431, NULL, NULL),(42, Ferrari, 1G4HP54K034781652, 0, 4175004180761010, NULL, NULL),(43, Chevrolet, 3GYFNGEY0AS224747, 1, 3531412246920317, NULL, NULL),(44, Pontiac, WAUKFBFL5DA660052, 1, 3563215406081346, NULL, NULL),(45, Suzuki, JH4KB16697C496976, 1, 5579722850578195, NULL, NULL),(46, Hummer, YV4940BZ2E1735567, 1, 633110994181412601, NULL, NULL),(47, Volkswagen, WAUJF78K49N904867, 0, 3577699494508415, NULL, NULL),(48, Hyundai, WBALZ5C59CD749574, 0, 4041376027405, NULL, NULL),(49, Mitsubishi, 1G4GC5G36FF961304, 0, 3532483308894558, NULL, NULL),(50, Land Rover, WAUGL58E85A981390, 0, 3548846848040159, NULL, NULL);")
 """
+
 
 # Menüs
 def willkommen():
@@ -214,8 +231,7 @@ def amenue():
         amenue()
 
 
-
-# Alle Mitglieder anzeigen
+# Alle Mitarbeiter anzeigen
 def MitarbeiterAuflisten():
     cursor.execute("SELECT * FROM mitarbeiter")
     records = cursor.fetchall()
@@ -228,7 +244,6 @@ def MitarbeiterAuflisten():
         print(f"PLZ ID: {row[5]}")
         print(f"Telefonnummer: {row[6]}")
         print(f"\n")
-
 
 
 # Alle Kunden anzeigen
@@ -246,8 +261,7 @@ def KundenAuflisten():
         print(f"\n")
 
 
-
-# Alle Mitglieder anzeigen
+# Alle Fahrzeuge anzeigen
 def FahrzeugeAuflisten():
     cursor.execute("SELECT * FROM fahrzeug")
     records = cursor.fetchall()
@@ -301,7 +315,7 @@ def bmenue():
         FahrzeugeAnlegen()
     elif choice == "D" or choice == "d":
         ZweigstellenAnlegen()
-    elif choice == "E" or choice =="e":
+    elif choice == "E" or choice == "e":
         MietpreiseAnlegen()
     elif choice == "1" or choice == "eins":
         hmenu()
@@ -350,14 +364,14 @@ def MitarbeiterAnlegen():
     liste_mitarbeiter.insert(4, input_mitarbeiter_telefonnummer)
 
     liste_mitarbeiter.append(liste_mitarbeiter_vergleich[0])
-    tupel_mitarbeiter = tuple(liste_mitarbeiter)
+    tupel_mitarbeiter: Tuple[str, ...] = tuple(liste_mitarbeiter)
     tupel_mitarbeiter_plz = tuple(liste_mitarbeiter_plz)
 
     cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_mitarbeiter_plz)
-    cursor.execute("INSERT INTO mitarbeiter (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_mitarbeiter)
+    cursor.execute("INSERT INTO mitarbeiter (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,"
+                   "%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))", tupel_mitarbeiter)
     DB_CBM.commit()
 
-#####################################################################################
 
 # Neuer Kunde anlegen
 def KundenAnlegen():
@@ -398,8 +412,11 @@ def KundenAnlegen():
     tupel_kunde_plz = tuple(liste_kunde_plz)
 
     cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_kunde_plz)
-    cursor.execute("INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_kunde)
+    cursor.execute(
+        "INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",
+        tupel_kunde)
     DB_CBM.commit()
+
 
 ###################################################################################
 
@@ -412,31 +429,24 @@ def FahrzeugeAnlegen():
     input_fahrzeug_marke = input()
     liste_fahrzeug = []
     liste_fahrzeug.insert(1, input_fahrzeug_marke)
-
     print("Bitte geben Sie an um was von eine Fahrzeug Klasse es sich handelt:\n Klssen: Kleinwagen, Mittelklasse oder Grosswagen")
     input_fahrzeug_klasse = input()
     liste_fahrzeug.insert(2, input_fahrzeug_klasse)
-
     print("Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
     input_fahrzeug_status = input()
     liste_fahrzeug.insert(3, input_fahrzeug_status)
-
     print("Bitte geben Sie eine Kennzeichen ein, die Sie hinzufügen wollen: ")
     input_fahrzeug_kennzeichen = input()
     liste_fahrzeug.insert(4, input_fahrzeug_kennzeichen)
-
     print("Bitte geben Sie an zu welcher Zweigstelle das Fahrzeug hinzufügt werden soll: ")
     input_fahrzeug_zweigstelle = input()
     liste_fahrzeug.insert(5, input_fahrzeug_zweigstelle)
-
     print("Bitte geben Sie an zu welchen Preis das Fahrzeug zuverfügung gestellt werden soll: ")
     input_fahrzeug_mietpreis = input()
     liste_fahrzeug.insert(6, input_fahrzeug_mietpreis)
-
     liste_fahrzeug.append(liste_fahrzeug[0])
     tupel_fahrzeug = tuple(liste_fahrzeug)
     tupel_fahrzeug_zweigstelle = tuple(tupel_fahrzeug)
-
     cursor.execute("INSERT INTO zweigstelle (zweigstellenname, strasse, hausnummer, plz_id, telefonnr, steuernummer) VALUES (%s,%s,%s,%s,%s)", tupel_fahrzeug_zweigstelle)
     cursor.execute("INSERT INTO fahrzeugn (marke, modell, klasse, status, kennzeichen, zweigstelle_id) VALUES (%s,%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_fahrzeug)
     DB_CBM.commit()
@@ -444,7 +454,8 @@ def FahrzeugeAnlegen():
 
 
 def ZweigstellenAnlegen():
-    print("Das Zweigstellen anlegen wirt momentan einen Fehler aus, ich schaue es mir noch mal genauer an wodran es liegt.")
+    print(
+        "Das Zweigstellen anlegen wirt momentan einen Fehler aus, ich schaue es mir noch mal genauer an wodran es liegt.")
     pass
     """
     print("Bitte geben Sie einen Zweigstellennamen an: ")
@@ -481,7 +492,12 @@ def ZweigstellenAnlegen():
     DB_CBM.commit()
     """
 
-def MietpreiseAnlegen():
+
+def liste_mietpreis_plz():
+    pass
+
+
+def MietpreiseAnlegen(tupel_mietpreis_plz=None):
     print("Bitte geben Sie die ID des Fahrzeug an: ")
     input_mietpreis_id = input()
     liste_mietpreis = []
@@ -491,12 +507,13 @@ def MietpreiseAnlegen():
     input_mietpreis_mietpreis = input()
     liste_mietpreis.insert(1, input_mietpreis_mietpreis)
 
-
-    liste_mietpreis.append(liste_mietpreis_vergleich[0])
-    tupel_mietpreis = tuple(liste_mietpreis)
+    liste_mietpreis.append(tupel_mietpreis_plz[0])
+    tupel_mietpreis_plz = tuple(liste_mietpreis)
     tupel_mietpreis_plz = tuple(liste_mietpreis_plz)
 
-    cursor.execute("UPDATE fahrzeug_preis SET fahrzeug_preis_netto = %s WHERE fahrzeug_preis . fahrzeug_preis_id = %s )", tupel_mietpreis_plz)
+    cursor.execute(
+        "UPDATE fahrzeug_preis SET fahrzeug_preis_netto = %s WHERE fahrzeug_preis . fahrzeug_preis_id = %s )",
+        tupel_mietpreis_plz)
     DB_CBM.commit()
 
 
@@ -529,7 +546,8 @@ def cmenue():
     elif choice == "0" or choice == "0":
         sys.exit()
     else:
-        print("Bitte geben Sie A,B,C oder D ein.\nMit 1 Gelangen Sie wieder zurück ins Hauptmenü.\nMit 0(NULL) Beenden Sie das Programm.")
+        print(
+            "Bitte geben Sie A,B,C oder D ein.\nMit 1 Gelangen Sie wieder zurück ins Hauptmenü.\nMit 0(NULL) Beenden Sie das Programm.")
         print("Bitte versuchen Sie es erneut.")
         cmenue()
 
@@ -581,7 +599,6 @@ def KundenEntfernen():
     print("Der Kunde wurde erfolgreich gelöscht.")
 
 
-
 def FahrzeugeEntfernen():
     os.system("cls")
     cursor = DB_CBM.cursor()
@@ -602,7 +619,6 @@ def FahrzeugeEntfernen():
     DB_CBM.commit()
     os.system("cls")
     print("Das Fahrzeug wurde erfolgreich gelöscht.")
-
 
 
 def ZweigstellenEntfernen():
@@ -663,7 +679,6 @@ def dmenue():
         dmenue()
 
 
-
 def MitarbeiterBearbeiten():
     try:
         pass
@@ -697,6 +712,7 @@ def MitpreiseBearbeiten():
         Mitpreis_input} + " WHERE fahrzeug_preis.fahrzeug_preis_id = (%s)")
     result = cursor.fetchall()
     """
+
 
 # E Menü - Kunden Optionen
 def emenue():
@@ -787,6 +803,7 @@ def FahrzeugSchadensbericht():
     print("")
     print("Herzlichen Dank für Ihren Schadensbericht!")
     hmenu()
+
 
 willkommen()
 hmenu()

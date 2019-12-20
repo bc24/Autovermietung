@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Dez 2019 um 13:58
+-- Erstellungszeit: 19. Dez 2019 um 23:50
 -- Server-Version: 10.4.10-MariaDB
--- PHP-Version: 7.1.33
+-- PHP-Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,21 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `cbm_autovermietung`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `ausgeliehen_details`
+--
+
+CREATE TABLE `ausgeliehen_details` (
+  `ausgeliehen_id` int(11) NOT NULL,
+  `kunden_id` int(11) DEFAULT NULL,
+  `verleih_anfang` date DEFAULT NULL,
+  `verleih_ende` date DEFAULT NULL,
+  `fahrzeug_id` int(11) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -425,6 +440,14 @@ INSERT INTO `zweigstelle_mitarbeiter` (`zweigstellen_id`, `mitarbeiter_id`) VALU
 --
 
 --
+-- Indizes für die Tabelle `ausgeliehen_details`
+--
+ALTER TABLE `ausgeliehen_details`
+  ADD PRIMARY KEY (`ausgeliehen_id`),
+  ADD KEY `fahrzeug_id` (`fahrzeug_id`),
+  ADD KEY `kunden_id` (`kunden_id`);
+
+--
 -- Indizes für die Tabelle `fahrzeug`
 --
 ALTER TABLE `fahrzeug`
@@ -492,6 +515,12 @@ ALTER TABLE `zweigstelle_mitarbeiter`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `ausgeliehen_details`
+--
+ALTER TABLE `ausgeliehen_details`
+  MODIFY `ausgeliehen_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `fahrzeug`
 --
 ALTER TABLE `fahrzeug`
@@ -536,6 +565,13 @@ ALTER TABLE `zweigstelle`
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `ausgeliehen_details`
+--
+ALTER TABLE `ausgeliehen_details`
+  ADD CONSTRAINT `ausgeliehen_details_ibfk_1` FOREIGN KEY (`fahrzeug_id`) REFERENCES `fahrzeug` (`fahrzeug_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `ausgeliehen_details_ibfk_2` FOREIGN KEY (`kunden_id`) REFERENCES `kunden` (`kunden_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `fahrzeug`
