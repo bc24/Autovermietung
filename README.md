@@ -30,3 +30,47 @@ Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...
 - MySQL Datenbank
 - Verhindern von Abstürzen
 
+# MySQL-Designer
+![MySQL-Designer](https://github.com/bc24/Autovermietung/blob/master/MySQL-Designer.jpg)
+
+#Fortschrift Status
+
+###### Menü Auflisten
+--------------
+- Mitarbeiter auflisten		**	läuft**
+- Kunden auflisten		**läuft**
+- Fahrzeuge auflisten		**läuft**
+- Zweigstellen auflisten		**läuft	**
+
+###### Menü Anlegen
+------------
+- Mitarbeiter anlegen		**läuft**
+- Kunden anlegen			**läuft**
+- Fahrzeuge anlegen		*Fehler*
+- Zweigstellen anlegen		*Fehler*
+- Mietpreise anlegen		~~pass~~
+
+###### Menü Entfernen
+--------------
+- Mitarbeiter entfernen		**läuft**
+- Kunden entfernen		**läuft**
+- Fahrzeuge entfernen		**läuft**
+- Zweigstellen entfernen		**läuft**
+
+###### Menü Bearbeiten
+--------------- 
+- Mitarbeiter bearbeiten		~~pass~~
+- Kunden bearbeiten		~~pass~~
+- Fahrzeuge bearbeiten		~~pass~~
+- Mitpreise bearbeiten		*Fehler*
+
+###### Kunden Optionen
+---------------
+- Fahrzeug Ausleihen		~~pass~~
+- Fahrzeug Zurückgeben		~~pass~~
+- Fahrzeug sotieren nach Status			**läuft**
+- Fahrzeug sotieren nach Modell			**läuft**
+- Schadensbericht einreichen		**läuft**
+
+> Kontakt
+E-Mail:  frank@panzer.mobi
