@@ -2,8 +2,13 @@
 
 ### Python Projekt 2019
 ### Copyright by Frank Panzer
-Webseite https://frank-panzer.de
+> Webseite https://frank-panzer.de
+> E-Mail:  frank@panzer.mobi
 
+Ich schlage vor, Sie eine virtuelle Umgebung verwenden, um den Code auszuführen
+- `pyvenv venv`
+- `source venv/bin/activate`
+- `pip install -r requirements.txt`
 
 #### Kurze Info
 Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...         
@@ -47,7 +52,7 @@ Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...
 - Mitarbeiter anlegen		**läuft**
 - Kunden anlegen			**läuft**
 - Fahrzeuge anlegen		*Fehler*
-- Zweigstellen anlegen		*Fehler*
+- Zweigstellen anlegen		**läuft**
 - Mietpreise anlegen		~~pass~~
 
 ###### Menü Entfernen
@@ -72,5 +77,4 @@ Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...
 - Fahrzeug sotieren nach Modell			**läuft**
 - Schadensbericht einreichen		**läuft**
 
-> Kontakt
-E-Mail:  frank@panzer.mobi
+

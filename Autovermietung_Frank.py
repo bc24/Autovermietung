@@ -244,6 +244,12 @@ def MitarbeiterAuflisten():
         print(f"PLZ ID: {row[5]}")
         print(f"Telefonnummer: {row[6]}")
         print(f"\n")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
 
 # Alle Kunden anzeigen
@@ -259,7 +265,12 @@ def KundenAuflisten():
         print(f"PLZ ID: {row[5]}")
         print(f"Telefonnummer: {row[6]}")
         print(f"\n")
-
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
 # Alle Fahrzeuge anzeigen
 def FahrzeugeAuflisten():
@@ -274,7 +285,12 @@ def FahrzeugeAuflisten():
         print(f"Zweigstellen ID: {row[5]}")
         print(f"Fahrzeug Preis ID: {row[6]}")
         print(f"\n")
-
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
 # Alle Zweigstellen anzeigen
 def ZweigstellenAuflisten():
@@ -288,7 +304,12 @@ def ZweigstellenAuflisten():
         print(f"Telefonnr: {row[4]}")
         print(f"Steuernummer ID: {row[5]}")
         print(f"\n")
-
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
 # B Menü - Anlegen
 def bmenue():
@@ -298,7 +319,6 @@ def bmenue():
         |       B: Kunden anlegen          |
         |       C: Fahrzeuge anlegen       |
         |       D: Zweigstellen anlegen    |
-        |       E: Mietpreise anlegen      |
         |----------------------------------|
         |       1: Hauptmenü               |
         |       0: Beenden                 |
@@ -315,8 +335,6 @@ def bmenue():
         FahrzeugeAnlegen()
     elif choice == "D" or choice == "d":
         ZweigstellenAnlegen()
-    elif choice == "E" or choice == "e":
-        MietpreiseAnlegen()
     elif choice == "1" or choice == "eins":
         hmenu()
     elif choice == "0" or choice == "0":
@@ -328,7 +346,6 @@ def bmenue():
         bmenue()
 
 
-#####################################################################################
 # Abfragen um Mitarbeiter anzulegen
 def MitarbeiterAnlegen():
     print("Bitte geben Sie eine Nachname ein, die Sie hinzufügen wollen: ")
@@ -371,6 +388,13 @@ def MitarbeiterAnlegen():
     cursor.execute("INSERT INTO mitarbeiter (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,"
                    "%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))", tupel_mitarbeiter)
     DB_CBM.commit()
+    print("Mitarbeiter erfolgreich angelegt.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
 
 # Neuer Kunde anlegen
@@ -416,29 +440,113 @@ def KundenAnlegen():
         "INSERT INTO kunden (nachname, vorname, strasse, hausnummer, telefonnr, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",
         tupel_kunde)
     DB_CBM.commit()
+    print("Kunde erfolgreich angelegt.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
-
-###################################################################################
+def view_zweigstelle_auswahl():
+    cursor.execute("SELECT * FROM zweigstelle")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"zweigstelle_ID: {row[0]:5} zweigstellename: {row[1]:10}  ")
 
 # Neue Fahrzeuge einfügen
 def FahrzeugeAnlegen():
-    print("Das Fahrzeug anlegen gibt leider schon wieder einen Fehler aus.")
-    pass
+    global klasse
+    print("Bitte geben sie die Marke des Fahrzeugs ein:")
+    marke = input()
+    liste_fahrzeuge = []
+    liste_fahrzeuge.insert(0, marke)
+
+    print(
+        "Bitte wählen sie die Klasse des Fahrzeug aus\nLuxusklasse(1)\nMittelklasse(2)\nKleinwagen(3)\n")
+    klasse_input = int(input())
+    if klasse_input == 1:
+        klasse = "Luxusklasse"
+    if klasse_input == 2:
+        klasse = "Mittelklasse"
+    if klasse_input == 3:
+        klasse = "Kleinwagen"
+    liste_fahrzeuge.insert(1, klasse)
+
+    print("Bitte geben sie das Kennzeichen des Fahrzeugs ein:")
+    kennzeichen = input()
+    liste_fahrzeuge.insert(2, kennzeichen)
+
+    print("Bitte wählen sie die ID der Zweigstelle des Fahrzeuges: ")
+    view_zweigstelle_auswahl()
+    zweigstelle = input()
+    liste_fahrzeuge_zweigstelle = []
+    liste_fahrzeuge_zweigstelle.insert(0, zweigstelle)
+    liste_fz_st_vergleich = []
+    liste_fz_st_vergleich.insert(0, zweigstelle)
+
+    print("Bitte wählen sie den Mietpreis aus")
+    print("Folgende Mietpreise sind bereits angelegt:")
+
+    cursor.execute("SELECT * FROM fahrzeug_preis")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"Preis ID: {row[0]:5} Nettopreis: {row[1]:5}")
+
+    print("Bitte wählen Sie aus:\nNeuer Mietpreis festzulegen(0)\nVorhandener Mietpreis(1)\n")
+    mietpreis_auswahl = int(input())
+
+    if mietpreis_auswahl == 0:
+        print("Bitte geben sie den neuen Mietpreis Preis ein: ")
+    mietpreis = float(input())
+    cursor.execute("INSERT INTO fahrzeug_preis (fahrzeug_preis_netto) VALUES (%s)", (mietpreis,))
+    DB_CBM.commit()
+    mietpreis_id_1 = cursor.execute("SELECT fahrzeug_preis_id FROM fahrzeug_preis WHERE fahrzeug_preis_netto = %s limit 2",(mietpreis,)).fetchall()
+    mietpreis_id = mietpreis_id_1[0][0]
+
+    if mietpreis_auswahl == 1:
+        print("Folgende Mietpreise sind bereits angelegt: ")
+    cursor.execute("SELECT * FROM fahrzeug_preis")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"Preis_ID: {row[0]:5} Nettopreis_pro_Tag: {row[1]:5}")
+    print("Bitte wählen sie die gewünschte Preis_ID aus:")
+    mietpreis_id = int(input())
+
+
+    print("Danke für ihre Eingabe")
+    liste_fahrzeuge.append(liste_fz_st_vergleich[0])
+    liste_fahrzeuge.append(mietpreis_id)
+    tupel_fahrzeuge = tuple(liste_fahrzeuge)
+
+    cursor.execute("INSERT INTO fahrzeug (marke, klasse, kennzeichen, zweigstelle_id, fahrzeug_preis_id) VALUES( % s, % s, % s, (SELECT zweigstelle_id FROM zweigstellee WHERE zweigstelle_id = % s limit 1), % s )", tupel_fahrzeuge)
+    DB_CBM.commit()
+    cursor.execute("INSERT INTO vermiet_details (status, fahrzeug_id) VALUES (('frei'),(SELECT fahrzeug_id FROM fahrzeug WHERE kennzeichen = %s))", ((kennzeichen,)))
+    DB_CBM.commit()
+    print("Fahrzeug erfolgreich angelegt.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
+
+
     """
     print("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
     input_fahrzeug_marke = input()
     liste_fahrzeug = []
     liste_fahrzeug.insert(1, input_fahrzeug_marke)
-    print("Bitte geben Sie an um was von eine Fahrzeug Klasse es sich handelt:\n Klssen: Kleinwagen, Mittelklasse oder Grosswagen")
+    print("Bitte geben Sie an um was von eine Fahrzeug Klasse es sich handelt:\nLuxusklassn(1)\nMittelklasse(2)\nKleinwage(3)")
     input_fahrzeug_klasse = input()
     liste_fahrzeug.insert(2, input_fahrzeug_klasse)
-    print("Bitte geben Sie an ob das Auto zu verfügung steht(1) oder Nicht zu verfügung steht(0): ")
+    print("Bitte geben Sie an ob das Auto zu Verfügung steht:\nJa(1)\nNein(0)\n ")
     input_fahrzeug_status = input()
     liste_fahrzeug.insert(3, input_fahrzeug_status)
     print("Bitte geben Sie eine Kennzeichen ein, die Sie hinzufügen wollen: ")
     input_fahrzeug_kennzeichen = input()
     liste_fahrzeug.insert(4, input_fahrzeug_kennzeichen)
-    print("Bitte geben Sie an zu welcher Zweigstelle das Fahrzeug hinzufügt werden soll: ")
+    print("Bitte geben Sie an zu welcher Zweigstelle das Fahrzeug hinzufügt werden soll:\nBremen(1)\nBremen Nord(2)\nBremen Flughafen(3) ")
     input_fahrzeug_zweigstelle = input()
     liste_fahrzeug.insert(5, input_fahrzeug_zweigstelle)
     print("Bitte geben Sie an zu welchen Preis das Fahrzeug zuverfügung gestellt werden soll: ")
@@ -450,71 +558,56 @@ def FahrzeugeAnlegen():
     cursor.execute("INSERT INTO zweigstelle (zweigstellenname, strasse, hausnummer, plz_id, telefonnr, steuernummer) VALUES (%s,%s,%s,%s,%s)", tupel_fahrzeug_zweigstelle)
     cursor.execute("INSERT INTO fahrzeugn (marke, modell, klasse, status, kennzeichen, zweigstelle_id) VALUES (%s,%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_fahrzeug)
     DB_CBM.commit()
-    """
-
+    print("Fahrzeug erfolgreich angelegt.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
+"""
 
 def ZweigstellenAnlegen():
-    print(
-        "Das Zweigstellen anlegen wirt momentan einen Fehler aus, ich schaue es mir noch mal genauer an wodran es liegt.")
-    pass
-    """
-    print("Bitte geben Sie einen Zweigstellennamen an: ")
-    input_zweigstelle_zweigstellennamen = input()
+    print("Bitte geben Sie einen Zweigstellennamen an:")
+    user_input_st_zweigstellenname = input()
     liste_zweigstelle = []
-    liste_zweigstelle.insert(1, input_zweigstelle_zweigstellennamen)
-
-    print("Bitte geben Sie eine Strasse für die Zweigstelle ein: ")
-    input_zweigstelle_strasse = input()
-    liste_zweigstelle.insert(2, input_zweigstelle_strasse)
-
-    print("Bitte geben Sie eine Hausnummer für die Zweigstelle ein : ")
-    input_zweigstelle_hausnummer = input()
-    liste_zweigstelle.insert(3, input_zweigstelle_hausnummer)
-
-    print("Bitte geben Sie eine Postleitzahl für die Zweigstelle ein: ")
-    input_zweigstelle_postleitzahl = input()
-    liste_zweigstelle.insert(4, input_zweigstelle_postleitzahl)
-
-    print("Bitte geben Sie eine Telefonnummer für die Zweigstelle ein:")
-    input_zweigstelle_telefonnummer = input()
-    liste_zweigstelle.insert(5, input_zweigstelle_telefonnummer)
-
-    print("Bitte geben Sie eine Steuernummer ein:")
-    input_zweigstelle_steuernummer = input()
-    liste_zweigstelle.insert(5, input_zweigstelle_steuernummer)
-
-    liste_zweigstelle.append(liste_zweigstelle_vergleich[0])
+    liste_zweigstelle.insert(0, user_input_st_zweigstellenname)
+    print("Bitte geben sie die Strasse der Zweigstelle ein:")
+    user_input_st_strasse = input()
+    liste_zweigstelle.insert(1, user_input_st_strasse)
+    print("Bitte geben sie die Hausnummer der Zweigstelles ein:")
+    user_input_st_hausnummer = input()
+    liste_zweigstelle.insert(2, user_input_st_hausnummer)
+    print("Bitte geben sie die Postleitzahl der Zweigstelles ein:")
+    liste_zweigstelle_plz = []
+    user_input_st_postleitzahl = input()
+    liste_zweigstelle_plz.insert(0, user_input_st_postleitzahl)
+    liste_st_vergleich = []
+    liste_st_vergleich.insert(0, user_input_st_postleitzahl)
+    print("Bitte geben sie den Ort der Zweigstelles ein:")
+    user_input_st_ort = input()
+    liste_zweigstelle_plz.insert(1, user_input_st_ort)
+    print("Bitte geben sie die Telefonnummer der Zweigstelles ein:")
+    user_input_st_telefonnummer = input()
+    liste_zweigstelle.insert(3, user_input_st_telefonnummer)
+    print("Bitte geben sie die Steuernummer der Zweigstelles ein:")
+    user_input_st_steuernummer = input()
+    liste_zweigstelle.insert(4, user_input_st_steuernummer)
+    liste_zweigstelle.append(liste_st_vergleich[0])
     tupel_zweigstelle = tuple(liste_zweigstelle)
-    tupel_zweigstelle = tuple(tupel_zweigstelle)
-
-    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", tupel_zweigstelle)
-    cursor.execute("INSERT INTO zweigstellen (zweigstellennamen, strasse, hausnummer, plz_id, telefonnr, steuernummer) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_zweigstelle)
-    DB_CBM.commit()
-    """
-
-
-def liste_mietpreis_plz():
-    pass
-
-
-def MietpreiseAnlegen(tupel_mietpreis_plz=None):
-    print("Bitte geben Sie die ID des Fahrzeug an: ")
-    input_mietpreis_id = input()
-    liste_mietpreis = []
-    liste_mietpreis.insert(0, input_mietpreis_id)
-
-    print("Bitte geben Sie einen Mietpreise ein: ")
-    input_mietpreis_mietpreis = input()
-    liste_mietpreis.insert(1, input_mietpreis_mietpreis)
-
-    liste_mietpreis.append(tupel_mietpreis_plz[0])
-    tupel_mietpreis_plz = tuple(liste_mietpreis)
-    tupel_mietpreis_plz = tuple(liste_mietpreis_plz)
-
+    tupel_zweigstelle_plz = tuple(liste_zweigstelle_plz)
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", (tupel_zweigstelle_plz))
     cursor.execute(
-        "UPDATE fahrzeug_preis SET fahrzeug_preis_netto = %s WHERE fahrzeug_preis . fahrzeug_preis_id = %s )",
-        tupel_mietpreis_plz)
+        "INSERT INTO zweigstelle (zweigstellenname,strasse, hausnummer, telefonnr, steuernummer, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",
+        tupel_zweigstelle)
     DB_CBM.commit()
+    print("Zweigstelle erfolgreich angelegt.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "1":
+        sys.exit()
 
 
 # C Menü - Entfernen
