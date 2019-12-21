@@ -53,7 +53,6 @@ Fahrzeuge, Kunden, Lieferanten, Rechnungen,Zweigstellen. Konten, Mitarbeiter...
 - Kunden anlegen			**läuft**
 - Fahrzeuge anlegen		*Fehler*
 - Zweigstellen anlegen		**läuft**
-- Mietpreise anlegen		~~pass~~
 
 ###### Menü Entfernen
 --------------
