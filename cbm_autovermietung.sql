@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Dez 2019 um 23:50
+-- Erstellungszeit: 22. Dez 2019 um 10:52
 -- Server-Version: 10.4.10-MariaDB
 -- PHP-Version: 7.3.12
 
@@ -36,6 +36,14 @@ CREATE TABLE `ausgeliehen_details` (
   `fahrzeug_id` int(11) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `ausgeliehen_details`
+--
+
+INSERT INTO `ausgeliehen_details` (`ausgeliehen_id`, `kunden_id`, `verleih_anfang`, `verleih_ende`, `fahrzeug_id`, `status`) VALUES
+(1, 24, '2019-12-08', '2019-12-13', 30, '1'),
+(2, 21, '2019-12-01', '2019-12-31', 39, '0');
 
 -- --------------------------------------------------------
 
@@ -79,7 +87,7 @@ INSERT INTO `fahrzeug` (`fahrzeug_id`, `marke`, `klasse`, `status`, `kennzeichen
 (19, 'Chevrolet', '3VW4S7AT8EM819921', '0', '6767587899645374', NULL, NULL),
 (20, 'Pontiac', '2T1BU4EE0BC236536', '0', '3530756522072602', NULL, NULL),
 (21, 'Pontiac', '19UUA75627A432521', '0', '5100133035483178', NULL, NULL),
-(22, 'Mercedes-Benz', '1YVHZ8BA5A5862738', '1', '3577464645502936', NULL, NULL),
+(22, 'Mercedes-Benz', '1YVHZ8BA5A5862738', '1', '3577464645502936', 1, NULL),
 (23, 'Kia', '5TFCW5F17DX681571', '0', '3585275339965258', NULL, NULL),
 (24, 'Subaru', 'JHMZE2H36ES320775', '0', '5528928590988162', NULL, NULL),
 (25, 'Chevrolet', '1N6AF0KY0EN247872', '0', '6762978877056954', NULL, NULL),
@@ -101,13 +109,13 @@ INSERT INTO `fahrzeug` (`fahrzeug_id`, `marke`, `klasse`, `status`, `kennzeichen
 (41, 'Mazda', 'WAUAF48H19K898482', '1', '4041378600431', NULL, NULL),
 (42, 'Ferrari', '1G4HP54K034781652', '0', '4175004180761010', NULL, NULL),
 (43, 'Chevrolet', '3GYFNGEY0AS224747', '1', '3531412246920317', NULL, NULL),
-(44, 'Pontiac', 'WAUKFBFL5DA660052', '1', '3563215406081346', NULL, NULL),
+(44, 'Pontiac', 'WAUKFBFL5DA660052', '1', '3563215406081346', 1, NULL),
 (45, 'Suzuki', 'JH4KB16697C496976', '1', '5579722850578195', NULL, NULL),
 (46, 'Hummer', 'YV4940BZ2E1735567', '1', '633110994181412601', NULL, NULL),
 (47, 'Volkswagen', 'WAUJF78K49N904867', '0', '3577699494508415', NULL, NULL),
 (48, 'Hyundai', 'WBALZ5C59CD749574', '0', '4041376027405', NULL, NULL),
 (49, 'Mitsubishi', '1G4GC5G36FF961304', '0', '3532483308894558', NULL, NULL),
-(50, 'Land Rover', 'WAUGL58E85A981390', '0', '3548846848040159', NULL, NULL);
+(50, 'Land Rover', 'WAUGL58E85A981390', '0', '3548846848040159', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,7 +182,17 @@ INSERT INTO `fahrzeug_preis` (`fahrzeug_preis_id`, `fahrzeug_preis_netto`) VALUE
 (47, 1648),
 (48, 164),
 (49, 145),
-(50, 160);
+(50, 160),
+(53, 250),
+(54, 246),
+(55, 50),
+(56, 2),
+(57, 164),
+(58, 54),
+(59, 466),
+(60, 59),
+(61, 55),
+(62, 164);
 
 -- --------------------------------------------------------
 
@@ -276,7 +294,8 @@ INSERT INTO `mitarbeiter` (`mitarbeiter_id`, `nachname`, `vorname`, `strasse`, `
 (44, 'Munford', 'Kristal', 'Grover', 91, NULL, '7272878926'),
 (45, 'Roskam', 'Jo-anne', 'Eastwood', 73492, NULL, '5893035934'),
 (47, 'Jope', 'Allayne', 'Victoria', 19, NULL, '4637850275'),
-(49, 'Schiefersten', 'Georgina', 'Westport', 57, NULL, '2509215441');
+(49, 'Schiefersten', 'Georgina', 'Westport', 57, NULL, '2509215441'),
+(50, 'ddd', 'ss', 'dd', 33, 51, '424');
 
 -- --------------------------------------------------------
 
@@ -344,7 +363,12 @@ INSERT INTO `plz_id` (`plz_id`, `plz`, `ort`) VALUES
 (47, '7165', 'Villa Gesell'),
 (48, NULL, 'Baalbek'),
 (49, NULL, 'Teongtoda'),
-(50, NULL, 'Taokeng');
+(50, NULL, 'Taokeng'),
+(51, '322', 'sd'),
+(52, '4', '5'),
+(54, 'd', 'd'),
+(55, 's', 's'),
+(56, '', '');
 
 -- --------------------------------------------------------
 
@@ -412,7 +436,8 @@ CREATE TABLE `zweigstelle` (
 INSERT INTO `zweigstelle` (`zweigstellen_id`, `zweigstellenname`, `strasse`, `hausnummer`, `plz_id`, `telefonnr`, `steuernummer`) VALUES
 (1, 'Bremen', 'Kornstrasse', 50, 1, 468545, '457896435678'),
 (2, 'Bremen-Nord', 'Kreinsloger', 103, 2, 46821685, '946255862164'),
-(3, 'Bremen Flughafen', 'Flugzeugstr', 1, 4, 1234567, '25468952136');
+(3, 'Bremen Flughafen', 'Flugzeugstr', 1, 4, 1234567, '25468952136'),
+(4, 's', 'd', 0, 54, 0, 'd');
 
 -- --------------------------------------------------------
 
@@ -518,7 +543,7 @@ ALTER TABLE `zweigstelle_mitarbeiter`
 -- AUTO_INCREMENT für Tabelle `ausgeliehen_details`
 --
 ALTER TABLE `ausgeliehen_details`
-  MODIFY `ausgeliehen_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ausgeliehen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `fahrzeug`
@@ -530,7 +555,7 @@ ALTER TABLE `fahrzeug`
 -- AUTO_INCREMENT für Tabelle `fahrzeug_preis`
 --
 ALTER TABLE `fahrzeug_preis`
-  MODIFY `fahrzeug_preis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `fahrzeug_preis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT für Tabelle `kunden`
@@ -542,13 +567,13 @@ ALTER TABLE `kunden`
 -- AUTO_INCREMENT für Tabelle `mitarbeiter`
 --
 ALTER TABLE `mitarbeiter`
-  MODIFY `mitarbeiter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `mitarbeiter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT für Tabelle `plz_id`
 --
 ALTER TABLE `plz_id`
-  MODIFY `plz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `plz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT für Tabelle `rechnung`
@@ -560,7 +585,7 @@ ALTER TABLE `rechnung`
 -- AUTO_INCREMENT für Tabelle `zweigstelle`
 --
 ALTER TABLE `zweigstelle`
-  MODIFY `zweigstellen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `zweigstellen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints der exportierten Tabellen
