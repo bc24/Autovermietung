@@ -18,7 +18,6 @@ Zufall Datensaätze                  -   https://mockaroo.com/
 
 # Importe
 from typing import Tuple
-
 import mysql
 from mysql.connector import cursor, connection
 import sys
@@ -37,15 +36,15 @@ def DatenbankenVerbindung():
     )
 
     # DatenbankenVerbindung()
-    # mycursor Cursor holen
-    mycursor = DB_CBM.cursor()
+    # cursor Cursor holen
+    cursor = DB_CBM.cursor()
 
     # cbm_Autovermietung Datenbank anlegen
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
+    cursor.execute("CREATE DATABASE IF NOT EXISTS cbm_Autovermietung")
 
     # Überprüfen ob Datenbank schon existiert
-    mycursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
-    for x in mycursor:
+    cursor.execute("SHOW DATABASES LIKE 'cbm_A%'")
+    for x in cursor:
         print("Vorhandene Datenbank", x)
 
     return DB_CBM
@@ -122,41 +121,41 @@ cursor.execute("INSERT INTO fahrzeug (fahrzeug_id, marke, klasse, status, kennze
 
 # Menüs
 def willkommen():
-    choice = input("""
-    _______________WILLKOMMEN_______________
-    |                 im                   |
-    |   Python Projekt - Autovermietung    |
-    |   2019 Copyright by. Frank Panzer    |
-    |                                      |
-    | Es werden alle Funktionen geladen... |
-    | Es werden alle Datensätze geladen... |
-    |                                      |
-    |         Drücken Sie ENTER            |
-    |  um alle Funktionen und Datensätze   |
-    |  einzuspielen und ins Hauptmenü zu   |
-    |  zu gelangen!                        |
-    |______________________________________|
-     """)
+    choice = input("\n"
+                   "    _______________WILLKOMMEN_______________\n"
+                   "    |                 im                   |\n"
+                   "    |   Python Projekt - Autovermietung    |\n"
+                   "    |   2019 Copyright by. Frank Panzer    |\n"
+                   "    |                                      |\n"
+                   "    | Es werden alle Funktionen geladen... |\n"
+                   "    | Es werden alle Datensätze geladen... |\n"
+                   "    |                                      |\n"
+                   "    |         Drücken Sie ENTER            |\n"
+                   "    |  um alle Funktionen und Datensätze   |\n"
+                   "    |  einzuspielen und ins Hauptmenü zu   |\n"
+                   "    |  zu gelangen!                        |\n"
+                   "    |______________________________________|\n"
+                   "     ")
     print("\t Aktuelles Dateum und Uhrzeit")
     print(time.strftime("\t\t %d.%m.%Y %H:%M:%S"))
     time.sleep(2)
 
 
 # H Menü
-def hmenu():
-    choice = input("""
-    ____________HAUPTMENUE______________
-    |       A: Auflisten               |
-    |       B: Anlegen                 |
-    |       C: Entfernen               |
-    |       D: Bearbeiten              |
-    |       E: Kunden Optionen         |
-    |----------------------------------|
-    |       0: Beenden                 |
-    |                                  |
-    |__________________©_Frank_Panzer__|
-
-    Bitte treffe eine Wahl: """)
+def hmenu() -> object:
+    choice = input("\n"
+                   "    ____________HAUPTMENUE______________\n"
+                   "    |       A: Auflisten               |\n"
+                   "    |       B: Anlegen                 |\n"
+                   "    |       C: Entfernen               |\n"
+                   "    |       D: Bearbeiten              |\n"
+                   "    |       E: Kunden Optionen         |\n"
+                   "    |----------------------------------|\n"
+                   "    |       0: Beenden                 |\n"
+                   "    |                                  |\n"
+                   "    |__________________©_Frank_Panzer__|\n"
+                   "\n"
+                   "    Bitte treffe eine Wahl: ")
 
     if choice == "A" or choice == "a":
         Auflisten()
@@ -198,19 +197,19 @@ def KundenOptionen():
 
 # A Menü - Auflisten
 def amenue():
-    choice = input("""
-        _________AUFLISTEN_MENÜ_____________
-        |       A: Mitarbeiter auflisten   |
-        |       B: Kunden auflisten        |
-        |       C: Fahrzeuge auflisten     |
-        |       D: Zweigstellen auflisten  |
-        |----------------------------------|
-        |       1: Hauptmenü               |
-        |       0: Beenden                 |
-        |                                  |
-        |__________________©_Frank_Panzer__|
-
-        Bitte treffe eine Wahl: """)
+    choice = input("\n"
+                   "        _________AUFLISTEN_MENÜ_____________\n"
+                   "        |       A: Mitarbeiter auflisten   |\n"
+                   "        |       B: Kunden auflisten        |\n"
+                   "        |       C: Fahrzeuge auflisten     |\n"
+                   "        |       D: Zweigstellen auflisten  |\n"
+                   "        |----------------------------------|\n"
+                   "        |       1: Hauptmenü               |\n"
+                   "        |       0: Beenden                 |\n"
+                   "        |                                  |\n"
+                   "        |__________________©_Frank_Panzer__|\n"
+                   "\n"
+                   "        Bitte treffe eine Wahl: ")
 
     if choice == "A" or choice == "a":
         MitarbeiterAuflisten()
@@ -248,7 +247,7 @@ def MitarbeiterAuflisten():
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 
@@ -269,7 +268,7 @@ def KundenAuflisten():
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 # Alle Fahrzeuge anzeigen
@@ -289,7 +288,7 @@ def FahrzeugeAuflisten():
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 # Alle Zweigstellen anzeigen
@@ -308,24 +307,24 @@ def ZweigstellenAuflisten():
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 # B Menü - Anlegen
 def bmenue():
-    choice = input("""
-        ___________ANLEGEN_MENÜ_____________
-        |       A: Mitarbeiter anlegen     |
-        |       B: Kunden anlegen          |
-        |       C: Fahrzeuge anlegen       |
-        |       D: Zweigstellen anlegen    |
-        |----------------------------------|
-        |       1: Hauptmenü               |
-        |       0: Beenden                 |
-        |                                  |
-        |__________________©_Frank_Panzer__|
-
-        Bitte treffe eine Wahl: """)
+    choice = input('\n'
+                   '        ___________ANLEGEN_MENÜ_____________\n'
+                   '        |       A: Mitarbeiter anlegen     |\n'
+                   '        |       B: Kunden anlegen          |\n'
+                   '        |       C: Fahrzeuge anlegen       |\n'
+                   '        |       D: Zweigstellen anlegen    |\n'
+                   '        |----------------------------------|\n'
+                   '        |       1: Hauptmenü               |\n'
+                   '        |       0: Beenden                 |\n'
+                   '        |                                  |\n'
+                   '        |__________________©_Frank_Panzer__|\n'
+                   '\n'
+                   '        Bitte treffe eine Wahl: ')
 
     if choice == "A" or choice == "a":
         MitarbeiterAnlegen()
@@ -393,7 +392,7 @@ def MitarbeiterAnlegen():
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 
@@ -445,14 +444,14 @@ def KundenAnlegen():
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 def view_zweigstelle_auswahl():
     cursor.execute("SELECT * FROM zweigstelle")
     result = cursor.fetchall()
     for row in result:
-        print(f"zweigstelle_ID: {row[0]:5} zweigstellename: {row[1]:10}  ")
+        print(f"zweigstellen_ID: {row[0]:5} zweigstellename: {row[1]:10}  ")
 
 # Neue Fahrzeuge einfügen
 def FahrzeugeAnlegen():
@@ -476,7 +475,6 @@ def FahrzeugeAnlegen():
     print("Bitte geben sie das Kennzeichen des Fahrzeugs ein:")
     kennzeichen = input()
     liste_fahrzeuge.insert(2, kennzeichen)
-
     print("Bitte wählen sie die ID der Zweigstelle des Fahrzeuges: ")
     view_zweigstelle_auswahl()
     zweigstelle = input()
@@ -512,60 +510,22 @@ def FahrzeugeAnlegen():
         print(f"Preis_ID: {row[0]:5} Nettopreis_pro_Tag: {row[1]:5}")
     print("Bitte wählen sie die gewünschte Preis_ID aus:")
     mietpreis_id = int(input())
-
-
-    print("Danke für ihre Eingabe")
     liste_fahrzeuge.append(liste_fz_st_vergleich[0])
     liste_fahrzeuge.append(mietpreis_id)
     tupel_fahrzeuge = tuple(liste_fahrzeuge)
 
-    cursor.execute("INSERT INTO fahrzeug (marke, klasse, kennzeichen, zweigstelle_id, fahrzeug_preis_id) VALUES( % s, % s, % s, (SELECT zweigstelle_id FROM zweigstellee WHERE zweigstelle_id = % s limit 1), % s )", tupel_fahrzeuge)
+    cursor.execute("INSERT INTO fahrzeug (marke, klasse, kennzeichen, zweigstellen_id, fahrzeug_preis_id) VALUES( % s, % s, % s, (SELECT zweigstellen_id FROM zweigstellee WHERE zweigstellen_id = % s limit 1), % s )", tupel_fahrzeuge)
     DB_CBM.commit()
-    cursor.execute("INSERT INTO vermiet_details (status, fahrzeug_id) VALUES (('frei'),(SELECT fahrzeug_id FROM fahrzeug WHERE kennzeichen = %s))", ((kennzeichen,)))
-    DB_CBM.commit()
-    print("Fahrzeug erfolgreich angelegt.")
-    print("")
-    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
-    if choice == "1":
-        hmenu()
-    elif choice == "1":
-        sys.exit()
-
-
-    """
-    print("Bitte geben Sie eine Fahrzeugmarke ein, die Sie hinzufügen wollen: ")
-    input_fahrzeug_marke = input()
-    liste_fahrzeug = []
-    liste_fahrzeug.insert(1, input_fahrzeug_marke)
-    print("Bitte geben Sie an um was von eine Fahrzeug Klasse es sich handelt:\nLuxusklassn(1)\nMittelklasse(2)\nKleinwage(3)")
-    input_fahrzeug_klasse = input()
-    liste_fahrzeug.insert(2, input_fahrzeug_klasse)
-    print("Bitte geben Sie an ob das Auto zu Verfügung steht:\nJa(1)\nNein(0)\n ")
-    input_fahrzeug_status = input()
-    liste_fahrzeug.insert(3, input_fahrzeug_status)
-    print("Bitte geben Sie eine Kennzeichen ein, die Sie hinzufügen wollen: ")
-    input_fahrzeug_kennzeichen = input()
-    liste_fahrzeug.insert(4, input_fahrzeug_kennzeichen)
-    print("Bitte geben Sie an zu welcher Zweigstelle das Fahrzeug hinzufügt werden soll:\nBremen(1)\nBremen Nord(2)\nBremen Flughafen(3) ")
-    input_fahrzeug_zweigstelle = input()
-    liste_fahrzeug.insert(5, input_fahrzeug_zweigstelle)
-    print("Bitte geben Sie an zu welchen Preis das Fahrzeug zuverfügung gestellt werden soll: ")
-    input_fahrzeug_mietpreis = input()
-    liste_fahrzeug.insert(6, input_fahrzeug_mietpreis)
-    liste_fahrzeug.append(liste_fahrzeug[0])
-    tupel_fahrzeug = tuple(liste_fahrzeug)
-    tupel_fahrzeug_zweigstelle = tuple(tupel_fahrzeug)
-    cursor.execute("INSERT INTO zweigstelle (zweigstellenname, strasse, hausnummer, plz_id, telefonnr, steuernummer) VALUES (%s,%s,%s,%s,%s)", tupel_fahrzeug_zweigstelle)
-    cursor.execute("INSERT INTO fahrzeugn (marke, modell, klasse, status, kennzeichen, zweigstelle_id) VALUES (%s,%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",tupel_fahrzeug)
+    cursor.execute("INSERT INTO ausgeliehen_details (status, fahrzeug_id) VALUES (('frei'),(SELECT fahrzeug_id FROM fahrzeug WHERE kennzeichen = %s))", ((kennzeichen,)))
     DB_CBM.commit()
     print("Fahrzeug erfolgreich angelegt.")
     print("")
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
-"""
+
 
 def ZweigstellenAnlegen():
     print("Bitte geben Sie einen Zweigstellennamen an:")
@@ -597,34 +557,33 @@ def ZweigstellenAnlegen():
     tupel_zweigstelle = tuple(liste_zweigstelle)
     tupel_zweigstelle_plz = tuple(liste_zweigstelle_plz)
     cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", (tupel_zweigstelle_plz))
-    cursor.execute(
-        "INSERT INTO zweigstelle (zweigstellenname,strasse, hausnummer, telefonnr, steuernummer, plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))",
-        tupel_zweigstelle)
+    cursor.execute("INSERT INTO zweigstelle (zweigstellenname,strasse, hausnummer, telefonnr, steuernummer, "
+                   "plz_id) VALUES (%s,%s,%s,%s,%s, (SELECT plz_id FROM plz_id WHERE plz = %s limit 1))", tupel_zweigstelle)
     DB_CBM.commit()
     print("Zweigstelle erfolgreich angelegt.")
     print("")
     choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
     if choice == "1":
         hmenu()
-    elif choice == "1":
+    elif choice == "0":
         sys.exit()
 
 
 # C Menü - Entfernen
 def cmenue():
-    choice = input("""
-        ___________ENTFERNEN_MENUE__________
-        |       A: Mitarbeiter entfernen   |
-        |       B: Kunden entfernen        |
-        |       C: Fahrzeuge entfernen     |
-        |       D: Zweigstellen entfernen  |
-        |----------------------------------|
-        |       1: Hauptmenü               |
-        |       0: Beenden                 |
-        |                                  |
-        |__________________©_Frank_Panzer__|
-
-        Bitte treffe eine Wahl: """)
+    choice = input("\n"
+                   "        ___________ENTFERNEN_MENUE__________\n"
+                   "        |       A: Mitarbeiter entfernen   |\n"
+                   "        |       B: Kunden entfernen        |\n"
+                   "        |       C: Fahrzeuge entfernen     |\n"
+                   "        |       D: Zweigstellen entfernen  |\n"
+                   "        |----------------------------------|\n"
+                   "        |       1: Hauptmenü               |\n"
+                   "        |       0: Beenden                 |\n"
+                   "        |                                  |\n"
+                   "        |__________________©_Frank_Panzer__|\n"
+                   "\n"
+                   "        Bitte treffe eine Wahl: ")
 
     if choice == "A" or choice == "a":
         MitarbeiterEntfernen()
@@ -667,7 +626,12 @@ def MitarbeiterEntfernen():
     DB_CBM.commit()
     os.system("cls")
     print("Der Mitarbeiter wurde erfolgreich gelöscht.")
-
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 def KundenEntfernen():
     os.system("cls")
@@ -690,6 +654,12 @@ def KundenEntfernen():
     DB_CBM.commit()
     os.system("cls")
     print("Der Kunde wurde erfolgreich gelöscht.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 def FahrzeugeEntfernen():
@@ -712,6 +682,12 @@ def FahrzeugeEntfernen():
     DB_CBM.commit()
     os.system("cls")
     print("Das Fahrzeug wurde erfolgreich gelöscht.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 def ZweigstellenEntfernen():
@@ -735,23 +711,28 @@ def ZweigstellenEntfernen():
     DB_CBM.commit()
     os.system("cls")
     print("Die Zweigstelle wurde erfolgreich gelöscht.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 # D Menü Bearbeiten
 def dmenue():
-    choice = input("""
-        _________BEARBEITEN_MENUE___________
-        |       A: Mitarbeiter bearbeiten  |
-        |       B: Kunden bearbeiten       |
-        |       C: Fahrzeuge bearbeiten    |
-        |       D: Mitpreise bearbeiten    |
-        |----------------------------------|
-        |       1: Hauptmenü               |
-        |       0: Beenden                 |
-        |                                  |
-        |__________________©_Frank_Panzer__|
-
-        Bitte treffe eine Wahl: """)
+    choice = input("\n"
+                   "        _________BEARBEITEN_MENUE___________\n"
+                   "        |       A: Mitarbeiter bearbeiten  |\n"
+                   "        |       B: Kunden bearbeiten       |\n"
+                   "        |       C: Fahrzeuge bearbeiten    |\n"
+                   "        |----------------------------------|\n"
+                   "        |       1: Hauptmenü               |\n"
+                   "        |       0: Beenden                 |\n"
+                   "        |                                  |\n"
+                   "        |__________________©_Frank_Panzer__|\n"
+                   "\n"
+                   "        Bitte treffe eine Wahl: ")
 
     if choice == "A" or choice == "a":
         MitarbeiterBearbeiten()
@@ -759,8 +740,6 @@ def dmenue():
         KundenBearbeiten()
     elif choice == "C" or choice == "c":
         FahrzeugeBearbeiten()
-    elif choice == "D" or choice == "d":
-        MitpreiseBearbeiten()
     elif choice == "1" or choice == "eins":
         hmenu()
     elif choice == "0" or choice == "0":
@@ -773,56 +752,255 @@ def dmenue():
 
 
 def MitarbeiterBearbeiten():
-    try:
-        pass
-    except:
-        print("Fehler ein Mitglied konnte nicht bearbeitet werden.")
+    print("Folgende Mitarbeiter sind vorhanden:")
+    cursor.execute("SELECT * FROM mitarbeiter INNER JOIN plz_id ON mitarbeiter.plz_id=plz_id.plz_id INNER JOIN zweigstelle ON mitarbeiter.zweigstellen_id=zweigstelle.zweigstellen_id")
+    result = cursor.fetchall()
+    for row in result:
+        print(
+            f"MA_ID: {row[0]:4} Nachname: {row[1]:12} Vorname: {row[2]:12} Strasse: {row[3]:12} Hausnr.: {row[4]:4} PLZ: {row[9]:6} Ort: {row[10]:12} Telefon: {row[6]:15} Standort: {row[12]:10}")
+    print("Bitte wählen sie die Mitarbeiter_ID (MA_ID) des Mitarbeiters dessen Daten sie ändern möchten")
+    mitarbeiter_id = input()
+    print("Bitte geben Sie den Nachnamen des Mitarbeiters ein:")
+    user_input_m_nachname = input()
+    print("Bitte geben sie den Vornamen des Mitarbeiters ein:")
+    user_input_m_vorname = input()
+    print("Bitte geben sie die Strasse des Mitarbeiters ein:")
+    user_input_m_strasse = input()
+    print("Bitte geben sie die Hausnummer des Mitarbeiters ein:")
+    user_input_m_hausnummer = input()
+    print("Bitte geben sie die Postleitzahl des Mitarbeiters ein:")
+    liste_mitarbeiter_plz = []
+    user_input_m_postleitzahl = input()
+    liste_mitarbeiter_plz.insert(0, user_input_m_postleitzahl)
+    print("Bitte geben sie den Wohnort des Mitarbeiters ein:")
+    user_input_m_wohnort = input()
+    liste_mitarbeiter_plz.insert(1, user_input_m_wohnort)
+    print("Bitte geben sie die Telefonnummer des Mitarbeiter ein:")
+    user_input_m_telefonnummer = input()
+    print("Folgende zweigstelle sind verfügbar:")
+    cursor.execute("SELECT zweigstellen_id, Zweigstellenname FROM zweigstelle")
+    result = cursor.fetchall()
+    for row in result:
+        print(f" zweigstellen_id:{row[0]:5} Zweigstellenname: {row[1]:20}")
+    print("Bitte wählen sie die zweigstellen_id des zweigstelle an dem der Mitarbeiter beschäftigt ist:")
+    user_input_standortid = input()
+    liste_mitarbeiter = []
+    liste_mitarbeiter.append(user_input_m_nachname)
+    liste_mitarbeiter.append(user_input_m_vorname)
+    liste_mitarbeiter.append(user_input_m_strasse)
+    liste_mitarbeiter.append(user_input_m_hausnummer)
+    liste_mitarbeiter.append(user_input_m_telefonnummer)
+    liste_mitarbeiter.append(user_input_standortid)
+    liste_mitarbeiter.append(user_input_m_postleitzahl)
+    liste_mitarbeiter.append(user_input_m_wohnort)
+    liste_mitarbeiter.append(mitarbeiter_id)
+    liste_mitarbeiter_standort = []
+    liste_mitarbeiter_standort.append(user_input_standortid)
+    liste_mitarbeiter_standort.append(mitarbeiter_id)
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", (liste_mitarbeiter_plz))
+    DB_CBM.commit()
+    cursor.execute(
+        """UPDATE mitarbeiter SET nachname=%s, vorname=%s, strasse=%s, hausnummer=%s, telefonnr=%s, zweigstellen_id=%s, plz_id=(SELECT plz_id FROM plz_id WHERE plz=%s AND ort=%s) WHERE mitarbeiter_id=%s",
+        (liste_mitarbeiter))
+    DB_CBM.commit()
+    cursor.execute("UPDATE zweigstelle_mitarbeiter SET zweigstellen_id =%s WHERE mitarbeiter_id=%s",
+                   (liste_mitarbeiter_standort))
+    DB_CBM.commit()
+    _id
+    """)
+    result = cursor.fetchall()
+    for row in result:
+        print(
+            f"Mitarbeiter_ID: {row[0]:4} Nachname: {row[1]:12} Vorname: {row[2]:12} Strasse: {row[3]:12} Hausnr.: {row[4]:4} PLZ: {row[9]:6} Ort: {row[10]:12} Telefon: {row[6]:15} Standort: {row[12]:10}")
+    print("Bitte wählen sie die Mitarbeiter_ID des Mitarbeiters dessen Daten sie ändern möchten")
+    mitarbeiter_id = input()
+    print("Bitte geben Sie den Nachnamen des Mitarbeiters ein:")
+    user_input_m_nachname = input()
+    print("Bitte geben sie den Vornamen des Mitarbeiters ein:")
+    user_input_m_vorname = input()
+    print("Bitte geben sie die Strasse des Mitarbeiters ein:")
+    user_input_m_strasse = input()
+    print("Bitte geben sie die Hausnummer des Mitarbeiters ein:")
+    user_input_m_hausnummer = input()
+    print("Bitte geben sie die Postleitzahl des Mitarbeiters ein:")
+    liste_mitarbeiter_plz = []
+    user_input_m_postleitzahl = input()
+    liste_mitarbeiter_plz.insert(0, user_input_m_postleitzahl)
+    print("Bitte geben sie den Wohnort des Mitarbeiters ein:")
+    user_input_m_wohnort = input()
+    liste_mitarbeiter_plz.insert(1, user_input_m_wohnort)
+    print("Bitte geben sie die Telefonnummer des Mitarbeiter ein:")
+    user_input_m_telefonnummer = input()
+    print("Folgende zweigstelle sind verfügbar:")
+    cursor.execute("SELECT zweigstellen_id, Zweigstellenname FROM zweigstelle")
+    result = cursor.fetchall()
+    for row in result:
+        print(f" zweigstellen_id:{row[0]:5} Zweigstellenname: {row[1]:20}")
+    print("Bitte wählen sie die zweigstellen_id des zweigstelle an dem der Mitarbeiter beschäftigt ist:")
+    user_input_standortid = input()
+    liste_mitarbeiter = []
+    liste_mitarbeiter.append(user_input_m_nachname)
+    liste_mitarbeiter.append(user_input_m_vorname)
+    liste_mitarbeiter.append(user_input_m_strasse)
+    liste_mitarbeiter.append(user_input_m_hausnummer)
+    liste_mitarbeiter.append(user_input_m_telefonnummer)
+    liste_mitarbeiter.append(user_input_standortid)
+    liste_mitarbeiter.append(user_input_m_postleitzahl)
+    liste_mitarbeiter.append(user_input_m_wohnort)
+    liste_mitarbeiter.append(mitarbeiter_id)
+    liste_mitarbeiter_standort = []
+    liste_mitarbeiter_standort.append(user_input_standortid)
+    liste_mitarbeiter_standort.append(mitarbeiter_id)
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", (liste_mitarbeiter_plz))
+    DB_CBM.commit()
+    cursor.execute(
+        "UPDATE mitarbeiter SET nachname=%s, vorname=%s, strasse=%s, hausnummer=%s, telefonnr=%s, zweigstellen_id=%s, plz_id=(SELECT plz_id FROM plz_id WHERE plz=%s AND ort=%s) WHERE mitarbeiter_id=%s",
+        (liste_mitarbeiter))
+    DB_CBM.commit()
+    cursor.execute("UPDATE zweigstelle_mitarbeiter SET zweigstellen_id =%s WHERE mitarbeiter_id=%s",
+                   (liste_mitarbeiter_standort))
+    DB_CBM.commit()
+    print("Der Mitarbeiter wurde erfolgreich bearbeitet.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 def KundenBearbeiten():
-    try:
-        pass
-    except:
-        print("Fehler ein Kunde konnte nicht bearbeitet werden.")
-
+    print("Folgende Kunden sind vorhanden:")
+    cursor.execute("SELECT * FROM kunden INNER JOIN plz_id ON kunden.plz_id=plz_id.plz_id")
+    result = cursor.fetchall()
+    for row in result:
+        print(
+            f"Kunden_ID: {row[0]:5} Nachname: {row[1]:15} Vorname: {row[2]:15} Strasse: {row[3]:15} Hausnr.: {row[4]:5} PLZ: {row[8]:8} Ort: {row[9]:15} Telefon: {row[6]:15}")
+    print("Bitte wählen sie die Kunden_ID des zu ändernden Kunden:")
+    kunde_id = input()
+    liste_kunde_1 = []
+    print("Bitte geben sie den Nachnamen des Kunden ein:")
+    user_input_k_nachname = input()
+    liste_kunde_1.insert(0, user_input_k_nachname)
+    print("Bitte geben sie den Vornamen des Kunden ein:")
+    user_input_k_vorname = input()
+    liste_kunde_1.insert(1, user_input_k_vorname)
+    print("Bitte geben sie die Strasse des Kunden ein:")
+    user_input_k_strasse = input()
+    liste_kunde_1.insert(2, user_input_k_strasse)
+    print("Bitte geben sie die Hausnummer des Kunden ein:")
+    user_input_k_hausnummer = input()
+    liste_kunde_1.insert(3, user_input_k_hausnummer)
+    print("Bitte geben sie die Postleitzahl des Kunden ein:")
+    liste_kunde_plz = []
+    user_input_k_postleitzahl = input()
+    liste_kunde_1.insert(5, user_input_k_postleitzahl)
+    liste_kunde_plz.insert(0, user_input_k_postleitzahl)
+    print("Bitte geben sie den Wohnort des Kunden ein:")
+    user_input_k_wohnort = input()
+    liste_kunde_1.insert(6, user_input_k_wohnort)
+    liste_kunde_plz.insert(1, user_input_k_wohnort)
+    print("Bitte geben sie die Telefonnummer des Kunden ein:")
+    user_input_k_telefonnummer = input()
+    liste_kunde_1.insert(4, user_input_k_telefonnummer)
+    liste_kunde_1.insert(7, kunde_id)
+    cursor.execute("INSERT INTO plz_id (plz, ort) VALUES (%s,%s)", (liste_kunde_plz))
+    cursor.execute(
+        "UPDATE kunden SET nachname=%s, vorname=%s, strasse=%s, hausnummer=%s, telefonnr=%s, plz_id=(SELECT plz_id FROM plz_id WHERE plz=%s AND ort=%s) WHERE kunden_id=%s",
+        (liste_kunde_1))
+    DB_CBM.commit()
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 def FahrzeugeBearbeiten():
-    try:
-        pass
-    except:
-        print("Fehler ein Fahrzeug konnte nicht bearbeitet werden.")
-
-
-def MitpreiseBearbeiten():
-    print("Mietpreise lassen sich noch nicht ändern. Wird noch überarbeitet.")
-    pass
-    """
-    os.system("cls")
-    cursor = DB_CBM.cursor()
-    Mitpreis_input = print("Bitte gebe die ID vom Fahrzeug ein welches du bearbeiten willst: ")
-    Mitpreis_input = ()
-    cursor.execute("UPDATE fahrzeug_preis SET fahrzeug_preis_netto = " + {
-        Mitpreis_input} + " WHERE fahrzeug_preis.fahrzeug_preis_id = (%s)")
+    print("Folgende Fahrzeuge sind vorhanden:")
+    cursor.execute(
+        "SELECT * FROM fahrzeug INNER JOIN zweigstelle ON fahrzeug.zweigstelle_ID = zweigstelle.zweigstelle_ID INNER JOIN fahrzeug_preis ON Fahrzeug.fahrzeug_preis_id = fahrzeug_preis.Fahrzeug_preis_id")
     result = cursor.fetchall()
-    """
+    for row in result:
+        print(
+            f"Fahrzeug_ID: {str(row[0]):5} Marke: {str(row[1]):18} Klasse: {str(row[2]):15} Kennzeichen: {str(row[3]):15} Standort: {str(row[7]):} Tagespreis netto: {str(row[14]):20} ")
+    print("Bitte wählen sie die Fahrzeug_ID des zu ändernden Fahrzeugs:")
+    liste_fahrzeuge = []
+    Fahrzeug_id = input()
+    liste_fahrzeuge.insert(5, Fahrzeug_id)
+    print("Bitte geben sie die Marke des Fahrzeugs ein:")
+    marke = input()
+    liste_fahrzeuge.insert(0, marke)
+    print(
+        "Bitte wählen sie die Klasse des Fahrzeugs aus (1) für Luxusklasse, (2) für Mittelklasse, (3) für Kleinwagen:")
+    klasse_input = int(input())
+    if klasse_input == 1:
+        klasse = "Luxusklasse"
+    if klasse_input == 2:
+        klasse = "Mittelklasse"
+    if klasse_input == 3:
+        klasse = "Kleinwagen"
+    liste_fahrzeuge.insert(1, klasse)
+    print("Bitte geben sie das Kennzeichen des Fahrzeugs ein:")
+    kennzeichen = input()
+    liste_fahrzeuge.insert(2, kennzeichen)
+    print("Bitte wählen sie den Standort des Fahrzeugs (zur Auswahl nutzen sie bitte die Zweigstelle_ID):")
+    view_zweigstelle_auswahl()
+    standort = input()
+    liste_fahrzeuge.insert(3, standort)
+    print("Bitte wählen sie den Mietpreis aus")
+    print("Folgende Mietpreise sind bereits angelegt: ")
+    cursor.execute("SELECT * FROM Fahrzeug_preis")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"Preis_ID: {row[0]:5} Nettopreis: {row[1]:5}")
+    print("Um einen neuen Mietpreis festzulegen, geben sie bitte die (0) ein, um einen bereits festgelegten Preis zu nutzen geben sie bitte die(1) ein: ")
+    mietpreis_auswahl = int(input())
+    if mietpreis_auswahl == 0:
+        print("Bitte geben sie den gewünschten Preis an:")
+    mietpreis = float(input())
+    cursor.execute("INSERT INTO Fahrzeug_preis (Fahrzeug_preis_netto) VALUES (%s)", (mietpreis,))
+    DB_CBM.commit()
+    cursor.execute("SELECT Fahrzeug_preis_id FROM Fahrzeug_preis WHERE Fahrzeug_preis_netto = %s limit 1", (mietpreis,))
+    result = cursor.fetchone()
+    mietpreis_id = result[0]
+    if mietpreis_auswahl == 1:
+        print("Folgende Mietpreise sind bereits angelegt:")
+    cursor.execute("SELECT * FROM Fahrzeug_preis")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"Preis_ID: {row[0]:5} Nettopreis_pro_Tag: {row[1]:5}")
+    print("Bitte wählen sie die gewünschte Preis_ID aus:")
+    mietpreis_id = int(input())
+    liste_fahrzeuge.insert(4, mietpreis_id)
+    cursor.execute(
+        "UPDATE Fahrzeug SET marke=%s, klasse=%s, kennzeichen=%s, Zweigstelle_ID=%s, Fahrzeug_preis_id=%s WHERE Fahrzeug_id=%s",
+        liste_fahrzeuge)
+    DB_CBM.commit()
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 # E Menü - Kunden Optionen
 def emenue():
-    choice = input("""
-        _________KUNDEN_OPTIONEN___________________
-        |       A: Fahrzeug Ausleihen              |
-        |       B: Fahrzeug Zurückgeben            |
-        |       C: Fahrzeug sotieren nach Status   |
-        |       D: Fahrzeug sotieren nach Modell   |
-        |       E: Schadensbericht einreichen      |
-        |------------------------------------------|
-        |       1: Hauptmenü                       |
-        |       0: Beenden                         |
-        |                                          |
-        |__________________________©_Frank_Panzer__|
-
-        Bitte treffe eine Wahl: """)
+    choice = input("\n"
+                   "        _________KUNDEN_OPTIONEN___________________\n"
+                   "        |       A: Fahrzeug Ausleihen              |\n"
+                   "        |       B: Fahrzeug Zurückgeben            |\n"
+                   "        |       C: Fahrzeug sotieren nach Status   |\n"
+                   "        |       D: Fahrzeug sotieren nach Modell   |\n"
+                   "        |       E: Schadensbericht einreichen      |\n"
+                   "        |------------------------------------------|\n"
+                   "        |       1: Hauptmenü                       |\n"
+                   "        |       0: Beenden                         |\n"
+                   "        |                                          |\n"
+                   "        |__________________________©_Frank_Panzer__|\n"
+                   "\n"
+                   "        Bitte treffe eine Wahl: ")
 
     if choice == "A" or choice == "a":
         FahrzeugAusleihen()
@@ -846,18 +1024,42 @@ def emenue():
 
 
 def FahrzeugAusleihen():
-    try:
-        pass
-    except:
-        print("Fehler ein Fahrzeug konnte nicht aufgeliehen werden.")
-
+    print("Das Fahrzeug ausleihen habe ich mit etlichen Varianten gecodet, jedoch kamen bei allen nur Fehler raus.\nSo das ich den Code wieder entfernte.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 def FahrzeugZurueckgeben():
-    try:
-        pass
-    except:
-        print("Fehler ein Fahrzeug konnte nicht zurückgegeben werden.")
-
+    print("Sie möchten ein Fahrzeug zurück bringen. Folgende Fahrzeuge sind vorhanden:")
+    cursor.execute("SELECT * FROM fahrzeug")
+    result = cursor.fetchall()
+    for row in result:
+        print(
+            f"fahrzeug_ID: {str(row[0]):5} Marke: {str(row[1]):10} Klasse: {str(row[2]):15} Kennzeichen: {str(row[3]):15} ")
+    print("Bitte wählen sie die fahrzeug_ID des Fahrzeugs, das sie zurück bringen möchten:")
+    fahrzeug_id = input()
+    stand_fahrzeug = []
+    stand_fahrzeug.insert(1, fahrzeug_id)
+    print("Folgende zweigstelle stehen zur Rückgabe zur Verfügung:")
+    cursor.execute("SELECT * FROM zweigstelle")
+    result = cursor.fetchall()
+    for row in result:
+        print(f"zweigstelle_ID: {row[0]:5} zweigstellename: {row[1]:25}")
+    print("Bitte wählen sie die zweigstelle_ID des annehmenden zweigstelles aus:")
+    stand_id = input()
+    stand_fahrzeug.insert(0, stand_id)
+    cursor.execute("UPDATE fahrzeug SET zweigstellen_id = %s WHERE fahrzeug_id = %s", stand_fahrzeug)
+    DB_CBM.commit()
+    print("Das Fahrzeug wurde erfolgreich abgegeben.")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 def FahrzeugSotierenStatus():
     cursor.execute("SELECT * FROM fahrzeug ORDER BY fahrzeug.status DESC")
@@ -871,6 +1073,12 @@ def FahrzeugSotierenStatus():
         print(f"Zweigstellen ID: {row[5]}")
         print(f"Fahrzeug Preis ID: {row[6]}")
         print(f"\n")
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 def FahrzeugSotierenModell():
@@ -885,7 +1093,12 @@ def FahrzeugSotierenModell():
         print(f"Zweigstellen ID: {row[5]}")
         print(f"Fahrzeug Preis ID: {row[6]}")
         print(f"\n")
-
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 def FahrzeugSchadensbericht():
     Schadensbericht = open('Schadensbericht.txt', 'a')
@@ -895,7 +1108,12 @@ def FahrzeugSchadensbericht():
     os.system("cls")
     print("")
     print("Herzlichen Dank für Ihren Schadensbericht!")
-    hmenu()
+    print("")
+    choice = input("Bitte wählen Sie:\n- Hauptmenü (1)\n- Programm Beenden(0)\n")
+    if choice == "1":
+        hmenu()
+    elif choice == "0":
+        sys.exit()
 
 
 willkommen()
