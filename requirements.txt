@@ -10,6 +10,6 @@ mog-commons==0.2.3
 mysql-connector-python==8.0.18
 passlib==1.7.2
 protobuf==3.11.1
-PyYAML==5.2
+PyYAML==5.4
 six==1.13.0
 Werkzeug==0.16.0
