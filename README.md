@@ -4,9 +4,9 @@
 
 > ####Kontakt
 >
-> Webseite https://frank-panzer.de | https://bremer-community.de
+> Webseite https://panzerit.de | https://bremer-community.de
 >
-> E-Mail:  frank@panzer.mobi
+> E-Mail:  dev@panzeit.de
                                                                     
 ##### Aufbau der Konsolenanwendung:
 Mit diesem Python Projekt biete ich eine Konsolenanwendung zur Autovermierung an.
